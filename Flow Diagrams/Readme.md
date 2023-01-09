@@ -1,4 +1,4 @@
-![Update Flow](FlowDiagramGeneral.drawio.png?raw=true "Title")
+![Update Flow](FlowDiagramGeneral.drawio.png?raw=true "Update Flow")
 
 The update process begins when an author request to register an update. The author sends
 their key, which was previously given to them by the register agent (see [Register Author](./RegisterAuthor)).

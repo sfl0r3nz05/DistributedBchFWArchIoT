@@ -1,4 +1,5 @@
-![Register Flow Chart](RegisterFlowChart.drawio.png?raw=true "Title")
+![Register Flow Chart](RegisterFlowChart.drawio.png?raw=true "Register Author")
+
 The register process begins with the request made from the author agent, 
 in which the author provides the public key that the register agent is going to
 use to verify the manifests. This key will be verified by the author agent before 
