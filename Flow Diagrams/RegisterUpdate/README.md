@@ -19,3 +19,14 @@ correct, it will also return and error. (ERR_MANIFEST_SIGN_NOT_VALID).
 4- The Register Node will verify the image using the hash present in the manifest using the author's
 public key, to check the integrity of it's contents. If the hash does not match, it will return an
 error. (ERR_IMAGE_NOT_VALID)
+
+5- The register Node stores the image in the IPFS net. The IPFS net returns a Content ID If the node is 
+unavailable to upload the image, it will send and error (ERR_IPFS_COULD_NOT_UPLOAD).
+
+6- The Content ID of the image its updated to the manifest and signed by the register node. If the
+node cant perform this operation, it will send an error. (ERR_COULD_NOT_UPDATE_MANIFEST)
+
+7- The Register Node calls the register chaincode in the aplication. It asks for the updated manifest
+to be stored in a transaction in the blockchain ledger. If this operation could not be done, the
+node will send an error. (ERR_COULD_NOT_UPLOAD_MANIFEST). If succesful, it will send a message back
+to the author.
