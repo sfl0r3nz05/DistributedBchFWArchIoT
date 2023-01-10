@@ -9,6 +9,7 @@ divided into 3 categories:
 1- Register Nodes communicate with authors. They verify the firmware images and their
 manifests, and store them.
 2- General Nodes maintain the network, but are not able to store or retrive updates.
+
 3- Retrieval Nodes retrive manifest and images and send them to the devices.
 
 For a more in-depth view, see [Project Architecture](./Architecture).
