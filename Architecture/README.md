@@ -1,4 +1,4 @@
-#Architecture
+# Architecture
 
 Hyperledger Fabric is used as the blockchain technology supporting the implementation. The network is a private/consortium network.
 The network is also permissioned. There are 3 types of nodes, with different permissions:
