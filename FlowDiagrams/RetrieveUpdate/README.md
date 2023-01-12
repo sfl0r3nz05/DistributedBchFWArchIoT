@@ -1,8 +1,8 @@
 ![Retrieval Flow](RetrieveUpdate.drawio.png?raw=true "Retrieval Flow")
 
 1- The retrieval process begins when a device asks a Retrieval Node for the latest version
-of the available firmware. In order to do this request, the device sends either it's key,
-which was given by the autor and is verifiable with the authors public key, or it's model.
+of the available firmware. In order to do this request, the device sends either it's identifier,
+which is composed of it's author's public key and the devices ClassID.
 
 2- The retrieval node verifies the key or the model to check if the device is selectable
 for updates from the blockchain. If it is not, it will send an error. (ERR_DEVICE_NOT_SELECTABLE)
@@ -10,7 +10,7 @@ If the device is selectable, it sends the last available version number. If this
 is not posible, it will send an error (ERR_BLOCKCHAIN_NOT_AVAILABLE).
 
 3- If the device has an inferior version to the last available in the blockchain, it will
-ask to recive the update. This time it needs to send it's key, not the model.
+ask to recive the update. It sends it's identifier again.
 
 4- The Retrieval Node verifies once again the key, as in 2, and will send an error if necesary.
 If selectable, the node retrieves the manifest from the ledger. If this operation if not posible,
