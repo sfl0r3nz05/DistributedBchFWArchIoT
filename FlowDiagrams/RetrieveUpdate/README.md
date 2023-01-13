@@ -16,8 +16,8 @@ ask to recive the update. It sends it's identifier again.
 If selectable, the node retrieves the manifest from the ledger. If this operation if not posible,
 it will send an error.
 
-5- Using the Content ID present in the manifest, the retrieval node retrieves the image
-from IPFS net. It uses the sign in the manifest to verify the image. If the image is not
+5- Using the Content ID, the retrieval node retrieves the image
+from IPFS net. It uses the author's sign and the digest in the manifest to verify the image. If the image is not
 verifiable, it sends an error. (ERR_IMAGE_NOT_VERIFIABLE)
 
 6- The Retrieval Node sends the image and the manifest to the device.
