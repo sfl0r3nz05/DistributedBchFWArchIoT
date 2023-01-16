@@ -2,10 +2,10 @@
 
 The register process begins with the request made from the author agent, 
 in which the author provides the public key that the register node is going to
-use to verify the manifests and the same key signed using his private key. 
+use to verify the manifests a message signed using his private key and the same unsigned message. 
 
-Then the register agent tries to store the key in the blockchain via a chaincode that verifies the key using the sign, and checks that 
-it is not already present in the net. If there are no problems, it generates a new key for the author to use in the update register process.
+Then the register agent tries to store the key in the blockchain via a chaincode that verifies the message using the sign, and checks that 
+the key is not already present in the net. If there are no problems, it generates a new key for the author to use in the update register process.
 This new key is send back to the author agent, which
 will store it in a keyStore/wallet.
 
