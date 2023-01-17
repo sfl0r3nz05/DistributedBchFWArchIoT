@@ -12,12 +12,10 @@ manifests, and store them.
 
 3- Retrieval Nodes retrive manifest and images and send them to the devices.
 
-For a more in-depth view, see [Project Architecture](./Design/Architecture).
-For a description of the information flow, see [Data Flow](./Design/FlowDiagrams).
-For a description of the data structures, see [Data Flow](./Design/DataStrctures).
+For a more in-depth view of the design, see [Design] (./Design)
 
 > **Note:** This repo is under development ⛏.
-> > It is maintained by [Jesús Rugarcía Sandía](https://github.com/jesusrugarcia), [Íñigo Juarros](https://github.com/inijuarros) and [Santiago Figueroa](https://github.com/sfl0r3nz05) as part of the project: *Distributed blockchain-based firmware update architecture for IoT devices*.
+> > It is maintained by [Jesús Rugarcía Sandia](https://github.com/jesusrugarcia), [Íñigo Juarros](https://github.com/inijuarros) and [Santiago Figueroa](https://github.com/sfl0r3nz05) as part of the project: *Distributed blockchain-based firmware update architecture for IoT devices*.
 
 > **Note:** Check the meeting minutes ✏.
 > > [Meeting minutes](./minutes)
