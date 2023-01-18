@@ -1,6 +1,6 @@
 # Register Agent
 
-![Register Author](RegisterAgentAuthorRegister.drawio.png?raw=true "Register author")
+![Register Author](AuthorAgentAuthorRegister.drawio.png?raw=true "Register author")
 
 The register agent has a call to register an author into the blockchain through the register agent.
 
@@ -15,7 +15,7 @@ is created in the author agent's storage/KeyStore.
 
 5- The response is sent by the author agent. It can be succesful (201) or can contain an error message(403, contains the error sent by register agent).
 
-![Register Update](RegisterAgentUpdateRegister.drawio.png?raw=true "Register Update")
+![Register Update](AuthorAgentUpdateRegister.drawio.png?raw=true "Register Update")
 
 The register agent also has a call to register an update through the register agent.
 
