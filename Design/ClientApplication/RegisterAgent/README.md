@@ -23,7 +23,7 @@ image/payload to the IPFS net and asking for the transaction to be updated.
 2- The RegisterPetition is sent through a call to the register chaincode. chaincode sends response, which contains a message that indicates if
 the update has been registered or not.
 
-3- If the response is successful, the register agent upload the image to IPFS network. Then it uses the CID to create an UpdatePetition. See [Updates](../../DataStructures/UpdatePetition).
+3- If the response is successful, the register agent upload the image to IPFS network. Then it uses the CID to create an UpdatePetition. See [UpdatePetition](../../DataStructures/UpdatePetition).
 This structure is used to indicate the blockchain which update to add the CID to. The chaincode is called once again.
 
 4- The chaincode sends a response, containing whether the transaction has been updated or not.
