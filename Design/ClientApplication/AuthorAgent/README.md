@@ -1,4 +1,4 @@
-# Register Agent
+# Author Agent
 
 ![Register Author](AuthorAgentAuthorRegister.drawio.png?raw=true "Register author")
 
@@ -22,7 +22,7 @@ The register agent also has a call to register an update through the register ag
 1- The call is received. It contains an Update and the author's public key.
 
 2- The author agent used the public key to obtain register key from KeyPair storage, and uses Update to create an instance of UpdateRegister.
-See [RegisterPetiton](../../DataStructures/Update).
+See [Updates](../../DataStructures/Update).
 
 3- The author agent sends call to register agent, containing the UpdateRegister.
 
