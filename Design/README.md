@@ -10,6 +10,8 @@ For a description of the blockchain application, see [Blockchain Application](./
 
 For a description of the client application, see [Client Application](./ClientApplication).
 
+For a description of the device emulator, see [Device Emulator](./DeviceEmulator).
+
 ## Error Messages
 
 During the execution of the processes of the application, the following error may arise, each one identyfied with a code:
