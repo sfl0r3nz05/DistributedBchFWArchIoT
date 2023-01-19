@@ -10,7 +10,7 @@ It will count with two main methods:
 
 ## Version Query
 
-This methods checks the last available version in the network and evaluates if an update is required.
+This method (checkLastVersion()) checks the last available version in the network and evaluates if an update is required.
 ![Version Query](VersionQuery.drawio.png?raw=true "Version Query")
 
 1- DeviceID is created from AuthorKey and ClassID.
@@ -22,7 +22,9 @@ This methods checks the last available version in the network and evaluates if a
 4- VersionID is compared to the stored manifest's one. If superior, Update Retrieval Petition is called.
 
 
-## Update Retrieval Peitition
+## Update Retrieval Petitition
+This method (requestUpdate()) makes a petition to get the last update, verifies it and stores it. A real device would perform the update by rebooting
+the obtained image.
 
 ![Update Retrieval Petition](UpdateRetrievalPetition.drawio.png?raw=true "Update Retrival Petition")
 
