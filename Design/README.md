@@ -32,4 +32,6 @@ Register Process Error Codes:
 
 - ERR_MANIFEST_NOT_VERIFIABLE: The provided manifest can not be verified using the author's public key associated to the providen register key with the given ManifestDigest and ManifestSign.
 
+- ERR_INCORRECT_MANIFEST_FORMAT: The provided manifest does not contain all the mandatory fields.
+
 - ERR_PAYLOAD_NOT_VERIFIABLE: The provided payload/image can not be verified using the author's public key associated to the providen register key with the given PayloadDigest and AuthorSign.
