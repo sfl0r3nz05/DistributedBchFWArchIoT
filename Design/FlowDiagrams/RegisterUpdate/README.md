@@ -11,24 +11,23 @@ as it will be retrieved later with a Content IDentifier (CID) given by the distr
 chaincode.
 
 3- The Register chaincode will fist verify the authors identity. If the given key does not correspond
-to any registered author it will return an error message. (ERR_AUTHOR_NOT_REGISTERED)
+to any registered author it will return an error message.
 
 4- The Register chaincode will verify the manifest. It will check that it has all the mandatory fields (
 see [Manifest Structure](../../DataStructures/Update/Manifest). It verifies the manifest using the public key 
 linked to the register key the author provided and the author's sign to obtain the digest, it also obtains the digest
 by digesting the manifest. If thedigest present in the manifest and the obtained ones are identical, the manifest is 
 known not to have been modified since the author signed it.
-If the manifest has an incorrect format, it will return an error. (ERR_INCORRECT_MANIFEST_FORMAT). If the sign is not
-correct, it will also return and error. (ERR_MANIFEST_SIGN_NOT_VALID).
-
+If the manifest has an incorrect format, it will return an error. If the sign is not
+correct, it will also return and error.
 5- The Register chaincode will verify the image using the same proccess as in the manifest. If the digest does not 
-match, it will return an error. (ERR_IMAGE_NOT_VALID)
+match, it will return an error.
 
 6- The Register chaincode stores the update in the blockchain.
 
 7- The register Node stores the image in the IPFS net. The IPFS net returns a Content ID. This CID is sent to the 
-register chaincode. If the node is unavailable to upload the image, it will send and error (ERR_IPFS_COULD_NOT_UPLOAD).
+register chaincode. If the node is unavailable to upload the image, it will send and error.
 
 8- The Register chaincode updates the transaction with the CID. If this operation could not be done, the
-node will send an error. (ERR_COULD_NOT_UPDATE_TRANSACTION). If succesful, it will send a message back
+node will send an error. If succesful, it will send a message back
 to the author. When succesful, the update is deleted from temporal storage.
