@@ -1,0 +1,137 @@
+{
+  "openapi": "3.0.3",
+  "info": {
+    "title": "Author Agent",
+    "description": "This API is used to allow firmware update authors to register and upload updates to an Hyperledger Fabric blockchain.",
+    "version": "0.0.1"
+  },
+  "externalDocs": {
+    "description": "Github Repository",
+    "url": "https://github.com/sfl0r3nz05/DistributedBchFWArchIoT"
+  },
+  "servers": [
+    {
+      "url": "To be hosted"
+    }
+  ],
+  "tags": [
+    {
+      "name": "register",
+      "description": "Register the firmware update or an author."
+    }
+  ],
+  "paths": {
+    "/register/author": {
+      "post": {
+        "tags": [
+          "register"
+        ],
+        "summary": "Register the author",
+        "description": "Register the author given a public key used to sign the manifests and message, both unsigned and signed with the author's private key. It sends a petition to the register agent.",
+        "operationId": "registerAuthor",
+        "requestBody": {
+          "description": "Register an author in the blockchain given a public key and a message both signed and unsigned.",
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "PublicKey": {
+                    "type": "string"
+                  },
+                  "SignedMessage": {
+                    "type": "string"
+                  },
+                  "Message": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "201": {
+            "description": "Successful operation. Stores the given public Key in a KeyPair with the generated registerKey."
+          },
+          "403": {
+            "description": "The blockchain application found an error. Error message contained.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "405": {
+            "description": "Invalid input"
+          }
+        }
+      }
+    },
+    "/register": {
+      "post": {
+        "tags": [
+          "register"
+        ],
+        "summary": "Register firmware update",
+        "description": "Register an update given an author public key and an Update Object",
+        "operationId": "register",
+        "requestBody": {
+          "description": "Register an aupdate given an author public key and an Update. Obtains registerKey from KeyPair in storage and generates a UpdateRegister to perform a petition to the register agent.",
+          "required": true,
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "PublicKey": {
+                    "type": "string"
+                  },
+                  "Update": {
+                    "type": "object",
+                    "properties": {
+                      "Manifest": {
+                        "type": "object"
+                      },
+                      "Payload": {
+                        "type": "string",
+                        "format": "binary"
+                      },
+                      "AuthorSign": {
+                        "type": "string"
+                      },
+                      "AuthorManifestSign": {
+                        "type": "string"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Successful operation."
+          },
+          "403": {
+            "description": "The blockchain application found an error. Error message contained.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "405": {
+            "description": "Invalid input"
+          }
+        }
+      }
+    }
+  }
+}

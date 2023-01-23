@@ -1,0 +1,148 @@
+{
+  "openapi": "3.0.3",
+  "info": {
+    "title": "Retrieval Agent",
+    "description": "This API is called by a device to obtain information about the stored updates and to retrieve them.",
+    "version": "0.0.1"
+  },
+  "externalDocs": {
+    "description": "Github Repository",
+    "url": "https://github.com/sfl0r3nz05/DistributedBchFWArchIoT"
+  },
+  "servers": [
+    {
+      "url": "To be hosted"
+    }
+  ],
+  "tags": [
+    {
+      "name": "retrieve",
+      "description": "Retrieves the last available update for the device or queries the last available version."
+    }
+  ],
+  "paths": {
+    "/retrieve/version": {
+      "post": {
+        "tags": [
+          "retrieve"
+        ],
+        "summary": "Retrieves the last available version for the device.",
+        "description": "A device sends it's DeviceID, which contains the author's key and the classID of the device. The agent calls the versionQuery chaincode and returns the last available VersionID.",
+        "operationId": "retrieveVersion",
+        "requestBody": {
+          "description": "It contains a DeviceID",
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "PublicKey": {
+                    "type": "string"
+                  },
+                  "ClassID": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "201": {
+            "description": "Successful operation. Returns the last available VersionID retrieved by the chaincode.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "The blockchain application found an error. Error message contained.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "405": {
+            "description": "Invalid input"
+          }
+        }
+      }
+    },
+    "/retrieve": {
+      "post": {
+        "tags": [
+          "retrieve"
+        ],
+        "summary": "Retrieve firmware update",
+        "description": "The device sends it DeviceID, and the agent calls the UpdateRetrieval chaincode. It returns the last available update.",
+        "operationId": "retrieve",
+        "requestBody": {
+          "description": "Contains a DeviceID object",
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "PublicKey": {
+                    "type": "string"
+                  },
+                  "ClassID": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "201": {
+            "description": "Successful operation. Contains the last available Update for the device.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "Manifest": {
+                      "type": "object"
+                    },
+                    "Payload": {
+                      "type": "string",
+                      "format": "binary"
+                    },
+                    "AuthorSign": {
+                      "type": "string"
+                    },
+                    "AuthorManifestSign": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "The blockchain application found an error. Error message contained.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "405": {
+            "description": "Invalid input"
+          }
+        }
+      }
+    }
+  }
+}
