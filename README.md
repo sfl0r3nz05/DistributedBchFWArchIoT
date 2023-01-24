@@ -14,6 +14,66 @@ manifests, and store them.
 
 For a more in-depth view of the design, see [Design](./Design)
 
+The project aims to create a secure update environment where the following types of threads and risk are avoided or mittigated:
+
+- Old image instalation: An attacker sends an older but valid update to a device,
+which may contain a vulnerability exploitable by the attacker. The device identifies
+the update as valid and instals it, allowing the attacker to make further exploits.
+
+	To avoid it, the MonotonicSequenceNumber and VersionID fields are introduced to the 
+manifest, allowing the devices to more accurately decide wether an update is more 
+recent than the currently instaled one.
+
+- Device not connected: An atacker sends an update which is more recent that the one
+currently instaled on a device, but older than the last available one. Since the device
+is not connected to any network in which it can obtain information about the last available
+update, it determines that the update should be installed. This update may contain vulnerabilities
+exploitable by the attacker, which may be already patched in more recent updates.
+
+	To avoid it, the devices should only install updates they asked for themselves. The proposed
+blockchain network will be the one to distribute the updates, and will always distribute the
+las available one.
+
+- Incorrect device class: An attacker sends a valid and recent update to a device, which is installed.
+The update, however, is designed for a different class of device. Therefore the device may no longer 
+work as intended or may stop working completly.
+
+To avoid it, both devices and manifest should include information about the class of the target device.
+This class will be neccesary to ask the blockchain application for update retrivals. Devices will only
+install updates targeted at their own device class.
+
+- Incorrect payload class: The payload is processed incorrectly by the device, potentially making it
+not work as intended or making it no longer functional.
+
+To avoid it, the manifest should contain information about the encryption of the payload and specific
+update steps when neccesary, so that devices can process the payload as intended.
+
+- Incorrect update directory: The update is installed to an incorrect directory, potentially making the
+device not work as intended.
+
+To avoid it, the manifest should contain a field to specify the directory for the payload when neccesary.
+
+- Malicious redirection: An attacker could modify the manifest to indicate a malicious direction for the 
+payload, making the device download a malicious payload, or could attack the payload storage to substitute
+it with a payload of their own making.
+
+To avoid it, the manifest will contain a field with the digest for itself, and the envelope will contain
+a sign from the author, so that devices can verify that manifests have not been modified. The payload distribution
+will be handled by the application, ensuring devices do not need to download from unkown storages. The manifest will
+also contain a digest for the payload and a sign for it in the envelop, so that devices can verify the payloads.
+
+- Payload / Manifest modifications: An attacker may modify the payload or manifest (or both) of an update to
+introduce malicious elements. They could add aditional code to an image and modify the digest for it in the manifest,
+giving it the appearance of a valid update.
+
+To avoid it, the manifest will contain the digests for both the payload and itself(must be removed for digesting) and
+the envelop will contain signs for both the manifest and the payload. This way both the blockchain application and
+the devices can verify that the updates have not been modifies since the author signed them. The devices will contain
+the public key of their author, so the signs will be only verifiable if they are signed with the asocciated 
+private key from the author.
+
+
+
 > **Note:** This repo is under development ⛏.
 > > It is maintained by [Jesús Rugarcía Sandia](https://github.com/jesusrugarcia), [Íñigo Juarros](https://github.com/inijuarros) and [Santiago Figueroa](https://github.com/sfl0r3nz05) as part of the project: *Distributed blockchain-based firmware update architecture for IoT devices*.
 
