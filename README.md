@@ -38,26 +38,26 @@ las available one.
 The update, however, is designed for a different class of device. Therefore the device may no longer 
 work as intended or may stop working completly.
 
-To avoid it, both devices and manifest should include information about the class of the target device.
+	To avoid it, both devices and manifest should include information about the class of the target device.
 This class will be neccesary to ask the blockchain application for update retrivals. Devices will only
 install updates targeted at their own device class.
 
 - Incorrect payload class: The payload is processed incorrectly by the device, potentially making it
 not work as intended or making it no longer functional.
 
-To avoid it, the manifest should contain information about the encryption of the payload and specific
+	To avoid it, the manifest should contain information about the encryption of the payload and specific
 update steps when neccesary, so that devices can process the payload as intended.
 
 - Incorrect update directory: The update is installed to an incorrect directory, potentially making the
 device not work as intended.
 
-To avoid it, the manifest should contain a field to specify the directory for the payload when neccesary.
+	To avoid it, the manifest should contain a field to specify the directory for the payload when neccesary.
 
 - Malicious redirection: An attacker could modify the manifest to indicate a malicious direction for the 
 payload, making the device download a malicious payload, or could attack the payload storage to substitute
 it with a payload of their own making.
 
-To avoid it, the manifest will contain a field with the digest for itself, and the envelope will contain
+	To avoid it, the manifest will contain a field with the digest for itself, and the envelope will contain
 a sign from the author, so that devices can verify that manifests have not been modified. The payload distribution
 will be handled by the application, ensuring devices do not need to download from unkown storages. The manifest will
 also contain a digest for the payload and a sign for it in the envelop, so that devices can verify the payloads.
@@ -66,7 +66,7 @@ also contain a digest for the payload and a sign for it in the envelop, so that 
 introduce malicious elements. They could add aditional code to an image and modify the digest for it in the manifest,
 giving it the appearance of a valid update.
 
-To avoid it, the manifest will contain the digests for both the payload and itself(must be removed for digesting) and
+	To avoid it, the manifest will contain the digests for both the payload and itself(must be removed for digesting) and
 the envelop will contain signs for both the manifest and the payload. This way both the blockchain application and
 the devices can verify that the updates have not been modifies since the author signed them. The devices will contain
 the public key of their author, so the signs will be only verifiable if they are signed with the asocciated 
