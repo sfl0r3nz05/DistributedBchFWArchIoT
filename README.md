@@ -91,7 +91,7 @@ honest petitions, since it can distribute the workload between different nodes.
 
 ## Future Work
 
-This project focuses on a limitted ammount of threads. Further investigation is needed in the following areas:
+This project focuses on a limitted ammount of threats. Further investigation is needed in the following areas:
 
 - Protection of the HTTP comunications: Communication between devices is assumed to be secure in this project. In a real environment,
 however, HTTP traffic can be intercepted and data may be stolen or modified. The verification step ensures that modified data won't make it
@@ -108,7 +108,9 @@ similar methods is advisable.
 A secure identification metodology is needed to allow access only for known devices, so that attackers with access to 
 device can not obtain the updates (Or not as easily). Similarly, the current method only allows for authors to upload
 updates for devices that already contain their public key. Should an author dissapear and another one subsitute it, device 
-operator may have to manually add the key from the new author to their devices.
+operator may have to manually add the key from the new author to their devices. The blockchain application could also
+track the state of the devices to identify actively devices that are vulnerable or not yet updated, similar to the state server
+proposed by thr RFC9019.
 
 - Delta updates: Delta updates may allow updates to become lighter and faster to distribute, but add significant complexity.
 
