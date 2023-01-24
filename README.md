@@ -73,6 +73,29 @@ the public key of their author, so the signs will be only verifiable if they are
 private key from the author.
 
 
+## Future Work
+
+This project focuses on a limitted ammount of threads. Further investigation is needed in the following areas:
+
+- Protection of the HTTP comunications: Communication between devices is assumed to be secure in this project. In a real environment,
+however, HTTP traffic can be intercepted and data may be stolen or modified. The verification step ensures that modified data won't make it
+into the network and devices wont install it, but unsecure commnucations make attacker able to obtain updates for reverse engineering processes.
+Should all traffic be intercepted and modified( like a man in the middle attack), in practical uses an attacker could deny services for a given
+author, agent or device.
+
+- Encryption of data: data flows without being encrypted, making it more accesible for malicious parties.
+
+- Author identification: The method used for author autentication is rough. The use of distributed IDs or
+similar methods is advisable.
+
+- Device identification: The method for identifying devices allows malicious parties to obtain updates from the network.
+A secure identification metodology is needed to allow access only for known devices, so that attackers with access to 
+device can not obtain the updates (Or not as easily). Similarly, the current method only allows for authors to upload
+updates for devices that already contain their public key. Should an author dissapear and another one subsitute it, device 
+operator may have to manually add the key from the new author to their devices.
+
+- Delta updates: Delta updates may allow updates to become lighter and faster to distribute, but add significant complexity.
+
 
 > **Note:** This repo is under development ⛏.
 > > It is maintained by [Jesús Rugarcía Sandia](https://github.com/jesusrugarcia), [Íñigo Juarros](https://github.com/inijuarros) and [Santiago Figueroa](https://github.com/sfl0r3nz05) as part of the project: *Distributed blockchain-based firmware update architecture for IoT devices*.
