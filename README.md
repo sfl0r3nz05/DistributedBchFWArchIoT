@@ -72,6 +72,20 @@ the devices can verify that the updates have not been modifies since the author 
 the public key of their author, so the signs will be only verifiable if they are signed with the asocciated 
 private key from the author.
 
+- Author dissappearance: When a vendor gets out the market, all the updates for their devices often get taken down or become
+otherwise unaccesible for devices that have not already obtained them.
+
+	With the use of a distributed network, we ensure that the updates already made available continue being so, while at least
+one vendor or copy of the ledger remains active withing the blockchain. Other authors may become able to provided updates for
+the device classes previously updated by that author, via a final update which contains the public key of the new author or by
+privately sharing the private key to the new author. This resposability inheritance may need to be more concretely
+detailed.
+
+- Denial of service: centralized architectures are more vulnerable to denial of service attacks. For a decentralizen network
+to be denied of providing its services, all the endpoints need to be simultaneosly attacked. While not imposible, it
+makes the attackers work more difficult. In the same way, a decentralized network may have an easier time attending multiple
+honest petitions, since it can distribute the workload between different nodes.
+
 
 ## Future Work
 
@@ -99,6 +113,9 @@ operator may have to manually add the key from the new author to their devices.
 - Low end device verifications: Type I low end devices may need to rely on gateways to perform verification. Once the gateway
 verifies an update, it must be send to the device. This last step is susceptible of being intercepted, feeding the device a 
 malicious update. Therefore communications between gateways and device needs to be protected.
+
+- Concrete methods for responsability inheritance: A clear protocol for retiring authors to legate their responsability
+may need to be specified.
 
 
 > **Note:** This repo is under development ⛏.
