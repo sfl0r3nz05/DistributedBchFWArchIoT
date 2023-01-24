@@ -96,6 +96,10 @@ operator may have to manually add the key from the new author to their devices.
 
 - Delta updates: Delta updates may allow updates to become lighter and faster to distribute, but add significant complexity.
 
+- Low end device verifications: Type I low end devices may need to rely on gateways to perform verification. Once the gateway
+verifies an update, it must be send to the device. This last step is susceptible of being intercepted, feeding the device a 
+malicious update. Therefore communications between gateways and device needs to be protected.
+
 
 > **Note:** This repo is under development ⛏.
 > > It is maintained by [Jesús Rugarcía Sandia](https://github.com/jesusrugarcia), [Íñigo Juarros](https://github.com/inijuarros) and [Santiago Figueroa](https://github.com/sfl0r3nz05) as part of the project: *Distributed blockchain-based firmware update architecture for IoT devices*.
