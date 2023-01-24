@@ -14,6 +14,8 @@ manifests, and store them.
 
 For a more in-depth view of the design, see [Design](./Design)
 
+## Security Objectives
+
 The project aims to create a secure update environment where the following types of threads and risk are avoided or mittigated:
 
 - Old image instalation: An attacker sends an older but valid update to a device,
