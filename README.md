@@ -110,7 +110,7 @@ device can not obtain the updates (Or not as easily). Similarly, the current met
 updates for devices that already contain their public key. Should an author dissapear and another one subsitute it, device 
 operator may have to manually add the key from the new author to their devices. The blockchain application could also
 track the state of the devices to identify actively devices that are vulnerable or not yet updated, similar to the state server
-proposed by thr RFC9019.
+proposed by thr RFC9019. It may be interesting to use the Physically Unclonable Function approach. 
 
 - Delta updates: Delta updates may allow updates to become lighter and faster to distribute, but add significant complexity.
 
@@ -120,6 +120,8 @@ malicious update. Therefore communications between gateways and device needs to 
 
 - Concrete methods for responsability inheritance: A clear protocol for retiring authors to legate their responsability
 may need to be specified.
+
+- device emulator should be updated to perform firmware emulation. A server for update verification may be useful for low end devices.
 
 
 > **Note:** This repo is under development ⛏.

@@ -31,7 +31,7 @@ This chaincode stores an Update in the blockchain.
 
 2- The RegisterKey is verified to be in the ledger, and the assocciated PublicKey is obtained. See [KeyPair](../../DataStructures/RegisterAuthorStructures).
 
-3- ManifestDigest field is removed from manifest, and its digested using MD5, or any other algortithm specified in PayloadFormat or PayloadProccesing.
+3- ManifestDigest field is removed from manifest, and its digested using SHA 384, or any other algortithm specified in PayloadFormat or PayloadProccesing.
 Manifest is verifies to contain all the mandatory fields.
 
 4- PublicKey is used to obtain the contents of the ManifestSign.
