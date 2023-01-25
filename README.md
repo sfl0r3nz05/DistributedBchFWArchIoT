@@ -123,6 +123,8 @@ may need to be specified.
 
 - device emulator should be updated to perform firmware emulation. A server for update verification may be useful for low end devices.
 
+- IPFS content could be verified on-chain, it may be interesting to add a check.
+
 
 > **Note:** This repo is under development ⛏.
 > > It is maintained by [Jesús Rugarcía Sandia](https://github.com/jesusrugarcia), [Íñigo Juarros](https://github.com/inijuarros) and [Santiago Figueroa](https://github.com/sfl0r3nz05) as part of the project: *Distributed blockchain-based firmware update architecture for IoT devices*.
