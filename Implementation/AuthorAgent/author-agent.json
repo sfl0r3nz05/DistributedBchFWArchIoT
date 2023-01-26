@@ -60,13 +60,13 @@
                 "schema": {
                   "type": "object",
                   "properties": {
-                    "PublicKey": {
+                    "publicKey": {
                       "type": "string"
                     },
-                    "SignedMessage": {
+                    "signedMessage": {
                       "type": "string"
                     },
-                    "Message": {
+                    "message": {
                       "type": "string"
                     }
                   }
