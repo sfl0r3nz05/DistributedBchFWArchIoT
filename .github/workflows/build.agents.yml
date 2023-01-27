@@ -13,7 +13,7 @@ jobs:
       fail-fast: false
       matrix:
         include:
-          - dockerfile: ../Implementation/AuthorAgent/Dockerfile
+          - dockerfile: ./Implementation/AuthorAgent/Dockerfile
             image: authoragent
          # - dockerfile: ./src/Dockerfile-dril4net-distribution
           #  image: ghcr.io/username/image2
