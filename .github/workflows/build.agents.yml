@@ -22,12 +22,6 @@ jobs:
       packages: write
 
     steps:
-      - name: Get to implementation folder
-        run: cd Implementation
-        
-      - name: Get to authoragent
-        run: cd AuthorAgent
-        
       - name: Checkout repository
         uses: actions/checkout@v3
 
@@ -42,7 +36,11 @@ jobs:
         uses: docker/metadata-action@v4
         with:
           images: ${{ matrix.image }}
-
+      - name: Get to implementation folder
+        run: cd Implementation
+        
+      - name: Get to authoragent
+        run: cd AuthorAgent
       - name: Build and push Docker Agent image
         env:
           CI: false
