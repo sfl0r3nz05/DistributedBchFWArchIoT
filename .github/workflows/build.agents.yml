@@ -24,7 +24,10 @@ jobs:
     steps:
       - name: Get to implementation folder
         run: cd Implementation
-             cd AuthorAgent
+        
+      - name: Get to authoragent
+        run: cd AuthorAgent
+        
       - name: Checkout repository
         uses: actions/checkout@v3
 
