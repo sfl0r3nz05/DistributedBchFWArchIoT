@@ -41,7 +41,7 @@ jobs:
           CI: false
         uses: docker/build-push-action@v3
         with:
-          context: .
+          context: ./Implementation/AuthorAgent
           file: ${{ matrix.dockerfile }}
           push: true
           tags: ${{ steps.meta.outputs.tags }}
