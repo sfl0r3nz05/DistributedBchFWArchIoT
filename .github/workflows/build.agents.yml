@@ -1,4 +1,6 @@
 name: Build & publish agent images
+env:
+     CI: false
 on:
   push:
     branches: [ main ]
