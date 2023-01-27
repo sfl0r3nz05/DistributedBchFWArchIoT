@@ -35,12 +35,7 @@ jobs:
         id: meta
         uses: docker/metadata-action@v4
         with:
-          images: ${{ matrix.image }}
-      - name: Get to implementation folder
-        run: cd Implementation
-        
-      - name: Get to authoragent
-        run: cd AuthorAgent
+          images: ${{ matrix.image }
       - name: Build and push Docker Agent image
         env:
           CI: false
