@@ -34,7 +34,7 @@ jobs:
         uses: docker/login-action@v2
         with:
           registry: ${{ env.REGISTRY }}
-          username: DistributedIot
+          username: distributediot
           password: ${{ secrets.DISTRIBUTEDBCHFWARCHIOT_SECRET }}
 
       - name: Extract metadata (tags, labels) for Docker
