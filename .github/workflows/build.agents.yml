@@ -35,7 +35,7 @@ jobs:
         id: meta
         uses: docker/metadata-action@v4
         with:
-          images: ${{ matrix.image }
+          images: ${{ matrix.image }}
       - name: Build and push Docker Agent image
         env:
           CI: false
