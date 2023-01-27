@@ -1,7 +1,6 @@
 FROM node:18-alpine
-WORKDIR /
+WORKDIR /app
 COPY ./ ./
-
 RUN npm install
 CMD ["npm","start"]
 RUN npm test
