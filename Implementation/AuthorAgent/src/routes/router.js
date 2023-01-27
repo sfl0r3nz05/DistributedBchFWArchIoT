@@ -17,6 +17,9 @@ router.post("/register/author", function (req, res) {
     
   });
 
+  router.get("/", function (req, res) {
+    return res.redirect('/api-docs');
+  });
 
   router.get("/about", function (req, res) {
     return res.redirect('/api-docs');
