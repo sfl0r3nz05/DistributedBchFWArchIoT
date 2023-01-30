@@ -16,9 +16,9 @@ jobs:
           - dockerfile: ./Implementation/AuthorAgent/Dockerfile
             image: distributediot/authoragent
             context: ./Implementation/AuthorAgent
-          - dockerfile: ./src/Dockerfile-dril4net-distribution
+          - dockerfile: ./Implementation/RegisterAgent/Dockerfile
             image: distributediot/registeragent
-            context: ../RegisterAgent
+            context: ./Implementation/RegisterAgent
     permissions:
       contents: read
       packages: write
