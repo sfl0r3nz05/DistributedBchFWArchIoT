@@ -14,7 +14,7 @@ jobs:
       matrix:
         include:
           - dockerfile: ./Implementation/AuthorAgent/Dockerfile
-            image: authoragent
+            image: distributediot/authoragent:authorimage
          # - dockerfile: ./src/Dockerfile-dril4net-distribution
           #  image: ghcr.io/username/image2
     permissions:
