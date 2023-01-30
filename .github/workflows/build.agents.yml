@@ -15,8 +15,10 @@ jobs:
         include:
           - dockerfile: ./Implementation/AuthorAgent/Dockerfile
             image: distributediot/authoragent
-         # - dockerfile: ./src/Dockerfile-dril4net-distribution
-          #  image: ghcr.io/username/image2
+            context: ./Implementation/AuthorAgent
+          - dockerfile: ./src/Dockerfile-dril4net-distribution
+            image: distributediot/registeragent
+            context: ./Implementation/RegisterAgent
     permissions:
       contents: read
       packages: write
@@ -41,7 +43,7 @@ jobs:
           CI: false
         uses: docker/build-push-action@v3
         with:
-          context: ./Implementation/AuthorAgent
+          context: ${{ matrix.context }}
           file: ${{ matrix.dockerfile }}
           push: true
           tags: ${{ steps.meta.outputs.tags }}
