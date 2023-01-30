@@ -1,6 +1,7 @@
 const express = require("express");
 const bodyParser = require('body-parser');
 const jest = require("jest");
+const options = require("./config/config.json");
 
 const swaggerUI = require('swagger-ui-express');
 
@@ -8,7 +9,6 @@ const router = require('./routes/router')
 
 
 const app = express();
-const port = 3000;
 
 const swaggerDocs = require('../author-agent.json');
 
@@ -19,6 +19,6 @@ app.use('/api-docs', swaggerUI.serve, swaggerUI.setup(swaggerDocs, { explorer: t
 
 
 
-app.listen(port, () => {
-  console.log(`Example app listening on port ${port}!`);
+app.listen(options.port, () => {
+  console.log(`Example app listening on port ${options.port}!`);
 });

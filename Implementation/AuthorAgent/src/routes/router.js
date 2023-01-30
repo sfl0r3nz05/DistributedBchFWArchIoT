@@ -4,15 +4,21 @@ const router = express.Router();
 
 const readRequest = require('../services/verify-register-petition');
 const verifyKeys = require("../services/verify-register-petition");
+const authorRequest = require("../services/author-register-petition");
 
 router.use(bodyParser.json());
-router.post("/register/author", function (req, res) {
+router.post("/register/author", async function(req, res) {
     let = verifiable = verifyKeys(req);
     if(!verifiable){
       res.status(400).json('Input not valid');
     } else {
       //should send to register agent
-      res.status(201).json('Registrated');
+      console.log("authorRequested");
+      authorRequest(req.body).then((data) => {
+        res.status(201).json(data);
+    }).catch(function (error) {
+      res.status(parseInt(error.stat)).json(error.message);
+    });
     }
     
   });
