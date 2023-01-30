@@ -111,23 +111,78 @@
                 "schema": {
                   "type": "object",
                   "properties": {
-                    "PublicKey": {
+                    "publicKey": {
                       "type": "string"
                     },
-                    "Update": {
+                    "update": {
                       "type": "object",
                       "properties": {
-                        "Manifest": {
-                          "type": "object"
+                        "manifest": {
+                          "type": "object",
+                          "properties" :{
+                            "versionID" : {
+                              "type" :"string"
+                            },
+                            "monotonicSequenceNumber" : {
+                              "type" : "date"
+                            },
+                            "vendorID" : {
+                              "type" : "string",
+                              "required" : "false"
+                            },"classID" : {
+                              "type" : "string"
+                            },
+                            "payloadFormat" : {
+                              "type" : "string"
+                            },
+                            "payloadProcessing" : {
+                              "type" : "string",
+                              "required" : "false"
+                            }, 
+                            "storageLocation" : {
+                              "type" : "string"
+                            }, 
+                            "payloadDigest" : {
+                              "type" : "string"
+                            }, 
+                            "manifestDigest" : {
+                              "type" : "string"
+                            }, 
+                            "size" : {
+                              "type" : "float"
+                            },
+                            "aditionalInstructions" : {
+                              "type" : "string",
+                              "required" : "false"
+                            }, 
+                            "dependencies" : {
+                              "type" : "array",
+                              "items": {
+                                "type" : "string"
+                              }
+                            }, 
+                            "encryptionWrapper" : {
+                              "type" : "string"
+                            }, 
+                            "payloadIndicator" : {
+                              "type" : "string",
+                              "required" : "false"
+                            }, 
+                            "payload" : {
+                              "type" : "string",
+                              "format" : "binary",
+                              "required" : "false"
+                            }
+                          }
                         },
-                        "Payload": {
+                        "payload": {
                           "type": "string",
                           "format": "binary"
                         },
-                        "AuthorSign": {
+                        "authorSign": {
                           "type": "string"
                         },
-                        "AuthorManifestSign": {
+                        "authorManifestSign": {
                           "type": "string"
                         }
                       }

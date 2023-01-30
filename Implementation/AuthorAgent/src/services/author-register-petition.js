@@ -6,7 +6,7 @@ function requestAuthorRegister(pdata) {
     console.log("request:" + JSON.stringify(pdata));
      return new Promise((resolve, reject) => {
         const serverOptions = {
-            host: options.host,
+            host: options.requestHost,
             path: options.registerAuthorPath,
             port: options.requestPort,
             method: 'POST',

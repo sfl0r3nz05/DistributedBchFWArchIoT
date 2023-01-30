@@ -2,7 +2,6 @@ const express = require("express");
 const bodyParser = require('body-parser');
 const router = express.Router();
 
-const readRequest = require('../services/verify-register-petition');
 const verifyKeys = require("../services/verify-register-petition");
 const authorRequest = require("../services/author-register-petition");
 
@@ -12,13 +11,7 @@ router.post("/register/author", async function(req, res) {
     if(!verifiable){
       res.status(400).json('Input not valid');
     } else {
-      //should send to register agent
-      console.log("authorRequested");
-      authorRequest(req.body).then((data) => {
-        res.status(201).json(data);
-    }).catch(function (error) {
-      res.status(parseInt(error.stat)).json(error.message);
-    });
+      res.status(201).json('EXAMPLE: UGFuGfg2r8739f93fu329qftggqbvcugpfg37');
     }
     
   });
@@ -29,11 +22,6 @@ router.post("/register/author", async function(req, res) {
 
   router.get("/about", function (req, res) {
     return res.redirect('/api-docs');
-  });
-
-
-  router.get("/example", function (req, res) {
-    return res.json('Example')
   });
   
   module.exports = router;

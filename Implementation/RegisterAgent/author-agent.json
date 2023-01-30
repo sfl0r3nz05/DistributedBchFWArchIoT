@@ -1,8 +1,8 @@
 {
     "openapi": "3.0.3",
     "info": {
-      "title": "Author Agent",
-      "description": "This API is used to allow firmware update authors to register and upload updates to an Hyperledger Fabric blockchain.",
+      "title": "Register Agent",
+      "description": "This API redirects petitions from authors to the blockchain application",
       "version": "0.0.1"
     },
     "externalDocs": {
@@ -11,7 +11,7 @@
     },
     "servers": [
       {
-        "url": "http://127.0.0.1:3000"
+        "url": "http://127.0.0.1:3001"
       }
     ],
     "tags": [
@@ -21,37 +21,13 @@
       }
     ],
     "paths": {
-      "/example": {
-        "get": {
-          "tags": [
-            "example"
-          ],
-          "summary": "Register the author",
-          "description": "Register the author given a public key used to sign the manifests and message, both unsigned and signed with the author's private key. It sends a petition to the register agent.",
-          "operationId": "registerAuthor",
-          "responses": {
-            "200": {
-              "description": "This but an example",
-              "content" : {
-                "application/json":{
-                  "schema":{
-                    "type": "object",
-                    "description": "test response"
-                  }
-                  
-                }
-              }     
-            }
-          }
-        }
-      },
       "/register/author": {
         "post": {
           "tags": [
             "register"
           ],
           "summary": "Register the author",
-          "description": "Register the author given a public key used to sign the manifests and message, both unsigned and signed with the author's private key. It sends a petition to the register agent.",
+          "description": "Register the author given a public key used to sign the manifests and message, both unsigned and signed with the author's private key. It sends a petition to the register chaincode.",
           "operationId": "registerAuthor",
           "requestBody": {
             "description": "Register an author in the blockchain given a public key and a message both signed and unsigned.",
@@ -77,7 +53,7 @@
           },
           "responses": {
             "201": {
-              "description": "Successful operation. Stores the given public Key in a KeyPair with the generated registerKey."
+              "description": "Successful operation. Returns the generated registerKey."
             },
             "403": {
               "description": "The blockchain application found an error. Error message contained.",
@@ -104,7 +80,7 @@
           "description": "Register an update given an author public key and an Update Object",
           "operationId": "register",
           "requestBody": {
-            "description": "Register an aupdate given an author public key and an Update. Obtains registerKey from KeyPair in storage and generates a UpdateRegister to perform a petition to the register agent.",
+            "description": "Register an aupdate given an author public key and an Update. Receives an UpdateRegister and sends it to the blockchain application.",
             "required": true,
             "content": {
               "multipart/form-data": {

@@ -19,6 +19,6 @@ app.use('/api-docs', swaggerUI.serve, swaggerUI.setup(swaggerDocs, { explorer: t
 
 
 
-app.listen(options.port, () => {
+app.listen(options.port, '0.0.0.0', () => {
   console.log(`Example app listening on port ${options.port}!`);
 });

@@ -1,5 +1,5 @@
-docker stop authoragent
-docker rm authoragent
-docker build -t authoragent .
-docker run --name authoragent -it -d -p 3000:3000 authoragent
-docker logs authoragent
+docker stop registeragent
+docker rm registeragent
+docker build -t registeragent .
+docker run --net=bridge --name registeragent -it -d -p 3001:3001 registeragent 
+docker logs registeragent
