@@ -3,7 +3,6 @@ const options = require("../config/config.json");
 
 
 function requestAuthorRegister(pdata) {
-    console.log("request:" + JSON.stringify(pdata));
      return new Promise((resolve, reject) => {
         const serverOptions = {
             host: options.requestHost,
@@ -49,13 +48,11 @@ function requestAuthorRegister(pdata) {
                 stat : 500,
                 message : 'INTERNAL SERVER ERROR'
             }
-            console.log(e.message);
           reject(rejection);
         });
         // send the request
        req.write(JSON.stringify(pdata));
        req.end();
-       console.log("Petition proccessed");
     });
 }
 

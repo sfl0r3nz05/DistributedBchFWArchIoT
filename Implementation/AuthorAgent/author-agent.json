@@ -107,7 +107,8 @@
             "description": "Register an aupdate given an author public key and an Update. Obtains registerKey from KeyPair in storage and generates a UpdateRegister to perform a petition to the register agent.",
             "required": true,
             "content": {
-              "multipart/form-data": {
+              
+                "application/json" : {
                 "schema": {
                   "type": "object",
                   "properties": {

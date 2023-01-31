@@ -2,19 +2,17 @@ const express = require("express");
 const bodyParser = require('body-parser');
 const router = express.Router();
 
-const readRequest = require('../services/verify-register-petition');
 const verifyKeys = require("../services/verify-register-petition");
 const authorRequest = require("../services/author-register-petition");
 const verifyUpdate = require("../services/verify-update");
 
 router.use(bodyParser.json());
 router.post("/register/author", async function(req, res) {
-    let = verifiable = verifyKeys(req);
+    let verifiable = verifyKeys(req);
     if(!verifiable){
       res.status(400).json('Input not valid');
     } else {
       //should send to register agent
-      console.log("authorRequested");
       authorRequest(req.body).then((data) => {
         res.status(201).json(data);
     }).catch(function (error) {
@@ -25,11 +23,11 @@ router.post("/register/author", async function(req, res) {
   });
 
   router.post("/register", async function(req, res) {
-    let  verifiable = verifyUpdate(JSON.stringify(req));
+    let  verifiable = verifyUpdate(req);
     if(!verifiable){
       res.status(405).json('Input not valid');
     } else {
-      res.status(200).json('prueba es bien');
+      res.status(201).json('prueba es bien');
     }
     
   });

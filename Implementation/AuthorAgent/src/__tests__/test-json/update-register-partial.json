@@ -1,0 +1,24 @@
+{
+    "publicKey": "string",
+    "update": {
+      "manifest": {
+        "versionID": "string",
+        "monotonicSequenceNumber": "date",
+        "classID": "string",
+        "payloadFormat": "string",
+        "storageLocation": "string",
+        "payloadDigest": "string",
+        "manifestDigest": "string",
+        "size": "float",
+        "dependencies": [
+          "string"
+        ],
+        "encryptionWrapper": "string",
+        "payloadIndicator": "string",
+        "payload": "string"
+      },
+      "payload": "string",
+      "authorSign": "string",
+      "authorManifestSign": "string"
+    }
+  }
