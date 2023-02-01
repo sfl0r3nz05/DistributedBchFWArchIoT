@@ -38,7 +38,7 @@ const mongoose = require('mongoose');
         request
         .post("/register/author")
         .send(json)
-        .expect(400)
+        .expect(405)
         .end((err, res) => {
             if (err) return done(err);
             return done();
@@ -86,6 +86,17 @@ const mongoose = require('mongoose');
         .post("/register")
         .send(json)
         .expect(405)
+        .end((err, res) => {
+            if (err) return done(err);
+            return done();
+        });
+    });
+    test('Correct input non registered', (done)=> {
+        var json = JSON.parse(fs.readFileSync(path.resolve(__dirname,"./test-json/update-register-unregistered.json"), 'utf8'));
+        request
+        .post("/register")
+        .send(json)
+        .expect(403)
         .end((err, res) => {
             if (err) return done(err);
             return done();
