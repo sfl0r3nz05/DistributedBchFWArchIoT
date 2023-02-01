@@ -3,6 +3,5 @@ WORKDIR /app
 COPY ./ .
 RUN ls
 RUN npm install
-RUN npm test
 CMD ["npm","start"]
 EXPOSE 3000

@@ -4,6 +4,8 @@
     "requestHost" : "172.17.0.1",
     "requestPort" : "3001",
     "registerAuthorPath" : "/register/author",
-    "registerUpdatePath" : "/register"
+    "registerUpdatePath" : "/register",
+    "dburl" : "mongodb://mongo:27017/keyStore",
+    "testdb" : "mongodb://127.0.0.1:27017/keyStore"
 
 }

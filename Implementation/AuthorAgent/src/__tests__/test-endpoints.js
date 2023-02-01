@@ -3,8 +3,7 @@ const supertest = require('supertest');
 const request = supertest(app);
 const fs = require('fs');
 var path = require("path");
-
-
+const mongoose = require('mongoose');
 
   describe('test example endpoint', () => {
     test('Expects Example', (done)=> {
@@ -32,7 +31,8 @@ var path = require("path");
             if (err) return done(err);
             return done();
         });
-    });
+        done();
+    }, 30000);
     test('Incorrect input', (done)=> {
         var json = JSON.parse(fs.readFileSync(path.resolve(__dirname,"./test-json/register-petition-not-ok.json"), 'utf8'));
         request

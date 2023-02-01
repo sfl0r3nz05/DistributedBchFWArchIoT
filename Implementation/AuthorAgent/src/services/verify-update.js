@@ -19,7 +19,7 @@ function verifyManifest(manifestKeys,expectedKeys,mandatoryManifest){
     }
     for (let i = 0; i< mandatoryManifest.length; i++){
         if (!(listOne.includes(listThree[i]))){
-            console.log(listThree[i] + "mandatory field not present in manifest");
+            //console.log(listThree[i] + "mandatory field not present in manifest");
             return false;
         }
     }
