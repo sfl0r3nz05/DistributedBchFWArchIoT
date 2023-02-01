@@ -1,28 +1,26 @@
 {
-    "publicKey": "string",
-    "update": {
-      "manifest": {
-        "versionID": "string",
-        "monotonicSequenceNumber": "date",
-        "vendorID": "string",
-        "classID": "string",
-        "payloadFormat": "string",
-        "payloadProcessing": "string",
-        "storageLocation": "string",
-        "payloadDigest": "string",
-        "manifestDigest": "string",
-        "size": "float",
-        "aditionalInstructions": "string",
-        "dependencies": [
-          "string"
-        ],
-        "encryptionWrapper": "string",
-        "payloadIndicator": "string",
-        "payload": "string"
-      },
-      "payload": "string",
-      "authorSign": "string",
-      "authorManifestSign": "string",
-      "Whassah" : "string"
-    }
-  }
+  "authorKey": "string",
+  "manifest": {
+    "versionID": "string",
+    "monotonicSequenceNumber": "date",
+    "vendorID": "string",
+    "classID": "string",
+    "payloadFormat": "string",
+    "payloadProcessing": "string",
+    "storageLocation": "string",
+    "payloadDigest": "string",
+    "manifestDigest": "string",
+    "size": "float",
+    "aditionalInstructions": "string",
+    "dependencies": [
+      "string"
+    ],
+    "encryptionWrapper": "string",
+    "payloadIndicator": "string",
+    "payload": "buffer"
+  },
+  "payload": "buffer",
+  "authorSign": "string",
+  "authorManifestSign": "string",
+  "Wasaah" : "string"
+}

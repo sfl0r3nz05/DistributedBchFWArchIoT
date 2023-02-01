@@ -3,7 +3,7 @@
     "update": {
       "manifest": {
         "versionID": "string",
-        "monotonicSequenceNumber": "date",
+        "monotonicSequenceNumber": "2023-02-01T14:04:19.353Z",
         "vendorID": "string",
         "classID": "string",
         "payloadFormat": "string",
@@ -11,7 +11,7 @@
         "storageLocation": "string",
         "payloadDigest": "string",
         "manifestDigest": "string",
-        "size": "float",
+        "size": "214324",
         "aditionalInstructions": "string",
         "dependencies": [
           "string"

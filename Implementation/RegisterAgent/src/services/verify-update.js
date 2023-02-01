@@ -28,25 +28,20 @@ function verifyManifest(manifestKeys,expectedKeys,mandatoryManifest){
 
 function verifyUpdate(req){
     var keys = readRequest(req.body);
-    var expected = ['update', 'publicKey'];
+    var expected = ['authorKey','manifest','authorSign','authorManifestSign','payload'];
     if(verifyPetition(keys, expected)){
-        var updateKeys = readRequest(req.body.update);
-        var expectedUpdate = ['manifest', 'payload', 'authorSign', 'authorManifestSign'];
-        if (verifyPetition(updateKeys, expectedUpdate)){
-            var manifestKeys = readRequest(req.body.update.manifest);
-            var mandatoryManifest = 
-            ['versionID','monotonicSequenceNumber','classID','payloadFormat',
-            'storageLocation', 'payloadDigest', 'manifestDigest', 'size', 
-             'dependencies', 'encryptionWrapper'];
-            var expectedManifest = 
-            ['versionID','monotonicSequenceNumber','vendorID','classID','payloadFormat',
-            'payloadProcessing', 'storageLocation', 'payloadDigest', 'manifestDigest', 'size', 
-            'aditionalInstructions', 'dependencies', 'encryptionWrapper', 'payloadIndicator', 
-            'payload'];
-            return verifyManifest(manifestKeys,expectedManifest,mandatoryManifest);
-        } else return false;
+        var manifestKeys = readRequest(req.body.manifest);
+        var mandatoryManifest = 
+        ['versionID','monotonicSequenceNumber','classID','payloadFormat',
+        'storageLocation', 'payloadDigest', 'manifestDigest', 'size', 
+            'dependencies', 'encryptionWrapper'];
+        var expectedManifest = 
+        ['versionID','monotonicSequenceNumber','vendorID','classID','payloadFormat',
+        'payloadProcessing', 'storageLocation', 'payloadDigest', 'manifestDigest', 'size', 
+        'aditionalInstructions', 'dependencies', 'encryptionWrapper', 'payloadIndicator', 
+        'payload'];
+        return verifyManifest(manifestKeys,expectedManifest,mandatoryManifest);
     } else return false;
-    
 }
 
 module.exports = verifyUpdate;

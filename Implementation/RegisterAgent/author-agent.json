@@ -83,36 +83,32 @@
             "description": "Register an aupdate given an author public key and an Update. Receives an UpdateRegister and sends it to the blockchain application.",
             "required": true,
             "content": {
-              "multipart/form-data": {
+              "application/json": {
                 "schema": {
                   "type": "object",
                   "properties": {
-                    "PublicKey": {
+                    "authorKey": {
                       "type": "string"
                     },
-                    "Update": {
-                      "type": "object",
-                      "properties": {
-                        "Manifest": {
-                          "type": "object"
-                        },
-                        "Payload": {
-                          "type": "string",
-                          "format": "binary"
-                        },
-                        "AuthorSign": {
-                          "type": "string"
-                        },
-                        "AuthorManifestSign": {
-                          "type": "string"
-                        }
-                      }
+                    "Manifest": {
+                      "type": "object"
+                    },
+                    "Payload": {
+                      "type": "string",
+                      "format": "binary"
+                    },
+                    "AuthorSign": {
+                      "type": "string"
+                    },
+                    "AuthorManifestSign": {
+                      "type": "string"
+                    }
+
                     }
                   }
                 }
               }
-            }
-          },
+            },
           "responses": {
             "201": {
               "description": "Successful operation."
@@ -133,5 +129,5 @@
           }
         }
       }
-    }
-  }
+    } }
+  

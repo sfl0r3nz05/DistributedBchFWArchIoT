@@ -21,7 +21,7 @@ var path = require("path");
         request
         .post("/register/author")
         .send(json)
-        .expect(400)
+        .expect(405)
         .end((err, res) => {
             if (err) return done(err);
             return done();

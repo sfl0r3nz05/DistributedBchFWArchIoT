@@ -2,12 +2,11 @@ const http = require('http');
 const options = require("../config/config.json");
 
 
-function requestAuthorRegister(pdata) {
-    console.log("request:" + JSON.stringify(pdata));
+function requestUpdateRegister(pdata) {
      return new Promise((resolve, reject) => {
         const serverOptions = {
-            host: options.host,
-            path: options.registerAuthorPath,
+            host: options.requestHost,
+            path: options.registerUpdatePath,
             port: options.requestPort,
             method: 'POST',
             body: JSON.stringify(pdata),
@@ -49,16 +48,14 @@ function requestAuthorRegister(pdata) {
                 stat : 500,
                 message : 'INTERNAL SERVER ERROR'
             }
-            console.log(e.message);
           reject(rejection);
         });
         // send the request
        req.write(JSON.stringify(pdata));
        req.end();
-       console.log("Petition proccessed");
     });
 }
 
 
 
-module.exports = requestAuthorRegister;
+module.exports = requestUpdateRegister;

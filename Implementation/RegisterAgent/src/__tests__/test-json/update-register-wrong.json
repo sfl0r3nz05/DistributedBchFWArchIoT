@@ -17,9 +17,9 @@
         ],
         "encryptionWrapper": "string",
         "payloadIndicator": "string",
-        "payload": "string"
+        "payload": "buffer"
       },
-      "payload": "string",
+      "payload": "buffer",
       "authorSign": "string",
       "authorManifestSign": "string"
     }

@@ -125,7 +125,7 @@
                               "type" :"string"
                             },
                             "monotonicSequenceNumber" : {
-                              "type" : "date"
+                              "type" : "string"
                             },
                             "vendorID" : {
                               "type" : "string",
@@ -150,7 +150,7 @@
                               "type" : "string"
                             }, 
                             "size" : {
-                              "type" : "float"
+                              "type" : "number"
                             },
                             "aditionalInstructions" : {
                               "type" : "string",
