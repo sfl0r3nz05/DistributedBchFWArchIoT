@@ -5,21 +5,6 @@ const fs = require('fs');
 var path = require("path");
 const mongoose = require('mongoose');
 
-  describe('test example endpoint', () => {
-    test('Expects Example', (done)=> {
-        request
-        .get("/example")
-        .expect(200)
-        .expect((res) => {
-            res.body = 'Example';
-        })
-        .end((err, res) => {
-            if (err) return done(err);
-            return done();
-        });
-    });
-  });
-
   describe('Register Author', () => {
     test('Correct input', (done)=> {
         var json = JSON.parse(fs.readFileSync(path.resolve(__dirname,"./test-json/register-petition-ok.json"), 'utf8'));

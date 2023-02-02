@@ -1,3 +1,4 @@
+//Starts the application
 const app = require("./app");
 const options = require("./config/config.json");
 
