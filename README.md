@@ -18,7 +18,9 @@ manifests, and store them.
 
 3- Retrieval Nodes retrive manifest and images and send them to the devices.
 
-For a more in-depth view of the design, see [Design](./Design)
+For a more in-depth view of the design, see [Design](./Design).
+
+For reading the details about the implementation, see [Implementation](./Implementation).
 
 ## Security Objectives
 
