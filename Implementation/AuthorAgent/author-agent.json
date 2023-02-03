@@ -21,30 +21,6 @@
       }
     ],
     "paths": {
-      "/example": {
-        "get": {
-          "tags": [
-            "example"
-          ],
-          "summary": "Register the author",
-          "description": "Register the author given a public key used to sign the manifests and message, both unsigned and signed with the author's private key. It sends a petition to the register agent.",
-          "operationId": "registerAuthor",
-          "responses": {
-            "200": {
-              "description": "This but an example",
-              "content" : {
-                "application/json":{
-                  "schema":{
-                    "type": "object",
-                    "description": "test response"
-                  }
-                  
-                }
-              }     
-            }
-          }
-        }
-      },
       "/register/author": {
         "post": {
           "tags": [

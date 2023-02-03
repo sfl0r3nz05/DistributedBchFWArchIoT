@@ -14,12 +14,16 @@ const UpdateRegister = require('../models/updateRegister');
 const mongoose = require('mongoose');
 
 router.use(bodyParser.json());
+
+//Receives a RegisterPetition object. If succesful stores a keyPair with a new register key and
+//the given public key.
 router.post("/register/author", function(req, res) {
+    //Verifies that the input has a correct format.
     let verifiable = verifyKeys(req);
     if(!verifiable){
       res.status(405).json('Input not valid');
     } else {
-      //should send to register agent
+      //Request register agent to register the author.
       authorRequest(req.body).then(async(data) => {
         if (data.error){
           res.status(403).json(data.error);
@@ -27,7 +31,7 @@ router.post("/register/author", function(req, res) {
           const conn = mongoose.createConnection();
           await mongoose.connect('mongodb://mongo:27017');
           console.log("connected to mongoDB");
-
+          //Create keypair object and store it on the database
           let keypair = new KeyPair({
             publicKey : req.body.publicKey,
             registerKey : data.message
@@ -42,7 +46,7 @@ router.post("/register/author", function(req, res) {
             } else {
               console.log("saved: " + keypair);
               conn.close();
-              res.status(201).json('The Registration was succesful. Register key available in the keyStore');
+              res.status(201).json('The Registration was succesful. Register key available in the keyStore: '+ keypair.registerKey + " DO NOT MISS THIS KEY. It is MANDATORY for registering updates for the given public key");
             }
           });
       }
@@ -58,13 +62,14 @@ router.post("/register/author", function(req, res) {
 
 
 
-
+//Receives an Update and a public key
   router.post("/register", async function(req, res) {
+    //verifies that input has correct format.
     let  verifiable = verifyUpdate(req);
     if(!verifiable){
       res.status(405).json('Input not valid');
     } else {
-      //get key from db
+      //get register key from db
       const conn = mongoose.createConnection();
       await mongoose.connect('mongodb://mongo:27017');
       console.log("connected to mongoDB");
@@ -96,10 +101,10 @@ router.post("/register/author", function(req, res) {
           delete up._id;
           delete up.manifest._id;
           console.log(up);
-          //TODO: SEND CALL TO REGISTER AGENT, RETURN RESULT
+          //SEND CALL TO REGISTER AGENT, RETURN RESULT
           updateRequest(up).then((data) => {
             if (data.error){
-              res.status(403).json(data.error); //CORRECT!!!!!!!!!!!! 403!!!!!
+              res.status(403).json(data.error); 
             } else {
               res.status(data.stat).json(data.message);
             }
@@ -121,11 +126,6 @@ router.post("/register/author", function(req, res) {
 
   router.get("/about", function (req, res) {
     return res.redirect('/api-docs');
-  });
-
-
-  router.get("/example", function (req, res) {
-    return res.json('Example')
   });
   
   module.exports = router;

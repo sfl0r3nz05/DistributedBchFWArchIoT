@@ -1,3 +1,4 @@
+//Constains the app configuration
 const express = require("express");
 const bodyParser = require('body-parser');
 
