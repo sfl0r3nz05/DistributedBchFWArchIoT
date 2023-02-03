@@ -1,7 +1,7 @@
 # Author Agent
 The author agent lets authors perform the registration tasks for the blockchain network. For more information about the data flow and case uses, see [Author Agent Design](../../Design/ClientApplication/AuthorAgent)
 
-The agent serves an REST API accesible through the port 3000.
+The agent serves an REST API accesible through the port 3000. It is composed by a node.js application and a database, each contained on it's own image.
 
 ## Endpoints
 

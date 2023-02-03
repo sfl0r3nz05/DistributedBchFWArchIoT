@@ -46,7 +46,7 @@ router.post("/register/author", function(req, res) {
             } else {
               console.log("saved: " + keypair);
               conn.close();
-              res.status(201).json('The Registration was succesful. Register key available in the keyStore');
+              res.status(201).json('The Registration was succesful. Register key available in the keyStore: '+ keypair.registerKey + " DO NOT MISS THIS KEY. It is MANDATORY for registering updates for the given public key");
             }
           });
       }
