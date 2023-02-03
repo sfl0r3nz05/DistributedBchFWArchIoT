@@ -14,7 +14,7 @@ class RegisterAuthor extends Contract {
                 publicKey : 'Example Public Key'
             },
             {
-                registerKey : '',
+                registerKey : 'Example',
                 publicKey : '-----BEGIN PUBLIC KEY-----\
                 MF0wDQYJKoZIhvcNAQEBBQADTAAwSQJCAMHthV1uM617J/yms07iMcsa4CvSnvyJ\
                 Y3YP+67AIJ6kx3UAD6nrkM9lRW/sp3/quaxmc7V+jLtJho3Q98yi+osDAgMBAAE=\
@@ -43,8 +43,29 @@ class RegisterAuthor extends Contract {
     async createAuthor(ctx, registerKey, publickey) {
         console.info('============= START : Create Author ===========');
 
-        await ctx.stub.putState(registerKey, Buffer.from(JSON.stringify({publicKey : publickey})));
+        await ctx.stub.putState(registerKey.toString(), Buffer.from(JSON.stringify({publicKey : publickey})));
         console.info('============= END : Create Author ===========');
+        
+    }
+
+    async GetAllAuthors(ctx) {
+        const allResults = [];
+        // range query with empty string for startKey and endKey does an open-ended query of all assets in the chaincode namespace.
+        const iterator = await ctx.stub.getStateByRange('', '');
+        let result = await iterator.next();
+        while (!result.done) {
+            const strValue = Buffer.from(result.value.value.toString()).toString('utf8');
+            let record;
+            try {
+                record = JSON.parse(strValue);
+            } catch (err) {
+                console.log(err);
+                record = strValue;
+            }
+            allResults.push(record);
+            result = await iterator.next();
+        }
+        return JSON.stringify(allResults);
     }
 }
 
