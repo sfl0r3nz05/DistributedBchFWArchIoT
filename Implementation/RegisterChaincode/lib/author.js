@@ -2,7 +2,7 @@
 
 // Deterministic JSON.stringify()
 const stringify  = require('json-stringify-deterministic');
-const sortKeysRecursive  = require('sort-keys-recursive');
+//const sortKeysRecursive  = require('sort-keys-recursive');
 const { Contract } = require('fabric-contract-api');
 
 class RegisterAuthor extends Contract {
