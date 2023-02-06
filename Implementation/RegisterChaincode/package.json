@@ -10,7 +10,9 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "fabric-ca-client": "^2.2.16",
     "fabric-contract-api": "^2.5.2",
+    "fabric-network": "^2.2.16",
     "fabric-shim": "^2.5.2",
     "json-stringify-deterministic": "^1.0.8"
   }

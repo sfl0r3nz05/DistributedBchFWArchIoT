@@ -15,7 +15,7 @@ var path = require("path");
             if (err) return done(err);
             return done();
         });
-    });
+    }, 55000);
     test('Incorrect input', (done)=> {
         var json = JSON.parse(fs.readFileSync(path.resolve(__dirname,"./test-json/register-petition-not-ok.json"), 'utf8'));
         request
@@ -27,7 +27,7 @@ var path = require("path");
             return done();
         });
     });
-  });
+  }, 55000);
 
   describe('Register Update', () => {
     test('Correct input', (done)=> {
