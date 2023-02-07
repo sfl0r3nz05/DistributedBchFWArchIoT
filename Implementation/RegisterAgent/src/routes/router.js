@@ -40,7 +40,7 @@ router.post("/register/author", async function(req, res) {
 
         // Create a new gateway for connecting to our peer node.
         const gateway = new Gateway();
-        await gateway.connect(ccp, { wallet, identity: 'RegisterAgentUser', discovery: { enabled: true, asLocalhost: true } });
+        await gateway.connect(ccp, { wallet, identity: 'RegisterAgentUser', discovery: { enabled: true, asLocalhost: false } }); //true gfor localhost
 
         // Get the network (channel) our contract is deployed to.
         const network = await gateway.getNetwork('mychannel');
@@ -49,8 +49,6 @@ router.post("/register/author", async function(req, res) {
         const contract = network.getContract('register');
 
         // Evaluate the specified transaction.
-        // queryCar transaction - requires 1 argument, ex: ('queryCar', 'CAR4')
-        // queryAllCars transaction - requires no arguments, ex: ('queryAllCars')
         const result = await contract.evaluateTransaction('GetAllAuthors');
         console.log(`Transaction has been evaluated, result is: ${result.toString()}`);
 
