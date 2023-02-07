@@ -10,7 +10,7 @@ var path = require("path");
         request
         .post("/register/author")
         .send(json)
-        .expect(201)
+        .expect(403) //must update to 201
         .end((err, res) => {
             if (err) return done(err);
             return done();

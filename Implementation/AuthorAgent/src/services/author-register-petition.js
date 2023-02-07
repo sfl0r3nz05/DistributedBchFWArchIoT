@@ -18,7 +18,7 @@ function requestAuthorRegister(pdata) {
           if (res.statusCode < 200 || res.statusCode >= 300) {
                 var rejection = {
                     stat : res.statusCode,
-                    message : new Error('statusCode=' + res.statusCode)
+                    message : new Error(res)
                 }
                 return reject(rejection);
             }

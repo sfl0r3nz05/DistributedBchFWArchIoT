@@ -26,14 +26,14 @@ router.post("/register/author", function(req, res) {
       //Request register agent to register the author.
       authorRequest(req.body).then(async(data) => {
         if (data.error){
-          res.status(403).json(data.error);
+          res.status(403).json(data.message);
         } else {
           const conn = mongoose.createConnection();
           await mongoose.connect('mongodb://mongo:27017');
-          console.log("connected to mongoDB");
+          //console.log("connected to mongoDB");
           //Create keypair object and store it on the database
           let keypair = new KeyPair({
-            publicKey : req.body.publicKey,
+            publicKey : req.body.publicKey.toString('base64'),
             registerKey : data.message
           });
           var keyObject = keypair.toObject();
@@ -72,8 +72,8 @@ router.post("/register/author", function(req, res) {
       //get register key from db
       const conn = mongoose.createConnection();
       await mongoose.connect('mongodb://mongo:27017');
-      console.log("connected to mongoDB");
-      KeyPair.findOne({publicKey : req.body.publicKey}, (err,obj) => {
+      console.log(req.body.publicKey);
+      KeyPair.findOne({publicKey : req.body.publicKey.toString()}, (err,obj) => {
         if (err) {
           console.log(err);
           conn.close();

@@ -1,5 +1,6 @@
 'use strict';
 
+const verifySign = require('./verify-author-sign');
 // Deterministic JSON.stringify()
 const stringify  = require('json-stringify-deterministic');
 //const sortKeysRecursive  = require('sort-keys-recursive');
@@ -40,11 +41,34 @@ class RegisterAuthor extends Contract {
         return authorAsBytes.toString();
     }
 
-    async createAuthor(ctx, registerKey, publickey) {
-        console.info('============= START : Create Author ===========');
-
-        await ctx.stub.putState(registerKey.toString(), Buffer.from(JSON.stringify({publicKey : publickey})));
-        console.info('============= END : Create Author ===========');
+    async createAuthor(ctx, message, signedMessage, publicKey) {
+        try {
+            console.info('============= START : Create Author ===========');
+            //Verify public key;
+            console.info('============= Verifiying public Key =============');
+            const verifiable = verifySign(message,signedMessage,publicKey);
+            if (verifiable){
+                //create author register key
+                console.info('============= Creating Register Key ===========');
+                const registerKey = 'REGISTERKEY FOR '+publicKey; //Temp, must search for a better method.
+                //verify if registerKey already exists
+                console.info('============= verifying register key ===========');
+                const exists = await this.AssetExists(ctx, registerKey);
+                if (exists) {
+                    throw new Error('ERR_KEY_NOT_REGISTABLE');
+                }
+                //Store keyPair.
+                console.info('============= Storying keypair ===========');
+                await ctx.stub.putState(registerKey.toString(), Buffer.from(JSON.stringify({publicKey : publicKey})));
+                console.info('============= END : Create Author ===========');
+                return registerKey;
+            } else {
+                throw new Error('ERR_KEY_NOT_VERIFIABLE');
+            }
+        } catch (err) {
+            //should handle error
+            throw err;
+        }
         
     }
 
@@ -66,6 +90,11 @@ class RegisterAuthor extends Contract {
             result = await iterator.next();
         }
         return JSON.stringify(allResults);
+    }
+
+    async AssetExists(ctx, id) {
+        const assetJSON = await ctx.stub.getState(id);
+        return assetJSON && assetJSON.length > 0;
     }
 }
 

@@ -47,14 +47,20 @@ router.post("/register/author", async function(req, res) {
 
         // Get the contract from the network.
         const contract = network.getContract('register');
-
+        //console.log("message: " + req.body.message + " signedMessage: " + req.body.signedMessage + " publicKey: " + req.body.publicKey);
         // Evaluate the specified transaction.
-        const result = await contract.evaluateTransaction('GetAllAuthors');
-        console.log(`Transaction has been evaluated, result is: ${result.toString()}`);
+        contract.evaluateTransaction('createAuthor', req.body.message, req.body.signedMessage, req.body.publicKey).then((result) => {
+          gateway.disconnect();
+          console.log(`Transaction has been evaluated, result is: ${result.toString()}`);
+          res.status(201).json(result.toString());
+        }).catch((err) =>{
+          gateway.disconnect();
+          console.log(`Transaction has been evaluated, obtained following error: ${err.toString()}`);
+          res.status(403).json(err.toString());
+        });
+        
 
         // Disconnect from the gateway.
-        await gateway.disconnect();
-        res.status(201).json(result.toString());
         
     } catch (error) {
         console.error(`Failed to evaluate transaction: ${error}`);

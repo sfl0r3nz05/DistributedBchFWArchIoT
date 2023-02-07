@@ -5,7 +5,7 @@ const path = require('path');
 function generateKeyFiles() {
 
     const keyPair = crypto.generateKeyPairSync('rsa', {
-       modulusLength: 520,
+       modulusLength: 2048,
        publicKeyEncoding: {
           type: 'spki',
           format: 'pem'
@@ -14,7 +14,7 @@ function generateKeyFiles() {
           type: 'pkcs8',
           format: 'pem',
           cipher: 'aes-256-cbc',
-          passphrase: ''
+          passphrase: 'authorKeyGenerator'
        }
     });
  
