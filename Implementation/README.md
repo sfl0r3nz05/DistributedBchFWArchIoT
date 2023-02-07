@@ -40,3 +40,16 @@ The technologies used for the agents are the following:
 - Swagger/OpenAPI for functional testing and documentation
 
 - Docker for image contention
+
+## Instalation and prerequesites
+
+This repository needs a previous instalation of docker and docker compose. Node and npm also need to be installed for development purposes. The repository is currently tested against the hyperledger fabric test network, which has to be installed in case you have not any other network installed.
+
+startHyperledger, intalCCOne and instalCCTwo can be placed in (your hyperledger installation path)/fabric-samples/test-network to help to reduce time when setting up the test network and installing the chaincode.
+
+1. Initialize the test network and install [RegisterChaincode](./RegisterChaincode/). 
+2. Copy the connection-org1.json file from test-network/organizations/peerOrganizations/org1.example.com into /RegisterAgent/src/config.
+3. Update connection-org1.json to include the gateway address from your network instead of localhost.
+4. Use the script build.sh to initialize the RegisterAgent. It will run the scripts to intialize the node app and register it to the blockchain network.
+5. Use the build.sh script from AuthorAgent to initialize it.
+6. Go to your browser and go to 127.0.0.1:3000 to get access to the Swagger documentation, which allows you to test the application.
