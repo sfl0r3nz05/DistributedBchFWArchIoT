@@ -1,6 +1,7 @@
 #$1 chaincode path
 #$2 chaincode name
 
+docker stop registeragent
 ./network.sh down
 ./network.sh up -ca
 ./network.sh createChannel

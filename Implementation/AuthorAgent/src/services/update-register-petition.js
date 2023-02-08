@@ -15,13 +15,6 @@ function requestUpdateRegister(pdata) {
             }
           };
         const req = http.request(serverOptions, (res) => {
-          if (res.statusCode < 200 || res.statusCode >= 300) {
-                var rejection = {
-                    stat : res.statusCode,
-                    message : new Error('statusCode=' + res.statusCode)
-                }
-                return reject(rejection);
-            }
             var body = [];
             res.on('data', function(chunk) {
                 body.push(chunk);
@@ -35,6 +28,13 @@ function requestUpdateRegister(pdata) {
                         message : e
                     }
                     reject(rejection);
+                }
+                if (res.statusCode < 200 || res.statusCode >= 300) {
+                    var rejection = {
+                        stat : res.statusCode,
+                        message : body
+                    }
+                    return reject(rejection);
                 }
                 var resolution = {
                     stat : res.statusCode,

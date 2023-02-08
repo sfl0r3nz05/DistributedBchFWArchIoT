@@ -33,7 +33,7 @@ router.post("/register/author", async function(req, res) {
         // Check to see if we've already enrolled the user.
         const identity = await wallet.get('RegisterAgentUser');
         if (!identity) {
-            console.log('An identity for the user "appUser" does not exist in the wallet');
+            console.log('An identity for the user "RegisterAgentUser" does not exist in the wallet');
             console.log('Run the registerUser.js application before retrying');
             return;
         }
@@ -46,7 +46,7 @@ router.post("/register/author", async function(req, res) {
         const network = await gateway.getNetwork('mychannel');
 
         // Get the contract from the network.
-        const contract = network.getContract('register');
+        const contract = network.getContract('register','RegisterAuthor');
         //console.log("message: " + req.body.message + " signedMessage: " + req.body.signedMessage + " publicKey: " + req.body.publicKey);
         // Evaluate the specified transaction.
         contract.evaluateTransaction('createAuthor', req.body.message, req.body.signedMessage, req.body.publicKey).then((result) => {

@@ -58,8 +58,12 @@ class RegisterAuthor extends Contract {
                     throw new Error('ERR_KEY_NOT_REGISTABLE');
                 }
                 //Store keyPair.
+                const author = {
+                    docType : 'author',
+                    publicKey : publicKey,
+                }
                 console.info('============= Storying keypair ===========');
-                await ctx.stub.putState(registerKey.toString(), Buffer.from(JSON.stringify({publicKey : publicKey})));
+                await ctx.stub.putState(registerKey.toString(), Buffer.from(JSON.stringify(author)));
                 console.info('============= END : Create Author ===========');
                 return registerKey;
             } else {
@@ -72,23 +76,22 @@ class RegisterAuthor extends Contract {
         
     }
 
-    async GetAllAuthors(ctx) {
+    async queryAllAuthors(ctx) {
+        const startKey = '';
+        const endKey = '';
         const allResults = [];
-        // range query with empty string for startKey and endKey does an open-ended query of all assets in the chaincode namespace.
-        const iterator = await ctx.stub.getStateByRange('', '');
-        let result = await iterator.next();
-        while (!result.done) {
-            const strValue = Buffer.from(result.value.value.toString()).toString('utf8');
+        for await (const {key, value} of ctx.stub.getStateByRange(startKey, endKey)) {
+            const strValue = Buffer.from(value).toString('utf8');
             let record;
             try {
                 record = JSON.parse(strValue);
             } catch (err) {
-                console.log(err);
+                console.info(err);
                 record = strValue;
             }
-            allResults.push(record);
-            result = await iterator.next();
+            allResults.push({ Key: key, Record: record });
         }
+        console.info(allResults);
         return JSON.stringify(allResults);
     }
 

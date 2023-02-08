@@ -15,24 +15,16 @@ function requestAuthorRegister(pdata) {
             }
           };
         const req = http.request(serverOptions, (res) => {
-          if (res.statusCode < 200 || res.statusCode >= 300) {
-                var rejection = {
-                    stat : res.statusCode,
-                    message : new Error(res)
-                }
-                return reject(rejection);
-            }
             var body = [];
             res.on('data', function(chunk) {
                 body.push(chunk);
             });
             res.on('end', function() {
-                try {
-                    body = JSON.parse(Buffer.concat(body).toString());
-                } catch(e) {
+                body = JSON.parse(Buffer.concat(body).toString());
+                if (res.statusCode < 200 || res.statusCode >= 300) {
                     var rejection = {
-                        stat : 500,
-                        message : e
+                        stat : res.statusCode,
+                        message : body
                     }
                     reject(rejection);
                 }
@@ -46,7 +38,7 @@ function requestAuthorRegister(pdata) {
         req.on('error', (e) => {
             var rejection = {
                 stat : 500,
-                message : 'INTERNAL SERVER ERROR'
+                message : 'INTERNAL SERVER ERROR' + e
             }
           reject(rejection);
         });
