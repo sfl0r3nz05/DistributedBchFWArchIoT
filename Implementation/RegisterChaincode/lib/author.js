@@ -5,6 +5,7 @@ const verifySign = require('./verify-author-sign');
 const stringify  = require('json-stringify-deterministic');
 //const sortKeysRecursive  = require('sort-keys-recursive');
 const { Contract } = require('fabric-contract-api');
+const createRegisterKey = require('./create-register-key');
 
 class RegisterAuthor extends Contract {
     async initLedger(ctx) {
@@ -47,36 +48,34 @@ class RegisterAuthor extends Contract {
             //Verify public key;
             console.info('============= Verifiying public Key =============');
             const verifiable = verifySign(message,signedMessage,publicKey);
-            if (verifiable){
-                //create author register key
-                console.info('============= Creating Register Key ===========');
-                const registerKey = 'REGISTERKEY FOR '+publicKey; //Temp, must search for a better method.
-                //verify if registerKey already exists
-                console.info('============= verifying register key ===========');
-                const exists = await this.AssetExists(ctx, registerKey);
-                if (exists) {
-                    throw new Error('ERR_KEY_NOT_REGISTABLE');
-                }
-                //Store keyPair.
-                const author = {
-                    docType : 'author',
-                    publicKey : publicKey,
-                }
-                console.info('============= Storying keypair ===========');
-                await ctx.stub.putState(registerKey.toString(), Buffer.from(JSON.stringify(author)));
-                console.info('============= END : Create Author ===========');
-                return registerKey;
-            } else {
+            if (!verifiable){
                 throw new Error('ERR_KEY_NOT_VERIFIABLE');
             }
+            //create author register key
+            console.info('============= Creating Register Key ===========');
+            const registerKey = createRegisterKey(publicKey); 
+            //verify if registerKey already exists
+            console.info('============= verifying register key ===========');
+            const exists = await this.AssetExists(ctx, registerKey);
+            if (exists) {
+                throw new Error('ERR_KEY_NOT_REGISTABLE');
+            }
+            //Store keyPair.
+            const author = {
+                docType : 'author',
+                publicKey : publicKey,
+            }
+            console.info('============= Storying keypair ===========');
+            await ctx.stub.putState(registerKey.toString(), Buffer.from(JSON.stringify(author)));
+            console.info('============= END : Create Author ===========');
+            return registerKey;
         } catch (err) {
-            //should handle error
             throw err;
         }
-        
     }
 
     async queryAllAuthors(ctx) {
+        try {
         const startKey = '';
         const endKey = '';
         const allResults = [];
@@ -89,10 +88,14 @@ class RegisterAuthor extends Contract {
                 console.info(err);
                 record = strValue;
             }
+            console.info("record: " + record)
             allResults.push({ Key: key, Record: record });
         }
         console.info(allResults);
         return JSON.stringify(allResults);
+        }catch (err){
+            console.info(err);
+        }
     }
 
     async AssetExists(ctx, id) {

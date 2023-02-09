@@ -8,7 +8,7 @@ const createUpdateRegister = (req) => {
     authorKey : req.body.authorKey,
     manifest : manifesto,
     authorSign : req.body.authorSign,
-    manifestSign : req.body.manifestSign
+    manifestSign : req.body.authorManifestSign
     });
     return updateRegister;
 }

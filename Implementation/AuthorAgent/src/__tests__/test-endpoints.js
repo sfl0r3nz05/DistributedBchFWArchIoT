@@ -4,6 +4,8 @@ const request = supertest(app);
 const fs = require('fs');
 var path = require("path");
 const crypto = require('crypto');
+const digest = require('../services/test-services/digest');
+const sign = require('../services/test-services/sign');
 
 
   describe('/register/author', () => {
@@ -65,6 +67,9 @@ const crypto = require('crypto');
     test('Correct input', (done)=> {
         var json = JSON.parse(fs.readFileSync(path.resolve(__dirname,"./test-json/update-register.json"), 'utf8'));
         json.publicKey = fs.readFileSync('public_key').toString();
+        json = digest(json);
+        json = sign(json, fs.readFileSync('private_key'));
+        console.log(json);
         request
         .post("/register")
         .send(json)
@@ -77,6 +82,8 @@ const crypto = require('crypto');
     test('Correct partial input', (done)=> {
         var json = JSON.parse(fs.readFileSync(path.resolve(__dirname,"./test-json/update-register-partial.json"), 'utf8'));
         json.publicKey = fs.readFileSync('public_key').toString();
+        json = digest(json);
+        json = sign(json, fs.readFileSync('private_key'));
         request
         .post("/register")
         .send(json)
@@ -89,6 +96,8 @@ const crypto = require('crypto');
     test('Incorrect input mandatory field missing', (done)=> {
         var json = JSON.parse(fs.readFileSync(path.resolve(__dirname,"./test-json/update-register-wrong.json"), 'utf8'));
         json.publicKey = fs.readFileSync('public_key');
+        json = digest(json);
+        json = sign(json, fs.readFileSync('private_key'));
         request
         .post("/register")
         .send(json)
@@ -101,6 +110,8 @@ const crypto = require('crypto');
     test('Incorrect input non allowed field', (done)=> {
         var json = JSON.parse(fs.readFileSync(path.resolve(__dirname,"./test-json/update-register-non-allowed.json"), 'utf8'));
         json.publicKey = fs.readFileSync('public_key');
+        json = digest(json);
+        json = sign(json, fs.readFileSync('private_key'));
         request
         .post("/register")
         .send(json)
@@ -112,6 +123,8 @@ const crypto = require('crypto');
     });
     test('Correct input non registered', (done)=> {
         var json = JSON.parse(fs.readFileSync(path.resolve(__dirname,"./test-json/update-register-unregistered.json"), 'utf8'));
+        json = digest(json);
+        json = sign(json, fs.readFileSync('private_key'));
         request
         .post("/register")
         .send(json)
