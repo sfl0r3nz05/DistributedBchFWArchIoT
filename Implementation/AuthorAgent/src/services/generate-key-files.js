@@ -2,8 +2,10 @@ var crypto = require('crypto');
 var fs = require('fs');
 const path = require('path');
 
-function generateKeyFiles() {
 
+//this function generates a public private key pair and writes it to local storage. It is not used but
+//it is stored for documentation purposes.
+function generateKeyFiles() {
     const keyPair = crypto.generateKeyPairSync('rsa', {
        modulusLength: 2048,
        publicKeyEncoding: {
@@ -13,8 +15,6 @@ function generateKeyFiles() {
        privateKeyEncoding: {
           type: 'pkcs8',
           format: 'pem',
-          cipher: 'aes-256-cbc',
-          passphrase: 'authorKeyGenerator'
        }
     });
  

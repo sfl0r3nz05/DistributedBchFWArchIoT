@@ -6,7 +6,7 @@ function readRequest(req){
 function verifyPetition(keys, expected){
     return keys.sort().join(',')=== expected.sort().join(',')
 }
-
+//this function verifies that the manifest has a correct format.
 function verifyManifest(manifestKeys,expectedKeys,mandatoryManifest){
     var listOne = manifestKeys.sort();
     var listTwo = expectedKeys.sort();
@@ -26,6 +26,7 @@ function verifyManifest(manifestKeys,expectedKeys,mandatoryManifest){
     return true;
 }
 
+//this function verifies that the req for update register process has all the neccesary keys.
 function verifyUpdate(req){
     var keys = readRequest(req.body);
     var expected = ['update', 'publicKey'];

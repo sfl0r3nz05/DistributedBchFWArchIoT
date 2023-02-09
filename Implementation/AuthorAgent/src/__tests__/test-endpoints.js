@@ -4,10 +4,9 @@ const request = supertest(app);
 const fs = require('fs');
 var path = require("path");
 const crypto = require('crypto');
-//const generateKeyFiles = require('../services/generate-key-files');
-const mongoose = require('mongoose');
 
-  describe('Register Author', () => {
+
+  describe('/register/author', () => {
     test('Correct input', (done)=> {
         const { publicKey, privateKey } = crypto.generateKeyPairSync("rsa", {
             // The standard secure default length for RSA keys is 2048 bits
@@ -62,7 +61,7 @@ const mongoose = require('mongoose');
     });
   });
 
-  describe('Register Update', () => {
+  describe('/register', () => {
     test('Correct input', (done)=> {
         var json = JSON.parse(fs.readFileSync(path.resolve(__dirname,"./test-json/update-register.json"), 'utf8'));
         json.publicKey = fs.readFileSync('public_key').toString();

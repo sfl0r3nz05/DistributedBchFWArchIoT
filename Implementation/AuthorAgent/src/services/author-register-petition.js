@@ -1,19 +1,19 @@
 const http = require('http');
 const options = require("../config/config.json");
 
-
+// POST petition to register agent for author register. Answer message and status is returned.
 function requestAuthorRegister(pdata) {
+    const serverOptions = {
+        host: options.requestHost,
+        path: options.registerAuthorPath,
+        port: options.requestPort,
+        method: 'POST',
+        body: JSON.stringify(pdata),
+        headers: {
+            'Content-Type': 'application/json'
+        }
+      };
      return new Promise((resolve, reject) => {
-        const serverOptions = {
-            host: options.requestHost,
-            path: options.registerAuthorPath,
-            port: options.requestPort,
-            method: 'POST',
-            body: JSON.stringify(pdata),
-            headers: {
-                'Content-Type': 'application/json'
-            }
-          };
         const req = http.request(serverOptions, (res) => {
             var body = [];
             res.on('data', function(chunk) {

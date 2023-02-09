@@ -1,34 +1,26 @@
 const http = require('http');
 const options = require("../config/config.json");
 
-
+//Creates a POST petition to the register agent and returns the answer.
 function requestUpdateRegister(pdata) {
+     const serverOptions = {
+        host: options.requestHost,
+        path: options.registerUpdatePath,
+        port: options.requestPort,
+        method: 'POST',
+        body: JSON.stringify(pdata),
+        headers: {
+            'Content-Type': 'application/json'
+        }
+      };
      return new Promise((resolve, reject) => {
-        const serverOptions = {
-            host: options.requestHost,
-            path: options.registerUpdatePath,
-            port: options.requestPort,
-            method: 'POST',
-            body: JSON.stringify(pdata),
-            headers: {
-                'Content-Type': 'application/json'
-            }
-          };
         const req = http.request(serverOptions, (res) => {
             var body = [];
             res.on('data', function(chunk) {
                 body.push(chunk);
             });
             res.on('end', function() {
-                try {
-                    body = JSON.parse(Buffer.concat(body).toString());
-                } catch(e) {
-                    var rejection = {
-                        stat : 500,
-                        message : e
-                    }
-                    reject(rejection);
-                }
+                body = JSON.parse(Buffer.concat(body).toString());
                 if (res.statusCode < 200 || res.statusCode >= 300) {
                     var rejection = {
                         stat : res.statusCode,
@@ -46,7 +38,7 @@ function requestUpdateRegister(pdata) {
         req.on('error', (e) => {
             var rejection = {
                 stat : 500,
-                message : 'INTERNAL SERVER ERROR'
+                message : 'INTERNAL SERVER ERROR ' + e
             }
           reject(rejection);
         });
@@ -55,7 +47,5 @@ function requestUpdateRegister(pdata) {
        req.end();
     });
 }
-
-
 
 module.exports = requestUpdateRegister;

@@ -1,3 +1,6 @@
+//This file is a copy of the router before being refactored. It is not used currently
+//and is stored just for documentation purposes.
+
 const express = require("express");
 const bodyParser = require('body-parser');
 const router = express.Router();
