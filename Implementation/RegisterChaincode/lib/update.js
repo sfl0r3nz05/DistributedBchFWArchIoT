@@ -36,7 +36,7 @@ class RegisterUpdate extends Contract {
         console.info('============= END : Initialize Ledger ===========');
     }
 
-    async createUpdate(ctx, updateRegister) {
+    async createUpdate(ctx, updateRegister, dat) {
         try {
             console.info('============= START : Create Update ===========');
             const updateObject = JSON.parse(updateRegister)
@@ -47,14 +47,12 @@ class RegisterUpdate extends Contract {
             //console.info('updateRegister stringify: ' + JSON.stringify(updateRegister))
             const authorAsBytes = await ctx.stub.getState(updateObject.authorKey); // get the author from chaincode state
             if (!authorAsBytes || authorAsBytes.length === 0) {
-                throw new Error(`${updateObject.authorKey} does not exist`);
+                throw new Error('ERR_KEY_NOT_VALID');
             }
             console.info ('Author: ' + authorAsBytes)
             console.info('============== Verifying Update ================')
             const verifiable = verifyUpdate(updateObject, JSON.parse(authorAsBytes).publicKey)
             console.info('================ Storing update ================');
-            //create compositeKey
-            const compoKey = await ctx.stub.createCompositeKey('key~manifestid',[JSON.parse(authorAsBytes).publicKey,updateObject.manifest.manifestID]);
             //create update in chain
             const updateInChain = {
                 authorPublicKey : JSON.parse(authorAsBytes).publicKey,
@@ -63,7 +61,11 @@ class RegisterUpdate extends Contract {
                 authorSign : updateObject.authorSign,
                 authorManifestSign : updateObject.authorManifestSign
             };
-            await ctx.stub.putState(compoKey, Buffer.from(JSON.stringify(updateInChain)));
+            await ctx.stub.putState('UPDATE_V_'+dat.toString(), Buffer.from(stringify(updateInChain)));
+            console.info('================ Storing Composite Key =============')
+            //create compositeKey
+            const compoKey = await ctx.stub.createCompositeKey('date~key~manifestid',[dat,JSON.parse(authorAsBytes).publicKey,updateObject.manifest.versionID]);
+            await ctx.stub.putState(compoKey, Buffer.from([]));
             console.info('================== Store Update Ended ===============');
             console.info({compoKey,updateInChain});
             return ('Succesfull registration');

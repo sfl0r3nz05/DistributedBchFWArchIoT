@@ -27,7 +27,7 @@ const callRegisterUpdateCC = async (req) => {
     const contract = network.getContract('register','RegisterUpdate');
     try { //ask for the contract to be executed.
         console.log(stringify(req.body.manifest));
-        const result = await contract.submitTransaction('createUpdate', stringify(req.body));
+        const result = await contract.submitTransaction('createUpdate', stringify(req.body), Date.now().toString());
         gateway.disconnect();
         console.log(`Transaction has been evaluated, result is: ${result.toString()}`);
         return {
