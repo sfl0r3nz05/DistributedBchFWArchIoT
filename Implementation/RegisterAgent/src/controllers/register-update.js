@@ -1,8 +1,8 @@
 const verifyUpdate = require("../services/verify-update");
 const createUpdateRegister = require('../services/create-update-register');
-
+const callRegisterUpdateCC = require('../services/call-register-update-cc');
 //this controller mamanges the process for asking for an update to be stored in the blockchain.
-const registerUpdate = (req) =>{
+const registerUpdate = async(req) =>{
     //verifies that the req has the correct keys.
     let  verifiable = verifyUpdate(req);
     if(!verifiable){
@@ -15,9 +15,10 @@ const registerUpdate = (req) =>{
     const updateRegister = createUpdateRegister(req);
     //Store update on db
     //CALL CHAINCODE
+    const result = await callRegisterUpdateCC(req);
     return {
-        status : 201,
-        message : updateRegister
+        status : result.status,
+        message : result.message
     }
     
 }

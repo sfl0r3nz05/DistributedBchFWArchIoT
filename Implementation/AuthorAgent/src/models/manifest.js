@@ -8,7 +8,7 @@ const manifestSchema = new Schema({
         unique : true
     },
     monotonicSequenceNumber : {
-        type : Date,
+        type : String,
         required : true
     },
     vendorID : {
@@ -60,7 +60,7 @@ const manifestSchema = new Schema({
         required : true
     },
     payload : {
-        type : Buffer,
+        type : String,
         required : false
     }
 });

@@ -1,5 +1,6 @@
 const http = require('http');
 const options = require("../config/config.json");
+const stringify = require('json-stringify-deterministic');
 
 //Creates a POST petition to the register agent and returns the answer.
 function requestUpdateRegister(pdata) {
@@ -8,7 +9,7 @@ function requestUpdateRegister(pdata) {
         path: options.registerUpdatePath,
         port: options.requestPort,
         method: 'POST',
-        body: JSON.stringify(pdata),
+        body: stringify(pdata),
         headers: {
             'Content-Type': 'application/json'
         }
@@ -43,7 +44,7 @@ function requestUpdateRegister(pdata) {
           reject(rejection);
         });
         // send the request
-       req.write(JSON.stringify(pdata));
+       req.write(stringify(pdata));
        req.end();
     });
 }

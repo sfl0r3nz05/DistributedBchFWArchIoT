@@ -8,7 +8,7 @@ const updateRegisterSchema = new Schema({
         required : true
     },
     payload : {
-        type : Buffer,
+        type : String,
         required : true
     },
     manifest : {

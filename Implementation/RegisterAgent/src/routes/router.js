@@ -9,7 +9,7 @@ router.use(bodyParser.json());
 router.post("/register/author", async function(req, res) {
       try {
         const result = await registerAuthor(req);
-        res.status(parseInt(result.status)).json(result.message);
+        res.status(parseInt(result.status)).json(result.message.toString());
       }catch (error) {
         console.log(`Failed to evaluate transaction: ${error}`);
         if (!error.status) error.status = 500;
@@ -20,7 +20,7 @@ router.post("/register/author", async function(req, res) {
 router.post("/register", async function(req, res) {
   try {
     const result = await registerUpdate(req);
-    res.status(parseInt(result.status)).json(result.message);
+    res.status(parseInt(result.status)).json(result.message.toString());
   }catch (error) {
     console.log(`Failed to evaluate transaction: ${error}`);
     if (!error.status) error.status = 500;

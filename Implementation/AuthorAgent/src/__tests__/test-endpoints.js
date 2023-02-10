@@ -6,7 +6,7 @@ var path = require("path");
 const crypto = require('crypto');
 const digest = require('../services/test-services/digest');
 const sign = require('../services/test-services/sign');
-
+const stringify = require('json-stringify-deterministic');
 
   describe('/register/author', () => {
     test('Correct input', (done)=> {
@@ -69,7 +69,6 @@ const sign = require('../services/test-services/sign');
         json.publicKey = fs.readFileSync('public_key').toString();
         json = digest(json);
         json = sign(json, fs.readFileSync('private_key'));
-        console.log(json);
         request
         .post("/register")
         .send(json)

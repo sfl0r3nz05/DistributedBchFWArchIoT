@@ -12,6 +12,7 @@
   "dependencies": {
     "body-parser": "^1.20.1",
     "express": "^4.18.2",
+    "json-stringify-deterministic": "^1.0.8",
     "mongodb": "^4.13.0",
     "mongoose": "^6.9.0",
     "swagger-jsdoc": "^6.2.8",

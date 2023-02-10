@@ -14,13 +14,13 @@ function verifyManifest(manifestKeys,expectedKeys,mandatoryManifest){
     for (let i = 0; i< manifestKeys.length; i++){
         if (!(listTwo.includes(listOne[i]))){
             console.log(listOne[i] + " field not allowed");
-            return false;
+            throw new Error('ERR_INCORRECT_MANIFEST_FORMAT');
         }
     }
     for (let i = 0; i< mandatoryManifest.length; i++){
         if (!(listOne.includes(listThree[i]))){
             console.log(listThree[i] + "mandatory field not present in manifest");
-            return false;
+            throw new Error('ERR_INCORRECT_MANIFEST_FORMAT');
         }
     }
     return true;
