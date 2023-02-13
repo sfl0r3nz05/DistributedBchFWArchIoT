@@ -86,7 +86,10 @@ class RegisterAuthor extends Contract {
                 record = JSON.parse(strValue);
             } catch (err) {
                 console.info(err);
-                record = strValue;
+                //record = strValue;
+            }
+            if (record.docType.toString().valueOf() == 'author'){
+                allResults.push({ Key: key, Record: record });
             }
             console.info("record: " + record)
             allResults.push({ Key: key, Record: record });

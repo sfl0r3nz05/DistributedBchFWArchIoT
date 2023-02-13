@@ -64,18 +64,16 @@ class RegisterUpdate extends Contract {
             };
             console.info("dat: " + dat.toString())
             console.info("versionID : " + updateInChain.manifest.versionID.toString())
-            const compoKey = await ctx.stub.createCompositeKey('date~key~manifestid',[dat.toString(),JSON.parse(authorAsBytes).publicKey,updateInChain.manifest.versionID.toString()]);
+            const compoKey = await ctx.stub.createCompositeKey('date~key~manifestid',[dat.toString(),JSON.parse(authorAsBytes).publicKey.toString(),updateInChain.manifest.versionID.toString()]);
             //const exists = await this.AssetExists(ctx, compoKey);
             //if (exists) {
             //    throw new Error('ERR_KEY_NOT_REGISTABLE');
             //}
             await ctx.stub.putState('UPDATE_'+dat.toString(), Buffer.from(stringify(updateInChain)));
             console.info('================ Storing Composite Key =============')
-            //create compositeKey
-            
-            await ctx.stub.putState(compoKey, Buffer.from([]));
+            await ctx.stub.putState(compoKey, Buffer.from('\u0000'));
             console.info('================== Store Update Ended ===============');
-            console.info({compoKey,updateInChain});
+            console.info(compoKey.toString() + "  " + updateInChain);
             return ('Succesfull registration');
             
         } catch (err) {
@@ -89,9 +87,38 @@ class RegisterUpdate extends Contract {
         return assetJSON && assetJSON.length > 0;
     }
 
-    async AssetExistsPartialCompositeKey(ctx, id, indexName) {
-        const assetJSON = await ctx.stub.getStateByPartialCompositeKey(indexName, id);
+    async AssetExistsPartialCompositeKey(ctx, indexName, authorKey, versionID) {
+        const keys = [authorKey.toString()]//, versionID.toString()];
+        console.info('queried: ' + keys.toString())
+        const assetJSON = await ctx.stub.getStateByPartialCompositeKey(indexName, keys);
         return assetJSON && assetJSON.length > 0;
+    }
+
+    async queryAllUpdates(ctx) {
+        try {
+        const startKey = '';
+        const endKey = '';
+        const allResults = [];
+        for await (const {key, value} of ctx.stub.getStateByRange(startKey, endKey)) {
+            const strValue = Buffer.from(value).toString('utf8');
+            let record;
+            try {
+                record = JSON.parse(strValue);
+            } catch (err) {
+                console.info(err);
+                //record = strValue;
+            }
+            console.info("record: " + record)
+            if (record.docType.toString().valueOf() == 'update'){
+                allResults.push({ Key: key, Record: record });
+            }
+            
+        }
+        console.info(allResults);
+        return JSON.stringify(allResults);
+        }catch (err){
+            console.info(err);
+        }
     }
 }
 
