@@ -59,12 +59,20 @@ class RegisterUpdate extends Contract {
                 CID : "YetToStore",
                 manifest : updateObject.manifest,
                 authorSign : updateObject.authorSign,
-                authorManifestSign : updateObject.authorManifestSign
+                authorManifestSign : updateObject.authorManifestSign,
+                docType : 'update'
             };
-            await ctx.stub.putState('UPDATE_V_'+dat.toString(), Buffer.from(stringify(updateInChain)));
+            console.info("dat: " + dat.toString())
+            console.info("versionID : " + updateInChain.manifest.versionID.toString())
+            const compoKey = await ctx.stub.createCompositeKey('date~key~manifestid',[dat.toString(),JSON.parse(authorAsBytes).publicKey,updateInChain.manifest.versionID.toString()]);
+            //const exists = await this.AssetExists(ctx, compoKey);
+            //if (exists) {
+            //    throw new Error('ERR_KEY_NOT_REGISTABLE');
+            //}
+            await ctx.stub.putState('UPDATE_'+dat.toString(), Buffer.from(stringify(updateInChain)));
             console.info('================ Storing Composite Key =============')
             //create compositeKey
-            const compoKey = await ctx.stub.createCompositeKey('date~key~manifestid',[dat,JSON.parse(authorAsBytes).publicKey,updateObject.manifest.versionID]);
+            
             await ctx.stub.putState(compoKey, Buffer.from([]));
             console.info('================== Store Update Ended ===============');
             console.info({compoKey,updateInChain});
@@ -78,6 +86,11 @@ class RegisterUpdate extends Contract {
     
     async AssetExists(ctx, id) {
         const assetJSON = await ctx.stub.getState(id);
+        return assetJSON && assetJSON.length > 0;
+    }
+
+    async AssetExistsPartialCompositeKey(ctx, id, indexName) {
+        const assetJSON = await ctx.stub.getStateByPartialCompositeKey(indexName, id);
         return assetJSON && assetJSON.length > 0;
     }
 }
