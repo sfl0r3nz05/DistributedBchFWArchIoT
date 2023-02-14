@@ -86,7 +86,7 @@ const stringify = require('json-stringify-deterministic');
         request
         .post("/register")
         .send(json)
-        .expect(201)
+        .expect(403)
         .end((err, res) => {
             if (err) return done(err);
             return done();

@@ -37,3 +37,6 @@ Register Process Error Codes:
 - ERR_INCORRECT_MANIFEST_FORMAT: The provided manifest does not contain all the mandatory fields.
 
 - ERR_PAYLOAD_NOT_VERIFIABLE: The provided payload/image can not be verified using the author's public key associated to the providen register key with the given PayloadDigest and AuthorSign.
+
+- ERR_UPDATE_ALREADY_EXISTS: There is already an update that shares the same versionID and classID for the publicKey.
+

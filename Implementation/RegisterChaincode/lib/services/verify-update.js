@@ -1,12 +1,14 @@
 const crypto = require('crypto');
 const stringify = require('json-stringify-deterministic');
+const verifyRegisterKey = require('./verify-register-key');
 
 
 // this method verifies that the update has not been modified since signed.
 const verifyUpdate = (updateRegister, publicKey) => {
+    const key = verifyRegisterKey(publicKey,updateRegister.authorKey);
     const manifest = verifyManifest(updateRegister, publicKey);
     const payload = verifyPayload(updateRegister,publicKey);
-    return (manifest && payload)
+    return (manifest && payload && key)
 }
 
 //this method verifies that the manifest has not been modified

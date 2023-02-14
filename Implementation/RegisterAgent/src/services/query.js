@@ -29,7 +29,8 @@ async function main() {
 
         // Create a new gateway for connecting to our peer node.
         const gateway = new Gateway();
-        await gateway.connect(ccp, { wallet, identity: 'RegisterAgentUser', discovery: { enabled: true, asLocalhost: true } });
+        await gateway.connect(ccp, { wallet, identity: 'RegisterAgentUser', discovery: 
+        { enabled: true, asLocalhost: true } });
 
         // Get the network (channel) our contract is deployed to.
         const network = await gateway.getNetwork('mychannel');
@@ -37,14 +38,11 @@ async function main() {
         // Get the contract from the network.
         const contract = network.getContract('register', 'RegisterUpdate');
 
-        // Evaluate the specified transaction.
-        // queryCar transaction - requires 1 argument, ex: ('queryCar', 'CAR4')
-        // queryAllCars transaction - requires no arguments, ex: ('queryAllCars')
-        const result = await contract.evaluateTransaction('queryAllUpdates');
-        console.log(`Transaction has been evaluated, result is: ${result.toString()}`);
-
+        const result = await contract.evaluateTransaction('queryAllUpdates');//'updateCID' ,'eyJhbGciOiJIUzI1NiJ9.LS0tLS1CRUdJTiBSU0EgUFVCTElDIEtFWS0tLS0tCk1JSUJDZ0tDQVFFQXE1aXY0c1EzQzRTZ05jZWhmK2Q3L0MwLzhUMUNERnRpUkY4VE9aamF6WXFrbEhtUVRTSVcKVWt0MTFIVDZWSmEvdGVOcFJJZE1sSlU2aGRlUjNHY3FiTmYvV01wcUlMb2tLcXp2NVY2ai8wU09OWWkrU3I5Vgo3bVgzd0lvV3BrNjBNZm9tYTNGMnplMU93U2R4RXpJTjN1SFpsUDIrMWtPM01kbnh6cDRKWFBSN1ltR1BXN2hXCjBTMlY0TlhiWGxCbTJ2V0c2WVV1Y0xTZ0J1ZVM2emhGSDNyRncrcmdrUVU1UWRDb01PaEZWMGJseEJrdTBlYWoKMXdtN3FNOGNMUzI1UnJqVHN5ejVHa3kyZGVXZkUvSjJnNmVYY1pCOStxZUxYY1hPRzlINDdwMEVqNzVEMWdwVgo2c216TEY4ZVdDSkRzaW1jcGtnRVVMWTVxa2RFTzFsejh3SURBUUFCCi0tLS0tRU5EIFJTQSBQVUJMSUMgS0VZLS0tLS0K._HGVOymhHD1jR5EwJz6dtflJjz3fOafUzyonGukig_g','string','string', 'Updateame esta CID Crack ;D');
+        console.log('Transaction has been evaluated, result is: ' + JSON.stringify(JSON.parse(result),
+        null,'\t'));
         // Disconnect from the gateway.
-        await gateway.disconnect();
+        gateway.disconnect();
         
     } catch (error) {
         console.error(`Failed to evaluate transaction: ${error}`);

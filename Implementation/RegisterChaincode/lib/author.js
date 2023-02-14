@@ -1,11 +1,9 @@
 'use strict';
 
-const verifySign = require('./verify-author-sign');
-// Deterministic JSON.stringify()
+const verifySign = require('./services/verify-author-sign');
 const stringify  = require('json-stringify-deterministic');
-//const sortKeysRecursive  = require('sort-keys-recursive');
 const { Contract } = require('fabric-contract-api');
-const createRegisterKey = require('./create-register-key');
+const createRegisterKey = require('./services/create-register-key');
 
 class RegisterAuthor extends Contract {
     async initLedger(ctx) {
@@ -92,7 +90,6 @@ class RegisterAuthor extends Contract {
                 allResults.push({ Key: key, Record: record });
             }
             console.info("record: " + record)
-            allResults.push({ Key: key, Record: record });
         }
         console.info(allResults);
         return JSON.stringify(allResults);
