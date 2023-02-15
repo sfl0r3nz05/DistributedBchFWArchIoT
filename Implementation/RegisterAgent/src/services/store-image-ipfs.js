@@ -1,7 +1,8 @@
 const {create} = require ('ipfs-http-client');
+const config = require('../config/config.json');
 
 const storeImageIPFS = async(payload) =>{
-    const ipfs = await create({ url: "http://172.27.0.13:5001" });
+    const ipfs = await create({ url: config.ipfsURL });
 
     const result = await ipfs.add(Buffer.from(payload));
     

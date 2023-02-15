@@ -3,6 +3,7 @@
     "requestHost" : "127.0.0.1",
     "requestPort" : "3002",
     "registerAuthorPath" : "/register/author",
-    "registerUpdatePath" : "/register"
+    "registerUpdatePath" : "/register",
+    "ipfsURL" : "http://172.27.0.13:5001"
 
 }
