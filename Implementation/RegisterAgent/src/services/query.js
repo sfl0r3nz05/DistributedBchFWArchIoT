@@ -3,6 +3,7 @@
 const { Gateway, Wallets } = require('fabric-network');
 const path = require('path');
 const fs = require('fs');
+const storeImageIPFS = require('./store-image-ipfs');
 
 const ccpPath = path.resolve(__dirname, '..', 'config',  'connection-org1.json');
 const walletPath = path.resolve(__dirname, '..', 'wallet');
@@ -43,6 +44,8 @@ async function main() {
         null,'\t'));
         // Disconnect from the gateway.
         gateway.disconnect();
+        const res = await storeImageIPFS(result);
+        console.log(res);
         
     } catch (error) {
         console.error(`Failed to evaluate transaction: ${error}`);
