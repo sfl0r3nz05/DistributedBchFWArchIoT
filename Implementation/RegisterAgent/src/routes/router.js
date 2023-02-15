@@ -6,6 +6,7 @@ const registerUpdate = require('../controllers/register-update');
 
 router.use(bodyParser.json());
 
+//receives a RegisterPetition and POSTs it to the CC. Return result from CC.
 router.post("/register/author", async function(req, res) {
       try {
         const result = await registerAuthor(req);
@@ -17,6 +18,8 @@ router.post("/register/author", async function(req, res) {
       }
   });
 
+//Receives an UpdateRegister and sends it to CC. If successful, store the payload in IPFS and aks CC
+//to update the CID. Returns result from CC.
 router.post("/register", async function(req, res) {
   try {
     const result = await registerUpdate(req);

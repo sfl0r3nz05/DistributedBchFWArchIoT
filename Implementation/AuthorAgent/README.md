@@ -1,7 +1,7 @@
 # Author Agent
 The author agent lets authors perform the registration tasks for the blockchain network. For more information about the data flow and case uses, see [Author Agent Design](../../Design/ClientApplication/AuthorAgent)
 
-The agent serves an REST API accesible through the port 3000. It is composed by a node.js application and a database, each contained on it's own image.
+The agent serves a REST API accesible through the port 3000. It is composed by a node.js application and a database, each contained on it's own image.
 
 ## Endpoints
 
@@ -24,15 +24,3 @@ The application contains several test suites to test the endpoints of the applic
 
 The [tests](./src/__tests__/test-endpoints.js) include correct and incorrect inputs for both endpoints, and case where the input is correct but the public key is not yet registered.
 
-## Structure
-The application uses a typical node application structure.
-- The main folder contains the package files, the OpenAPI document and the dockerfiles.
-- The data folder contains the volumes used by docker to persist data. It's content are added to the gitignore file. Every local instance needs to have its own private information persistent through image buildings.
-- The node_module folder contains the dependencies. It is added to gitignore, as the dependencies are installed when the image is build. If the application is to be run without docker, npm install can be used to download the dependencies.
-- src contains the code for the app:
-
-    - tests contains the jest tests for the application.
-    - config contains the configuration file where the addresses for db connection and requests to register agent are, as well as the application port number.
-    - models contains the data structures needed for the application: KeyPair, UpdateRegister and Manifest.
-    - scripts contains the script to build the application.
-    - services contains the functions verify the inputs a request to the register agent.

@@ -3,12 +3,12 @@
 const { Gateway, Wallets } = require('fabric-network');
 const path = require('path');
 const fs = require('fs');
-const storeImageIPFS = require('./store-image-ipfs');
+const retrieveImageIPFS = require('./retrieve-image-ipfs');
 
 const ccpPath = path.resolve(__dirname, '..', 'config',  'connection-org1.json');
 const walletPath = path.resolve(__dirname, '..', 'wallet');
 
-
+//This is used to perform queries to test the network manually and is not called by the agent.
 
 async function main() {
     try {
@@ -46,8 +46,10 @@ async function main() {
         null,'\t'));
         // Disconnect from the gateway.
         gateway.disconnect();
-        //const res = await storeImageIPFS(result);
-        //console.log(res);
+        const meh = JSON.parse(result).Record.CID.path;
+        console.log(meh)
+        const res = await retrieveImageIPFS(meh);
+        console.log(res.toString());
         
     } catch (error) {
         console.error(`Failed to evaluate transaction: ${error}`);

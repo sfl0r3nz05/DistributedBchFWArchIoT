@@ -6,7 +6,7 @@ function readRequest(req){
 function verifyPetition(keys, expected){
     return keys.sort().join(',')=== expected.sort().join(',')
 }
-
+//this function verifies that the received manifest has a correct format.
 function verifyManifest(manifestKeys,expectedKeys,mandatoryManifest){
     var listOne = manifestKeys.sort();
     var listTwo = expectedKeys.sort();
@@ -26,6 +26,8 @@ function verifyManifest(manifestKeys,expectedKeys,mandatoryManifest){
     return true;
 }
 
+
+// this function verifies that the received UpdateREgister has the correct format.
 function verifyUpdate(req){
     var keys = readRequest(req.body);
     var expected = ['authorKey','manifest','authorSign','authorManifestSign','payload'];

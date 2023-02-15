@@ -5,8 +5,8 @@ const ccpPath = path.resolve(__dirname, '..', 'config',  'connection-org1.json')
 const walletPath = path.resolve(__dirname, '..', 'wallet');
 const stringify = require('json-stringify-deterministic');
 
-//This service creates a connection to the blockchain gateway an asks to create a execute the register
-//author contract from RegisterAuthor chaincode.
+//This service creates a connection to the blockchain gateway an asks to create a execute the 
+//updateCID contract from RegisterAuthor chaincode.
 const callRegisterCIDCC = async (req, CID) => {
     //load config files and wallet identities.
     const ccp = JSON.parse(fs.readFileSync(ccpPath, 'utf8'));

@@ -2,7 +2,7 @@ const http = require('http');
 const options = require("../config/config.json");
 const stringify = require('json-stringify-deterministic');
 
-//Creates a POST petition to the register agent and returns the answer.
+//Creates a POST petition to the register agent to store an Update and returns the answer.
 function requestUpdateRegister(pdata) {
      const serverOptions = {
         host: options.requestHost,
