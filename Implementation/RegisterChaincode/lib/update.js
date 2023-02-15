@@ -107,9 +107,8 @@ class RegisterUpdate extends Contract {
         if (!update){
             throw new Error('ERR_UPDATE_NON_EXISTENT');
         }
-        console.info(stringify(update));
         console.info('==================== Storing CID ==========================');
-        update.Record.CID = CID;
+        update.Record.CID = JSON.parse(CID);
         const keyer = update.Key.toString();
         const recorder = stringify(update.Record);
         await ctx.stub.putState(keyer, Buffer.from(recorder));

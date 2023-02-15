@@ -27,7 +27,7 @@ const callRegisterCIDCC = async (req, CID) => {
     const contract = network.getContract('register','RegisterUpdate');
     try { //ask for the contract to be executed.
         console.log(stringify(req.body.manifest));
-        const result = await contract.submitTransaction('updateCID', req.body.authorKey.toString(), req.body.manifest.versionID.toString(), req.body.manifest.classID.toString(), CID.toString());
+        const result = await contract.submitTransaction('updateCID', req.body.authorKey.toString(), req.body.manifest.versionID.toString(), req.body.manifest.classID.toString(), stringify(CID));
         gateway.disconnect();
         console.log(`Transaction has been evaluated, result is: ${result.toString()}`);
         return {
