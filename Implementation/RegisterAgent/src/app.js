@@ -2,7 +2,7 @@ const express = require("express");
 const bodyParser = require('body-parser');
 const swaggerUI = require('swagger-ui-express');
 const router = require('./routes/router');
-const swaggerDocs = require('../author-agent.json');
+const swaggerDocs = require('../register-agent.json');
 
 //this is the main app for the agent.
 const app = express();

@@ -7,10 +7,10 @@ function verifySign (message, signedMessage, publicKey){
     var decrypted ="";
     try { 
         decrypted = crypto.publicDecrypt(publicKey,buffer);
-        console.info('============= obtained message: ' + decrypted + ' ===========');
+        console.info('============= obtained message: ' + decrypted.toString('base64') + ' ===========');
         return message.valueOf() == decrypted.valueOf();
     } catch (err){
-        throw new Error('ERR_KEY_NOT_VERIFIABLE' + " obtained: " + decrypted + " expected: " + message);
+        throw new Error('ERR_KEY_NOT_VERIFIABLE');
     }
    
 }

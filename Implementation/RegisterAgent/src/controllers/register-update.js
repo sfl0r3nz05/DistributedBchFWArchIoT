@@ -14,7 +14,7 @@ const registerUpdate = async(req) =>{
         }
     }
     //create an UpdateRegister Object in case we need to store it.
-    const updateRegister = createUpdateRegister(req);
+    //const updateRegister = createUpdateRegister(req);
     //Store update on db
     //CALL CHAINCODE
     const result = await callRegisterUpdateCC(req);

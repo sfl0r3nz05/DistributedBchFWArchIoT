@@ -56,7 +56,7 @@ The technologies and libraries used for the agents are the following:
 - This repository needs a previous instalation of docker and docker compose. 
 - Node and npm also need to be installed for development purposes. 
 - The repository is currently tested against the hyperledger fabric test network, which has to be installed in case you have not any other network installed. 
-- Finally you need access to an IPFS (private) network.
+- Finally you need access to an IPFS (private) network. A single Docker contained node is being used in development.
 
 The contents of [FabricScripts](./fabricScripts/) can be placed in (your hyperledger installation path)/fabric-samples/test-network to help to reduce time when setting up the test network, installing and updating the chaincode.
 
@@ -75,6 +75,7 @@ To get the repository working in a local environment, please follow the instruct
     ```
     It is important that version increases by one everytime you update the chaincode.
 2. Copy the connection-org1.json file from test-network/organizations/peerOrganizations/org1.example.com into /RegisterAgent/src/config.
+3. Delete contents of RegisterAgent/src/wallet
 3. Update connection-org1.json to include the gateway address from your network instead of localhost.
 4. Initialize your IPFS node. If you dont have one, you can test using the public Docker image. It will also add it to the test network. Copy the direction of the node to src/config/config.json.
     ```
