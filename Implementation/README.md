@@ -76,7 +76,7 @@ To get the repository working in a local environment, please follow the instruct
     It is important that version increases by one everytime you update the chaincode.
 2. Copy the connection-org1.json file from test-network/organizations/peerOrganizations/org1.example.com into /RegisterAgent/src/config.
 3. Update connection-org1.json to include the gateway address from your network instead of localhost.
-4. Initialize your IPFS node. If you dont have one, you can test using the public Docker image. It will also add it to the test network.
+4. Initialize your IPFS node. If you dont have one, you can test using the public Docker image. It will also add it to the test network. Copy the direction of the node to src/config/config.json.
     ```
     docker run -d --name ipfs_host --network fabric_test -e IPFS_PROFILE=server -v $ipfs_staging:/export -v $ipfs_data:/data/ipfs -p 4001:4001 -p 4001:4001/udp -p 127.0.0.1:8080:8080 -p 127.0.0.1:5001:5001 ipfs/kubo:latest
     ```
