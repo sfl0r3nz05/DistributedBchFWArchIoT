@@ -4,6 +4,9 @@ const request = supertest(app);
 const fs = require('fs');
 var path = require("path");
 
+//For correct input testing, please run the test with the same name on author agent, since that
+//test makes the full register flow testing, passing through register agent and register chaindode 
+
   describe('Register Author', () => {
     test('Correct input', (done)=> {
         var json = JSON.parse(fs.readFileSync(path.resolve(__dirname,"./test-json/register-petition-ok.json"), 'utf8'));
@@ -35,7 +38,7 @@ var path = require("path");
         request
         .post("/register")
         .send(json)
-        .expect(201)
+        .expect(403)
         .end((err, res) => {
             if (err) return done(err);
             return done();
@@ -46,7 +49,7 @@ var path = require("path");
         request
         .post("/register")
         .send(json)
-        .expect(201)
+        .expect(403)
         .end((err, res) => {
             if (err) return done(err);
             return done();
