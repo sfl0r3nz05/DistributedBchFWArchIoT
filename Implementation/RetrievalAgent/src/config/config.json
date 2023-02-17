@@ -1,0 +1,7 @@
+{
+    "port": "3002",
+    "requestHost" : "127.0.0.1",
+    "requestPort" : "3002",
+    "ipfsURL" : "http://172.19.0.13:5001"
+
+}
