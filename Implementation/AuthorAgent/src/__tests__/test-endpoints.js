@@ -7,6 +7,7 @@ const crypto = require('crypto');
 const digest = require('../services/test-services/digest');
 const sign = require('../services/test-services/sign');
 const stringify = require('json-stringify-deterministic');
+const readJSON = require('../services/test-services/read-json');
 
   describe('/register/author', () => {
     test('Correct input', (done)=> {
@@ -65,10 +66,7 @@ const stringify = require('json-stringify-deterministic');
 
   describe('/register', () => {
     test('Correct input', (done)=> {
-        var json = JSON.parse(fs.readFileSync(path.resolve(__dirname,"./test-json/update-register.json"), 'utf8'));
-        json.publicKey = fs.readFileSync('public_key').toString();
-        json = digest(json);
-        json = sign(json, fs.readFileSync('private_key'));
+        var json = readJSON("./test-json/update-register.json");
         request
         .post("/register")
         .send(json)
@@ -79,10 +77,18 @@ const stringify = require('json-stringify-deterministic');
         });
     });
     test('Correct partial input', (done)=> {
-        var json = JSON.parse(fs.readFileSync(path.resolve(__dirname,"./test-json/update-register-partial.json"), 'utf8'));
-        json.publicKey = fs.readFileSync('public_key').toString();
-        json = digest(json);
-        json = sign(json, fs.readFileSync('private_key'));
+        var json = readJSON("./test-json/update-register-partial.json", 'Version'+Date.now());
+        request
+        .post("/register")
+        .send(json)
+        .expect(201)
+        .end((err, res) => {
+            if (err) return done(err);
+            return done();
+        });
+    });
+    test('Correct partial input repeated key', (done)=> {
+        var json = readJSON("./test-json/update-register-partial.json");
         request
         .post("/register")
         .send(json)
@@ -93,10 +99,7 @@ const stringify = require('json-stringify-deterministic');
         });
     });
     test('Incorrect input mandatory field missing', (done)=> {
-        var json = JSON.parse(fs.readFileSync(path.resolve(__dirname,"./test-json/update-register-wrong.json"), 'utf8'));
-        json.publicKey = fs.readFileSync('public_key');
-        json = digest(json);
-        json = sign(json, fs.readFileSync('private_key'));
+        var json = readJSON("./test-json/update-register-wrong.json");
         request
         .post("/register")
         .send(json)
@@ -107,10 +110,7 @@ const stringify = require('json-stringify-deterministic');
         });
     });
     test('Incorrect input non allowed field', (done)=> {
-        var json = JSON.parse(fs.readFileSync(path.resolve(__dirname,"./test-json/update-register-non-allowed.json"), 'utf8'));
-        json.publicKey = fs.readFileSync('public_key');
-        json = digest(json);
-        json = sign(json, fs.readFileSync('private_key'));
+        var json = readJSON("./test-json/update-register-non-allowed.json");
         request
         .post("/register")
         .send(json)
@@ -121,9 +121,32 @@ const stringify = require('json-stringify-deterministic');
         });
     });
     test('Correct input non registered', (done)=> {
-        var json = JSON.parse(fs.readFileSync(path.resolve(__dirname,"./test-json/update-register-unregistered.json"), 'utf8'));
-        json = digest(json);
-        json = sign(json, fs.readFileSync('private_key'));
+        var json = readJSON("./test-json/update-register-unregistered.json");
+        json.publicKey = 'NONREGISTEREDKEY'
+        request
+        .post("/register")
+        .send(json)
+        .expect(403)
+        .end((err, res) => {
+            if (err) return done(err);
+            return done();
+        });
+    });
+    test('Modified manifest', (done)=> {
+        var json = readJSON("./test-json/update-register.json");
+        json.update.manifest.versionID = "XD"
+        request
+        .post("/register")
+        .send(json)
+        .expect(403)
+        .end((err, res) => {
+            if (err) return done(err);
+            return done();
+        });
+    });
+    test('Modified payload', (done)=> {
+        var json = readJSON("./test-json/update-register.json");
+        json.update.payload = "XD"
         request
         .post("/register")
         .send(json)
