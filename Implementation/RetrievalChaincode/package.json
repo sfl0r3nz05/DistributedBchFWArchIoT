@@ -1,0 +1,18 @@
+{
+  "name": "retrievalchaincode",
+  "version": "0.0.1",
+  "description": "This chaincode has the responsability of retrieving updates in chain for the retrieval agent",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "fabric-chaincode-node start"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "fabric-ca-client": "^2.2.16",
+    "fabric-contract-api": "^2.5.2",
+    "fabric-network": "^2.2.16",
+    "fabric-shim": "^2.5.2"
+  }
+}

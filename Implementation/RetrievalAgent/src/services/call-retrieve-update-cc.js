@@ -23,11 +23,12 @@ const callRetrieveUpdateCC = async (req) => {
     const gateway = new Gateway();
     await gateway.connect(ccp, { wallet, identity: 'RegisterAgentUser', discovery: { enabled: true, asLocalhost: false } });
     const network = await gateway.getNetwork('mychannel');
-    const contract = network.getContract('register','RegisterUpdate');
+    const contract = network.getContract('register','RetrieveUpdate');
     try { //ask for the contract to be executed.
-        const result = await contract.submitTransaction('queryAllUpdates');
+        console.log(req.body)
+        const result = await contract.submitTransaction('queryUpdateByPublicKeyClassID', req.body.publicKey.toString(), req.body.classID.toString());
         gateway.disconnect();
-        //console.log(`Transaction has been evaluated, result is: ${result}`);
+        console.log(`Transaction has been evaluated, result is: ${result}`);
         return {
             status : 201,
             message : JSON.parse(result)
