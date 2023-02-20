@@ -2,6 +2,7 @@ const express = require("express");
 const bodyParser = require('body-parser');
 const router = express.Router();
 const retrieve = require('../controllers/retrieve');
+const retrieveVersion = require('../controllers/retrieve-version');
 
 
 router.use(bodyParser.json());
@@ -9,7 +10,7 @@ router.use(bodyParser.json());
 //receives a DeviceID and sends it to the CC. Return result (version) from CC.
 router.post("/retrieve/version", async function(req, res) {
   try {
-    const result = await retrieve(req);
+    const result = await retrieveVersion(req);
     res.status(parseInt(result.status)).json(result.message);
   }catch (error) {
     console.log(`Failed to evaluate transaction: ${error}`);

@@ -12,7 +12,7 @@ const retrieve = async(req) => {
         }
     }
     //CALL CHAINCODE
-    const result = await callRetrieveUpdateCC(req);
+    var result = await callRetrieveUpdateCC(req);
     //check if  result was succesful
     if(result.status.toString().valueOf() !== '201'){
         return {
@@ -20,13 +20,26 @@ const retrieve = async(req) => {
             message : result.message
         }
     }
-    console.log(result.message[0].Record.CID.path.toString());
+    result = result.message[0].Record;
+    console.log(result.CID.path.toString());
     //store update payload in ipfs
-    const resultCID = await retrieveImageIPFS(result.message[0].Record.CID.path.toString());
-    console.log(resultCID);
+    const resultCID = await retrieveImageIPFS(result.CID.path.toString());
+    if(resultCID.status.toString().valueOf() !== '201'){
+        return {
+            status : resultCID.status,
+            message : resultCID.message
+        }
+    }
+    const update = {
+        manifest : result.manifest,
+        authorSign : result.authorSign,
+        authorManifestSign : result.authorManifestSign,
+        payload : resultCID.message
+    }
+    //console.log(update)
     return {
         status : resultCID.status,
-        message : resultCID.message
+        message : JSON.stringify(update,null,'\t')
     }
 
 }
