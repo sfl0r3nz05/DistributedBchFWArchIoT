@@ -9,7 +9,9 @@ The agent serves a REST API accesible through the port 3002 (localhost). It is c
 
 The API serves the following [endpoints](./src/routes/router.js):
 
-- 
+- /retrieve/version (POST): Receives a [DeviceID](../../Design/DataStructures/DeviceID). It calls the retrieval ChainCode to obtain the latest available update's versionID, which is returned.
+
+- /retrieve (POST): Receives a [DeviceID](../../Design/DataStructures/DeviceID). It calls the retrieval ChainCode to obtain the latest available updateInChain. It uses the CID to get the Payload from IPFS, and then builds the update object, which is returned as a JSON.
 
 - /api-docs: Also accesible with / and /about. It shows the documentation generated with Swagger, which also offer the posibility to use and test the API. To generate this documentation, the [OpenAPI document](./retrieval-agent.json) is used.
 
