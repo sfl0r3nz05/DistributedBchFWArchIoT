@@ -15,6 +15,7 @@ var path = require("path");
         .expect(201)
         .end((err, res) => {
             if (err) return done(err);
+            console.log("RESULT: " + JSON.stringify(res.text));
             return done();
         });
     });
@@ -24,6 +25,17 @@ var path = require("path");
         .post("/retrieve/version")
         .send(json)
         .expect(405)
+        .end((err, res) => {
+            if (err) return done(err);
+            return done();
+        });
+    });
+    test('Non existent update', (done)=> {
+        var json = JSON.parse(fs.readFileSync(path.resolve(__dirname, './test-json/non-existent.json'), 'utf8'));
+        request
+        .post("/retrieve/version")
+        .send(json)
+        .expect(403)
         .end((err, res) => {
             if (err) return done(err);
             return done();
@@ -49,6 +61,17 @@ var path = require("path");
         .post("/retrieve")
         .send(json)
         .expect(405)
+        .end((err, res) => {
+            if (err) return done(err);
+            return done();
+        });
+    });
+    test('Non existent update', (done)=> {
+        var json = JSON.parse(fs.readFileSync(path.resolve(__dirname, './test-json/non-existent.json'), 'utf8'));
+        request
+        .post("/retrieve/version")
+        .send(json)
+        .expect(403)
         .end((err, res) => {
             if (err) return done(err);
             return done();
