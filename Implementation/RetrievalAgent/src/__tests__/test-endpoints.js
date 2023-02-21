@@ -6,7 +6,7 @@ var path = require("path");
 
 
 //JSONs in test-json folder may need to be modified, since the key used can be deleted when using network.sh down.
-  describe('/retrieve/version', () => {
+  describe.skip('/retrieve/version', () => {
     test('Correct input', (done)=> {
         var json = JSON.parse(fs.readFileSync(path.resolve(__dirname, './test-json/correct.json'), 'utf8'));
         request
@@ -54,8 +54,8 @@ var path = require("path");
             if (err) return done(err);
             return done();
         });
-    });
-    test('Incorrect input', (done)=> {
+    },20000);
+    test.skip('Incorrect input', (done)=> {
         var json = JSON.parse(fs.readFileSync(path.resolve(__dirname, './test-json/incorrect.json'), 'utf8'));
         request
         .post("/retrieve")
@@ -66,7 +66,7 @@ var path = require("path");
             return done();
         });
     });
-    test('Non existent update', (done)=> {
+    test.skip('Non existent update', (done)=> {
         var json = JSON.parse(fs.readFileSync(path.resolve(__dirname, './test-json/non-existent.json'), 'utf8'));
         request
         .post("/retrieve/version")

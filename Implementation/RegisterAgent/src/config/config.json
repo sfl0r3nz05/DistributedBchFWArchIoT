@@ -4,6 +4,6 @@
     "requestPort" : "3002",
     "registerAuthorPath" : "/register/author",
     "registerUpdatePath" : "/register",
-    "ipfsURL" : "http://172.19.0.13:5001"
+    "ipfsURL" : "http://172.19.0.16:5001"
 
 }
