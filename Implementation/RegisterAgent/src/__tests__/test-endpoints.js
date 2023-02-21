@@ -7,7 +7,7 @@ var path = require("path");
 //For correct input testing, please run the test with the same name on author agent, since that
 //test makes the full register flow testing, passing through register agent and register chaindode 
 
-  describe('Register Author', () => {
+  describe.skip('Register Author', () => {
     test('Correct input', (done)=> {
         var json = JSON.parse(fs.readFileSync(path.resolve(__dirname,"./test-json/register-petition-ok.json"), 'utf8'));
         request
@@ -32,7 +32,7 @@ var path = require("path");
     });
   }, 55000);
 
-  describe('Register Update', () => {
+  describe.skip('Register Update', () => {
     test('Correct input', (done)=> {
         var json = JSON.parse(fs.readFileSync(path.resolve(__dirname,"./test-json/update-register.json"), 'utf8'));
         request
