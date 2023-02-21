@@ -1,6 +1,0 @@
-{
-    "publicKeyer": "string",
-    "SignedMessage": "string",
-    "message": "string",
-    "extraField" : "float"
-  }
