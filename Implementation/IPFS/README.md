@@ -7,8 +7,7 @@ In order to use the content, you need to install Docker and Docker Compose. you 
 1. Run build.sh. If you are using a different network than that created by the Hyperledger Fabric test network, first modify the network in docker-compose.yaml.
 2. Copy swarm.key into each one of the folders inside data. The data folder will be created
 3. Run create-private-network.sh
-
-Copy the address from one peer into the config file of Register and Retrieval Agents.
+4. Copy the address from one peer into the config file of Register and Retrieval Agents.
 Example: 'http:172.12.0.18:5001'
 
 
