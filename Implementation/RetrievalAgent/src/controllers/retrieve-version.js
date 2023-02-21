@@ -22,7 +22,7 @@ const retrieveVersion = async(req) => {
     //console.log(JSON.stringify(result.message[0]));
     return {
         status : result.status,
-        message : result.message[0].Record.manifest.versionID.toString()
+        message : result.message.Record.manifest.versionID.toString()
     }
 
 }

@@ -20,7 +20,7 @@ const retrieve = async(req) => {
             message : result.message
         }
     }
-    result = result.message[0].Record;
+    result = result.message.Record;
     console.log(result.CID.path.toString());
     //store update payload in ipfs
     const resultCID = await retrieveImageIPFS(result.CID.path.toString());

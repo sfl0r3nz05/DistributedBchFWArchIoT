@@ -28,6 +28,7 @@ const readJSON = require('../services/test-services/read-json');
         //var json = JSON.parse(fs.readFileSync(path.resolve(__dirname,"./test-json/register-petition-ok.json"), 'utf8'));
         fs.writeFileSync('public_key', publicKey);
         fs.writeFileSync('private_key', privateKey.toString('base64'));
+        console.log(publicKey.toString('base64'));
         const message = "message";
 
         const signedMessage = crypto.privateEncrypt({
@@ -66,7 +67,7 @@ const readJSON = require('../services/test-services/read-json');
 
   describe('/register', () => {
     test('Correct input', (done)=> {
-        var json = readJSON("./test-json/update-register.json");
+        var json = readJSON("./test-json/update-register.json",'V_1');
         request
         .post("/register")
         .send(json)
@@ -77,7 +78,7 @@ const readJSON = require('../services/test-services/read-json');
         });
     });
     test('Correct partial input', (done)=> {
-        var json = readJSON("./test-json/update-register-partial.json", 'Version'+Date.now());
+        var json = readJSON("./test-json/update-register-partial.json", 'V_2');
         request
         .post("/register")
         .send(json)
@@ -88,7 +89,7 @@ const readJSON = require('../services/test-services/read-json');
         });
     });
     test('Correct partial input repeated key', (done)=> {
-        var json = readJSON("./test-json/update-register-partial.json");
+        var json = readJSON("./test-json/update-register-partial.json",'V_1');
         request
         .post("/register")
         .send(json)
