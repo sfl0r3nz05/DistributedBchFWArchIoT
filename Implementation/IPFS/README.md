@@ -15,6 +15,6 @@ Example: 'http:172.12.0.18:5001'
 ## Credits
 The contents of this folder were made following these articles:
 
-[1](https://medium.com/@s_van_laar/deploy-a-private-ipfs-network-on-ubuntu-in-5-steps-5aad95f7261b) Deploy a private IPFS network on Ubuntu.
+1. [Deploy a private IPFS network on Ubuntu.](https://medium.com/@s_van_laar/deploy-a-private-ipfs-network-on-ubuntu-in-5-steps-5aad95f7261b)
 
-[2](https://medium.com/rahasak/ipfs-cluster-with-docker-db2ec20a6cc1) IPFS cluster with Docker
+2. [IPFS cluster with Docker](https://medium.com/rahasak/ipfs-cluster-with-docker-db2ec20a6cc1) 
