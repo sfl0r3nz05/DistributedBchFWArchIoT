@@ -40,6 +40,14 @@ class RetrieveUpdate extends Contract {
         console.info(err);
         return
     }
+
+    async queryVersionByPublicKeyClassID (ctx, publicKey, classID){
+        const res = await this.queryUpdateByPublicKeyClassID(ctx,publicKey,classID);
+        return res.Record.manifest.versionID;
+    } catch (err){
+        console.info(err);
+        return
+    }
 }
 
 module.exports = RetrieveUpdate;

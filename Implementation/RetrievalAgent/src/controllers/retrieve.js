@@ -13,7 +13,6 @@ const retrieve = async(req) => {
     }
     //CALL CHAINCODE
     var result = await callRetrieveUpdateCC(req);
-    //check if  result was succesful
     if(result.status.toString().valueOf() !== '201'){
         return {
             status : result.status,
@@ -22,7 +21,7 @@ const retrieve = async(req) => {
     }
     result = result.message.Record;
     console.log(result.CID.path.toString());
-    //store update payload in ipfs
+    //retrieve update payload from ipfs
     const resultCID = await retrieveImageIPFS(result.CID.path.toString());
     if(resultCID.status.toString().valueOf() !== '201'){
         return {
@@ -30,6 +29,7 @@ const retrieve = async(req) => {
             message : resultCID.message
         }
     }
+    //build update object
     const update = {
         manifest : result.manifest,
         authorSign : result.authorSign,

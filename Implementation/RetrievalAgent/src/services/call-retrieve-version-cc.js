@@ -10,7 +10,7 @@ const callRetrieveUpdateCC = async (req) => {
     //load config files and wallet identities.
     const ccp = JSON.parse(fs.readFileSync(ccpPath, 'utf8'));
     const wallet = await Wallets.newFileSystemWallet(walletPath);
-    const identity = await wallet.get('RetrievalAgentUser');
+    const identity = await wallet.get('RegisterAgentUser');
     if (!identity) {
         console.log('An identity for the user "RetrievalAgentUser" does not exist in the wallet');
         console.log('Run the registerUser.js application before retrying');
@@ -26,7 +26,7 @@ const callRetrieveUpdateCC = async (req) => {
     const contract = network.getContract('register','RetrieveUpdate');
     try { //ask for the contract to be executed.
         console.log(req.body)
-        const result = await contract.submitTransaction('queryUpdateByPublicKeyClassID', req.body.publicKey.toString(), req.body.classID.toString());
+        const result = await contract.submitTransaction('queryVersionByPublicKeyClassID', req.body.publicKey.toString(), req.body.classID.toString());
         gateway.disconnect();
         console.log(`Transaction has been evaluated, result is: ${result}`);
         return {
