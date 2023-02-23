@@ -9,16 +9,16 @@ var path = require("path");
   describe('/retrieve/version', () => {
     test('Correct input', (done)=> {
         var json = JSON.parse(fs.readFileSync(path.resolve(__dirname, './test-json/correct.json'), 'utf8'));
+        json.publicKey = fs.readFileSync(path.resolve(__dirname, '../','public_key'),'utf-8');
         request
         .post("/retrieve/version")
         .send(json)
         .expect(201)
         .end((err, res) => {
             if (err) return done(err);
-            console.log("RESULT: " + JSON.stringify(res.text));
             return done();
         });
-    });
+    },20000);
     test('Incorrect input', (done)=> {
         var json = JSON.parse(fs.readFileSync(path.resolve(__dirname, './test-json/incorrect.json'), 'utf8'));
         request
@@ -46,6 +46,7 @@ var path = require("path");
   describe('/retrieve', () => {
     test('Correct input', (done)=> {
         var json = JSON.parse(fs.readFileSync(path.resolve(__dirname, './test-json/correct.json'), 'utf8'));
+        json.publicKey = fs.readFileSync(path.resolve(__dirname, '../','public_key'),'utf-8');
         request
         .post("/retrieve")
         .send(json)

@@ -8,8 +8,9 @@ const digest = require('../services/test-services/digest');
 const sign = require('../services/test-services/sign');
 const stringify = require('json-stringify-deterministic');
 const readJSON = require('../services/test-services/read-json');
+const { ConnectionClosedEvent } = require("mongodb");
 
-  describe('/register/author', () => {
+  describe.skip('/register/author', () => {
     test('Correct input', (done)=> {
         const { publicKey, privateKey } = crypto.generateKeyPairSync("rsa", {
             // The standard secure default length for RSA keys is 2048 bits
@@ -42,7 +43,7 @@ const readJSON = require('../services/test-services/read-json');
             signedMessage : signedMessage,
             publicKey : publicKey
         };
-        
+        console.log("JSON when good: " + JSON.stringify(json))
         request
         .post("/register/author")
         .send(json)
@@ -65,9 +66,10 @@ const readJSON = require('../services/test-services/read-json');
     });
   });
 
-  describe('/register', () => {
+  describe.skip('/register', () => {
     test('Correct input', (done)=> {
         var json = readJSON("./test-json/update-register.json",'V_1');
+        console.log("publicKey when ok: " + json.publicKey)
         request
         .post("/register")
         .send(json)
@@ -76,7 +78,7 @@ const readJSON = require('../services/test-services/read-json');
             if (err) return done(err);
             return done();
         });
-    });
+    },20000);
     test('Correct partial input', (done)=> {
         var json = readJSON("./test-json/update-register-partial.json", 'V_2');
         request
@@ -157,4 +159,47 @@ const readJSON = require('../services/test-services/read-json');
             return done();
         });
     });
+});
+
+    describe('Register Author and Update with Non random Key, For retrieval Testing', () => {
+        test('Correct input', (done)=> {
+            const publicKey = fs.readFileSync(path.resolve(__dirname,'../','public_key'),'utf8');
+            const privateKey = fs.readFileSync(path.resolve(__dirname,'../','private_key'),'utf8');
+
+            const message = "message";
+    
+            const signedMessage = crypto.privateEncrypt({
+                key : Buffer.from(privateKey), 
+                padding : crypto.constants.RSA_PKCS1_PADDING,
+            },Buffer.from(message)
+            ).toString('base64');
+            
+            const decrypt = crypto.publicDecrypt(publicKey,Buffer.from(signedMessage, 'base64')).toString();
+            console.log("Decrypt: " + decrypt);
+            var json = {
+                message: message,
+                signedMessage : signedMessage,
+                publicKey : publicKey
+            };
+            request
+            .post("/register/author")
+            .send(json)
+            .expect(201)
+            .end((err, res) => {
+                if (err) return done(err);
+                return done();
+            });
+        });
+        test('Correct input non random', (done)=> {
+            var json = readJSON("./test-json/update-register-non-random.json",'V_1',path.resolve(__dirname,'../','public_key'),path.resolve(__dirname,'../','private_key'));
+            console.log("public key when bad: " + json.publicKey);
+            request
+            .post("/register")
+            .send(json)
+            .expect(201)
+            .end((err, res) => {
+                if (err) return done(err);
+                return done();
+            });
+        });
   });

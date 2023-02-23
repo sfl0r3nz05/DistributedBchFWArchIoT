@@ -1,5 +1,5 @@
 const verifyDevice = require('../services/verify-device');
-const callRetrieveUpdateCC = require('../services/call-retrieve-update-cc');
+const callRetrieveVersionCC = require('../services/call-retrieve-version-cc');
 
 const retrieveVersion = async(req) => {
     //verifies that the req has the correct keys.
@@ -11,7 +11,7 @@ const retrieveVersion = async(req) => {
         }
     }
     //CALL CHAINCODE
-    const result = await callRetrieveUpdateCC(req);
+    const result = await callRetrieveVersionCC(req);
     //check if  result was succesful
     if(result.status.toString().valueOf() !== '201'){
         return {

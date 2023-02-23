@@ -1,0 +1,27 @@
+{
+    "publicKey": "string",
+    "update": {
+      "manifest": {
+        "versionID": "string",
+        "monotonicSequenceNumber": "2023-02-01T14:04:19.353Z",
+        "vendorID": "string",
+        "classID": "string",
+        "payloadFormat": "string",
+        "payloadProcessing": "string",
+        "storageLocation": "string",
+        "payloadDigest": "string",
+        "manifestDigest": "string",
+        "size": "324",
+        "aditionalInstructions": "string",
+        "dependencies": [
+          "string"
+        ],
+        "encryptionWrapper": "string",
+        "payloadIndicator": "string",
+        "payload": "string"
+      },
+      "payload": "SGVsbG8gRXZlcnlvbmUKSW4gdGhpcyB2aWRlbyB3ZSBhcmUgZ29pbmcgdG8gc2hvdyB0aGUgcHJvY2VzcyBvZiBpbnN0YWxhdGlvbiBmb3IgdGhlIHByb2plY3QKCjEuLSBJbml0aWFsaXplIHRoZSBIeXBlcmxlZGdlciBUZXN0IE5ldHdvcmsKMi4tIEluc3RhbGwgVGhlIENoYWluY29kZQozLi0gSW5pdGlhbGl6ZSB0aGUgSVBGUyBwcml2YXRlIG5ldHdvcmsKNC4tIENvbmZpZ3VyZSBSZWdpc3RlciBBZ2VudCBhbmQgUmV0cmlldmFsIEFnZW50CjUuLSBMYXVuY2ggUmVnaXN0ZXIgQWdlbnQKNi4tIExhdW5jaCBBdXRob3IgQWdlbnQgLS0+IEFkZCBhc3NldHMgdG8gdGhlIGJsb2NrY2hhaW4gLyBJUEZTCjcuLSBMYXVuY2ggUmV0cmlldmFsIEFnZW50IC0tPiBSZXRyaWV2ZSBmcm9tIGJsb2NrY2hhaW4gLyBJUEZT",
+      "authorSign": "string",
+      "authorManifestSign": "string"
+    }
+  }
