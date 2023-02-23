@@ -39,7 +39,7 @@ const retrieve = async(req) => {
     //console.log(update)
     return {
         status : resultCID.status,
-        message : JSON.stringify(update,null,'\t')
+        message : update
     }
 
 }

@@ -23,7 +23,7 @@ router.post("/retrieve/version", async function(req, res) {
 router.post("/retrieve", async function(req, res) {
   try {
     const result = await retrieve(req);
-    res.status(parseInt(result.status)).json(result.message.toString());
+    res.status(parseInt(result.status)).json(result.message);
   }catch (error) {
     console.log(`Failed to evaluate transaction: ${error}`);
     if (!error.status) error.status = 500;

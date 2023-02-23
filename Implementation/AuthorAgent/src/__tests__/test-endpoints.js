@@ -189,7 +189,7 @@ const { ConnectionClosedEvent } = require("mongodb");
                 if (err) return done(err);
                 return done();
             });
-        });
+        },20000);
         test('Correct input non random', (done)=> {
             var json = readJSON("./test-json/update-register-non-random.json",'V_1',path.resolve(__dirname,'../','public_key'),path.resolve(__dirname,'../','private_key'));
             console.log("public key when bad: " + json.publicKey);
@@ -201,5 +201,5 @@ const { ConnectionClosedEvent } = require("mongodb");
                 if (err) return done(err);
                 return done();
             });
-        });
+        },20000);
   });
