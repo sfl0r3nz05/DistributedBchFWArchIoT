@@ -8,6 +8,7 @@ The project has two main components:
 - The blockchain application contains the smart contracts to be deployed on the blockchain network.
 
 - The client application contains the agents that let users interact with the application.
+
 ![Architecture](Architecture.drawio.png?raw=true "Architecture")
 
 ## Blockchain Application
