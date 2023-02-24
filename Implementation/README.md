@@ -9,6 +9,8 @@ The project has two main components:
 
 - The client application contains the agents that let users interact with the application.
 
+They are supported by an IPFS network and the Hyperledger Fabric test network. The architecture has the following structure:
+
 ![Architecture](Architecture.drawio.png?raw=true "Architecture")
 
 ## Blockchain Application
@@ -18,14 +20,14 @@ that do not require heavy consensus algorithms like PoW.
 
 In the current version of the project the test network is used. Check the instalation section down bellow for details.
 
-The smart contracts in Hyperledger Fabric are called chaincodes. We implement them using the node.js version of Hyperledger Fabric SDK.
+The smart contracts in Hyperledger Fabric are contained in groups called chaincodes. We implement them using the node.js version of Hyperledger Fabric SDK.
 
-The chaincodes are implemented in [RegisterChaincode](./RegisterChaincode) and RetrievalChaincode (pending...).
+The contracts and the chaincode are implemented in [Chaincode](./RegisterChaincode).
 
 ## Client Application
 
-The client applications is composed by three agents: [Author](./AuthorAgent), [Register](./RegisterAgent) and Retrieval. Each one of these agents is composed by a few Docker images that contain a 
-node.js application and a data base. 
+The client applications is composed by three agents: [Author](./AuthorAgent), [Register](./RegisterAgent) and [Retrieval](./RetrievalAgent/). Each one of these agents is composed by one or few Docker images that contain a 
+node.js application. 
 
 The node applications serve a RESTful API that let users (authors and devices) interact with the blockchain network application. For more details about the data flow
 and structure of the project, see [Design](../Design).
@@ -79,7 +81,7 @@ To get the repository working in a local environment, please follow the instruct
 2. Copy the connection-org1.json file from test-network/organizations/peerOrganizations/org1.example.com into /RegisterAgent/src/config.
 3. Delete contents of RegisterAgent/src/wallet
 3. Update connection-org1.json to include the gateway address from your network instead of localhost.
-4. Initialize your IPFS node/network. If you dont have one, you use the [custom private network implementation](./IPFS) or you can try using the public Docker image using the following command.
+4. Initialize your IPFS node/network. If you dont have one, you can use the [custom private network implementation](./IPFS) or you can try using the public Docker image using the following command.
     ```
     docker run -d --name ipfs_host --network fabric_test -e IPFS_PROFILE=server -v $ipfs_staging:/export -v $ipfs_data:/data/ipfs -p 4001:4001 -p 4001:4001/udp -p 127.0.0.1:8080:8080 -p 127.0.0.1:5001:5001 ipfs/kubo:latest
     ```

@@ -1,7 +1,7 @@
 const crypto = require("crypto");
 
 
-
+//verifies the content of the signed message using the public key.
 function verifySign (message, signedMessage, publicKey){
     var buffer = Buffer.from(signedMessage, "base64");
     var decrypted ="";
