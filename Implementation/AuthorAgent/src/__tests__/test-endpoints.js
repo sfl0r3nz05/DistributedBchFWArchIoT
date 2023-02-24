@@ -31,11 +31,11 @@ const { ConnectionClosedEvent } = require("mongodb");
         fs.writeFileSync('private_key', privateKey.toString('base64'));
         console.log(publicKey.toString('base64'));
         const message = "message";
-
+        const messageHash = crypto.createHash('sha384').update(message).digest('hex');
         const signedMessage = crypto.privateEncrypt({
             key : privateKey, 
             padding : crypto.constants.RSA_PKCS1_PADDING,
-        },Buffer.from(message)
+        },Buffer.from(messageHash)
         ).toString('base64');
 
         var json = {
@@ -168,14 +168,15 @@ const { ConnectionClosedEvent } = require("mongodb");
 
             const message = "message";
     
+            const messageHash = crypto.createHash('sha384').update(message).digest('hex');
             const signedMessage = crypto.privateEncrypt({
-                key : Buffer.from(privateKey), 
+                key : privateKey, 
                 padding : crypto.constants.RSA_PKCS1_PADDING,
-            },Buffer.from(message)
+            },Buffer.from(messageHash)
             ).toString('base64');
             
             const decrypt = crypto.publicDecrypt(publicKey,Buffer.from(signedMessage, 'base64')).toString();
-            console.log("Decrypt: " + decrypt);
+            console.log("Decrypt: " + decrypt + " hash: " + messageHash);
             var json = {
                 message: message,
                 signedMessage : signedMessage,
