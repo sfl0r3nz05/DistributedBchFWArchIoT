@@ -1,0 +1,9 @@
+{
+    "connection" : "http://127.0.0.1:3000/register",
+    "port": "3003",
+    "requestHost" : "http://127.0.0.1:",
+    "requestPort" : "3000",
+    "registerAuthorPath" : "/register/author",
+    "registerUpdatePath" : "/register"
+
+}

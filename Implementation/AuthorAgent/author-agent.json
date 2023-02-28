@@ -166,6 +166,89 @@
                     }
                   }
                 }
+              },
+              "multipart/form-data" : {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "publicKey": {
+                      "type": "string"
+                    },
+                    "update": {
+                      "type": "object",
+                      "properties": {
+                        "manifest": {
+                          "type": "object",
+                          "properties" :{
+                            "versionID" : {
+                              "type" :"string"
+                            },
+                            "monotonicSequenceNumber" : {
+                              "type" : "string"
+                            },
+                            "vendorID" : {
+                              "type" : "string",
+                              "required" : "false"
+                            },"classID" : {
+                              "type" : "string"
+                            },
+                            "payloadFormat" : {
+                              "type" : "string"
+                            },
+                            "payloadProcessing" : {
+                              "type" : "string",
+                              "required" : "false"
+                            }, 
+                            "storageLocation" : {
+                              "type" : "string"
+                            }, 
+                            "payloadDigest" : {
+                              "type" : "string"
+                            }, 
+                            "manifestDigest" : {
+                              "type" : "string"
+                            }, 
+                            "size" : {
+                              "type" : "number"
+                            },
+                            "aditionalInstructions" : {
+                              "type" : "string",
+                              "required" : "false"
+                            }, 
+                            "dependencies" : {
+                              "type" : "array",
+                              "items": {
+                                "type" : "string"
+                              }
+                            }, 
+                            "encryptionWrapper" : {
+                              "type" : "string"
+                            }, 
+                            "payloadIndicator" : {
+                              "type" : "string",
+                              "required" : "false"
+                            }, 
+                            "payload" : {
+                              "type" : "string",
+                              "format" : "binary",
+                              "required" : "false"
+                            }
+                          }
+                        },
+                        "authorSign": {
+                          "type": "string"
+                        },
+                        "authorManifestSign": {
+                          "type": "string"
+                        }
+                      }
+                    },
+                    "payload": {
+                      "type": "string",
+                      "format": "binary"
+                    }
+                  }
+                }
               }
             }
           },

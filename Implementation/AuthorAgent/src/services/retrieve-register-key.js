@@ -6,7 +6,9 @@ const mongoose = require('mongoose');
 const retrieveRegisterKey = async(publicKey) => {
     const conn = mongoose.createConnection();
     await mongoose.connect('mongodb://mongo:27017');
+    //console.log("received public Key: " + publicKey + "  Tostring  " + publicKey.toString());
     const keypair = await KeyPair.findOne({publicKey : publicKey.toString()});
+    //console.log(keypair)
     conn.close();
     if(!keypair){
         return false;

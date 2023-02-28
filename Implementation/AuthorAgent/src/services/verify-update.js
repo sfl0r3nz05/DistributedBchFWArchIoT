@@ -1,10 +1,27 @@
+const mandatoryManifest = 
+['versionID','monotonicSequenceNumber','classID','payloadFormat',
+'storageLocation', 'payloadDigest', 'manifestDigest', 'size', 
+    'dependencies', 'encryptionWrapper'];
+const expectedManifest = 
+['versionID','monotonicSequenceNumber','vendorID','classID','payloadFormat',
+'payloadProcessing', 'storageLocation', 'payloadDigest', 'manifestDigest', 'size', 
+'aditionalInstructions', 'dependencies', 'encryptionWrapper', 'payloadIndicator', 
+'payload'];
+const expectedUpdate = ['manifest', 'authorSign', 'authorManifestSign'];
+const expected = ['update', 'publicKey'];
+
+
 function readRequest(req){
     var keys = Object.keys(req);
     return keys;
 }
 
 function verifyPetition(keys, expected){
-    return keys.sort().join(',')=== expected.sort().join(',')
+    const verified = keys.sort().join(',')=== expected.sort().join(',');
+    if (!verified){
+        console.log("Petition Keys not valid. Expected: "+ expected + " Received: " + keys);
+    }
+    return verified;
 }
 //this function verifies that the manifest has a correct format.
 function verifyManifest(manifestKeys,expectedKeys,mandatoryManifest){
@@ -19,7 +36,7 @@ function verifyManifest(manifestKeys,expectedKeys,mandatoryManifest){
     }
     for (let i = 0; i< mandatoryManifest.length; i++){
         if (!(listOne.includes(listThree[i]))){
-            //console.log(listThree[i] + "mandatory field not present in manifest");
+            console.log(listThree[i] + "mandatory field not present in manifest");
             return false;
         }
     }
@@ -28,25 +45,39 @@ function verifyManifest(manifestKeys,expectedKeys,mandatoryManifest){
 
 //this function verifies that the req for update register process has all the neccesary keys.
 function verifyUpdate(req){
-    var keys = readRequest(req.body);
-    var expected = ['update', 'publicKey'];
-    if(verifyPetition(keys, expected)){
-        var updateKeys = readRequest(req.body.update);
-        var expectedUpdate = ['manifest', 'payload', 'authorSign', 'authorManifestSign'];
-        if (verifyPetition(updateKeys, expectedUpdate)){
-            var manifestKeys = readRequest(req.body.update.manifest);
-            var mandatoryManifest = 
-            ['versionID','monotonicSequenceNumber','classID','payloadFormat',
-            'storageLocation', 'payloadDigest', 'manifestDigest', 'size', 
-             'dependencies', 'encryptionWrapper'];
-            var expectedManifest = 
-            ['versionID','monotonicSequenceNumber','vendorID','classID','payloadFormat',
-            'payloadProcessing', 'storageLocation', 'payloadDigest', 'manifestDigest', 'size', 
-            'aditionalInstructions', 'dependencies', 'encryptionWrapper', 'payloadIndicator', 
-            'payload'];
-            return verifyManifest(manifestKeys,expectedManifest,mandatoryManifest);
-        } else return false;
-    } else return false;
+    try {
+        var keys = readRequest(req.body);
+        var correctKeys = verifyPetition(keys, expected);
+        if(!correctKeys){
+            return false;
+        } 
+
+        var updateKeys;
+        try {
+            updateKeys = readRequest(JSON.parse(req.body.update));
+        } catch (err){
+            updateKeys = readRequest(req.body.update);
+        }
+
+        var correctBody = verifyPetition(updateKeys, expectedUpdate);
+        if(!correctBody){
+            return false;
+        } 
+
+        var manifestKeys;
+        try{
+            manifestKeys = readRequest(JSON.parse(req.body.update).manifest);
+        } catch {
+            manifestKeys = readRequest(req.body.update.manifest);
+        }
+        return verifyManifest(manifestKeys,expectedManifest,mandatoryManifest);
+
+    } catch(err){
+        console.log(err);
+        return false;
+    }
+    
+        
     
 }
 

@@ -7,12 +7,17 @@ const createUpdateRegister = require('../services/create-update-register');
 //It returns an object containing a status code and a message, either error or success.
 //It manages all the services require to adapt the Update petition and POST it to the register agent.
 const registerUpdate = async(req) => {
+    //console.log(req.file, req.body)
         // req is verified to contain all the fields needed for the update process.
-        let verifiable = verifyUpdate(req);
+        var isMultipart = false;
+        if(req.file){
+            isMultipart = true
+        }
+        let verifiable = verifyUpdate(req, isMultipart);
         if(!verifiable){
             return {
                 status : 405,
-                message : 'Input not valid'
+                message : 'Input is not valid'
             }
         }
         //registerKey associated to publicKey is retrived from db. 
@@ -26,7 +31,13 @@ const registerUpdate = async(req) => {
         //An UpdateRegister object is made from Update and registerKey.
         const updateRegister = createUpdateRegister(req, registerKey);
         // POST petition made to registerAgent
-        const data = await updateRequest(updateRegister);
+        var data;
+        if (isMultipart){
+            data = await updateRequest(updateRegister,isMultipart,req.file.path.toString());
+        } else {
+            data = await updateRequest(updateRegister,isMultipart);
+        }
+        
         return {
             status : data.stat,
             message : data.message

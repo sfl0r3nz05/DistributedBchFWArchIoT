@@ -9,12 +9,17 @@ const verifyUpdate = (updateRegister, publicKey) => {
     const key = verifyRegisterKey(publicKey,updateRegister.authorKey);
     const manifest = verifyManifest(updateRegister, publicKey);
     const payload = verifyPayload(updateRegister,publicKey);
-    return (manifest && payload && key && fields)
+    verified = (manifest && payload && key && fields);
+    if (!verified){
+        throw new Error('Update not verifiable. Check the update format.');
+    }
+    return true;
 }
 
 //this method verifies that the manifest has not been modified
 const verifyManifest = (updateRegister, publicKey) => {
-    //obtain manifest digest
+    try {
+        //obtain manifest digest
     var manifest = JSON.parse(stringify(updateRegister.manifest));
     delete manifest.manifestDigest;
     const manifestDigest = crypto.createHash('sha384')
@@ -26,11 +31,17 @@ const verifyManifest = (updateRegister, publicKey) => {
     if(!((manifestDigest.valueOf() == signatureContent.valueOf()) && ((manifestDigest.valueOf() == updateRegister.manifest.manifestDigest.toString().valueOf() ))) ){
         throw new Error('ERR_MANIFEST_NOT_VERIFIABLE');
     }
+    } catch (err) {
+        console.info(err);
+        throw new Error('ERR_MANIFEST_NOT_VERIFIABLE');
+    }
+    
 }
 
 //this method verifies that the payload has not been modified.
 const verifyPayload = (updateRegister, publicKey) => {
-    //console.info("received manifest payloadDigest: " + stringify(updateRegister.manifest.payloadDigest))
+    try {
+        //console.info("received manifest payloadDigest: " + stringify(updateRegister.manifest.payloadDigest))
     //obtain payload digest
     const payloadDigest = crypto.createHash('sha384').update(stringify(updateRegister.payload)).digest('hex');
     //console.info("payload digest: " + payloadDigest)
@@ -40,6 +51,10 @@ const verifyPayload = (updateRegister, publicKey) => {
     //console.info("author sign content: " + signatureContent)
     //compare results
     if(!((payloadDigest.valueOf() == signatureContent.valueOf()) && ((payloadDigest.valueOf() == updateRegister.manifest.payloadDigest.toString().valueOf() )) )){
+        throw new Error('ERR_PAYLOAD_NOT_VERIFIABLE');
+    }
+    } catch (err){
+        console.info(err);
         throw new Error('ERR_PAYLOAD_NOT_VERIFIABLE');
     }
 }

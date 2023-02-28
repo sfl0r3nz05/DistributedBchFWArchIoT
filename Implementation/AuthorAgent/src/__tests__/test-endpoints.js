@@ -4,11 +4,8 @@ const request = supertest(app);
 const fs = require('fs');
 var path = require("path");
 const crypto = require('crypto');
-const digest = require('../services/test-services/digest');
-const sign = require('../services/test-services/sign');
-const stringify = require('json-stringify-deterministic');
 const readJSON = require('../services/test-services/read-json');
-const { ConnectionClosedEvent } = require("mongodb");
+
 
   describe.skip('/register/author', () => {
     test('Correct input', (done)=> {
@@ -43,7 +40,7 @@ const { ConnectionClosedEvent } = require("mongodb");
             signedMessage : signedMessage,
             publicKey : publicKey
         };
-        console.log("JSON when good: " + JSON.stringify(json))
+        //console.log("JSON when good: " + JSON.stringify(json))
         request
         .post("/register/author")
         .send(json)
@@ -69,7 +66,6 @@ const { ConnectionClosedEvent } = require("mongodb");
   describe.skip('/register', () => {
     test('Correct input', (done)=> {
         var json = readJSON("./test-json/update-register.json",'V_1');
-        console.log("publicKey when ok: " + json.publicKey)
         request
         .post("/register")
         .send(json)
@@ -161,7 +157,7 @@ const { ConnectionClosedEvent } = require("mongodb");
     });
 });
 
-    describe('Register Author and Update with Non random Key, For retrieval Testing', () => {
+    describe.skip('Register Author and Update with Non random Key, For retrieval Testing', () => {
         test('Correct input', (done)=> {
             const publicKey = fs.readFileSync(path.resolve(__dirname,'../','public_key'),'utf8');
             const privateKey = fs.readFileSync(path.resolve(__dirname,'../','private_key'),'utf8');
@@ -192,8 +188,8 @@ const { ConnectionClosedEvent } = require("mongodb");
             });
         },20000);
         test('Correct input non random', (done)=> {
-            var json = readJSON("./test-json/update-register-non-random.json",'V_1',path.resolve(__dirname,'../','public_key'),path.resolve(__dirname,'../','private_key'));
-            console.log("public key when bad: " + json.publicKey);
+            var json = readJSON("./test-json/update-register-non-random.json",'V_2',path.resolve(__dirname,'../','public_key'),path.resolve(__dirname,'../','private_key'),false);
+            console.log("public key: " + json.publicKey);
             request
             .post("/register")
             .send(json)

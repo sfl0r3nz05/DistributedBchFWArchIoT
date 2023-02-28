@@ -4,7 +4,13 @@ const UpdateRegister = require('../models/updateRegister');
 // it receives a req containing and Update and a registerKey
 // it returns an UpdateRegister object created with the input, without the _id fields from mongoose.
 const createUpdateRegister = (req, registerKey) => {
-    let manifesto = new Manifest(req.body.update.manifest);
+    var update = req.body.update;
+    try {
+        update = JSON.parse(update);
+    } catch (err){
+        //update doesnt need parse
+    }
+    let manifesto = new Manifest(update.manifest);
     if (!manifesto.monotonicSequenceNumber || manifesto.monotonicSequenceNumber === ""){
     var date = new Date();
     manifesto.monotonicSequenceNumber = date;
@@ -12,9 +18,9 @@ const createUpdateRegister = (req, registerKey) => {
     let updateRegister = new UpdateRegister({
     authorKey : registerKey,
     manifest : manifesto,
-    authorSign : req.body.update.authorSign,
-    authorManifestSign : req.body.update.authorManifestSign,
-    payload : req.body.update.payload
+    authorSign : update.authorSign,
+    authorManifestSign : update.authorManifestSign,
+    payload : update.payload
     });
     var up = updateRegister.toObject();
     delete up._id;

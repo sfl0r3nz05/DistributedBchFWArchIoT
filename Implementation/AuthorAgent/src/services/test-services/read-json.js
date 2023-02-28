@@ -13,7 +13,7 @@ const readJSON = (pathTo, versionID, public_key, private_key, payload) => {
         json.publicKey = fs.readFileSync(public_key).toString();
     }
     if(payload){
-        json.update.payload = fs.readFileSync(path.resolve(__dirname, '../..','BCM2046A2-iMac2009Bluetooth.bin'),'base64');
+        json.update.payload = fs.readFileSync(path.resolve(__dirname, '../..','BCM2046A2-iMac2009Bluetooth.bin'));
     }
     json = digest(json);
     if(private_key){

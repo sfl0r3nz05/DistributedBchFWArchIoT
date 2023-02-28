@@ -1,3 +1,14 @@
+const expected = ['authorKey','manifest','authorSign','authorManifestSign'];
+const mandatoryManifest = 
+['versionID','monotonicSequenceNumber','classID','payloadFormat',
+'storageLocation', 'payloadDigest', 'manifestDigest', 'size', 
+    'dependencies', 'encryptionWrapper'];
+const expectedManifest = 
+['versionID','monotonicSequenceNumber','vendorID','classID','payloadFormat',
+'payloadProcessing', 'storageLocation', 'payloadDigest', 'manifestDigest', 'size', 
+'aditionalInstructions', 'dependencies', 'encryptionWrapper', 'payloadIndicator', 
+'payload'];
+
 function readRequest(req){
     var keys = Object.keys(req);
     return keys;
@@ -8,6 +19,7 @@ function verifyPetition(keys, expected){
 }
 //this function verifies that the received manifest has a correct format.
 function verifyManifest(manifestKeys,expectedKeys,mandatoryManifest){
+    console.log(manifestKeys)
     var listOne = manifestKeys.sort();
     var listTwo = expectedKeys.sort();
     var listThree = mandatoryManifest.sort();
@@ -29,19 +41,22 @@ function verifyManifest(manifestKeys,expectedKeys,mandatoryManifest){
 
 // this function verifies that the received UpdateREgister has the correct format.
 function verifyUpdate(req){
-    var keys = readRequest(req.body);
-    var expected = ['authorKey','manifest','authorSign','authorManifestSign','payload'];
+    var update;
+    try{
+        update = JSON.parse(req.body);
+    } catch {
+        update = req.body;
+    }
+    var keys = readRequest(update);
+    
     if(verifyPetition(keys, expected)){
-        var manifestKeys = readRequest(req.body.manifest);
-        var mandatoryManifest = 
-        ['versionID','monotonicSequenceNumber','classID','payloadFormat',
-        'storageLocation', 'payloadDigest', 'manifestDigest', 'size', 
-            'dependencies', 'encryptionWrapper'];
-        var expectedManifest = 
-        ['versionID','monotonicSequenceNumber','vendorID','classID','payloadFormat',
-        'payloadProcessing', 'storageLocation', 'payloadDigest', 'manifestDigest', 'size', 
-        'aditionalInstructions', 'dependencies', 'encryptionWrapper', 'payloadIndicator', 
-        'payload'];
+        var manifestKeys;
+        try {
+            manifestKeys = readRequest(JSON.parse(update.manifest));
+        } catch {
+            manifestKeys = readRequest(update.manifest);
+        }
+       
         return verifyManifest(manifestKeys,expectedManifest,mandatoryManifest);
     } else return false;
 }

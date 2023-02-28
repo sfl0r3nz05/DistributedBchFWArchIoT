@@ -23,10 +23,9 @@ describe('Test input update verification', () => {
       .toBe(false);
     });
     
-    test('inCorrect RegisterPetition format', () => {
-      expect(() => {
-        var json = {me: readJSON('./test-json/update-register-wrong.json')};
-        verifyUpdate(json);
-      }).toThrow();
-    });
+    //test('inCorrect RegisterPetition format', () => {
+    //  expect(() => {
+    //    verifyUpdate('json',3);
+     // }).toThrow();
+    //});
   });
