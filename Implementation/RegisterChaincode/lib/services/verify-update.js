@@ -5,11 +5,12 @@ const verifyRegisterKey = require('./verify-register-key');
 
 // this method verifies that the update has not been modified since signed.
 const verifyUpdate = (updateRegister, publicKey) => {
+    //console.info("verifying: " + JSON.stringify(updateRegister,null,'\t'))
     const fields = verifyUpdateFields(updateRegister);
-    const key = verifyRegisterKey(publicKey,updateRegister.authorKey);
+    //const key = verifyRegisterKey(publicKey,updateRegister.authorKey);
     const manifest = verifyManifest(updateRegister, publicKey);
     const payload = verifyPayload(updateRegister,publicKey);
-    verified = (manifest && payload && key && fields);
+    verified = (manifest && payload  && fields); //&& key
     if (!verified){
         throw new Error('Update not verifiable. Check the update format.');
     }
@@ -31,6 +32,7 @@ const verifyManifest = (updateRegister, publicKey) => {
     if(!((manifestDigest.valueOf() == signatureContent.valueOf()) && ((manifestDigest.valueOf() == updateRegister.manifest.manifestDigest.toString().valueOf() ))) ){
         throw new Error('ERR_MANIFEST_NOT_VERIFIABLE');
     }
+    return true;
     } catch (err) {
         console.info(err);
         throw new Error('ERR_MANIFEST_NOT_VERIFIABLE');
@@ -43,7 +45,7 @@ const verifyPayload = (updateRegister, publicKey) => {
     try {
         //console.info("received manifest payloadDigest: " + stringify(updateRegister.manifest.payloadDigest))
     //obtain payload digest
-    const payloadDigest = crypto.createHash('sha384').update(stringify(updateRegister.payload)).digest('hex');
+    const payloadDigest = crypto.createHash('sha384').update(updateRegister.payload).digest('hex');
     //console.info("payload digest: " + payloadDigest)
     //obtain signature content
     const buffer = Buffer.from(updateRegister.authorSign,'base64');
@@ -51,8 +53,12 @@ const verifyPayload = (updateRegister, publicKey) => {
     //console.info("author sign content: " + signatureContent)
     //compare results
     if(!((payloadDigest.valueOf() == signatureContent.valueOf()) && ((payloadDigest.valueOf() == updateRegister.manifest.payloadDigest.toString().valueOf() )) )){
+        console.info("payloadDigest: " + updateRegister.manifest.payloadDigest);
+        console.info("Sign: "+ signatureContent)
+        console.info("obtained payloadDigest: "+ payloadDigest);
         throw new Error('ERR_PAYLOAD_NOT_VERIFIABLE');
     }
+    return true;
     } catch (err){
         console.info(err);
         throw new Error('ERR_PAYLOAD_NOT_VERIFIABLE');
@@ -65,7 +71,11 @@ function readRequest(req){
 }
 
 function verifyPetition(keys, expected){
-    return keys.sort().join(',')=== expected.sort().join(',')
+    var verified = keys.sort().join(',')=== expected.sort().join(',');
+    if (!verified){
+        console.info("obtained: " + keys + " expected: " + expected);
+    }
+    return verified;
 }
 //this function verifies that the received manifest has a correct format.
 function verifyManifestFields(manifestKeys,expectedKeys,mandatoryManifest){

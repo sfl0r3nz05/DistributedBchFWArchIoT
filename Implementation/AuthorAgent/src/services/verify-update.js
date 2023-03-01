@@ -8,6 +8,7 @@ const expectedManifest =
 'aditionalInstructions', 'dependencies', 'encryptionWrapper', 'payloadIndicator', 
 'payload'];
 const expectedUpdate = ['manifest', 'authorSign', 'authorManifestSign'];
+const expectedUpdatePayload = ['manifest', 'authorSign', 'authorManifestSign', 'payload'];
 const expected = ['update', 'publicKey'];
 
 
@@ -60,7 +61,8 @@ function verifyUpdate(req){
         }
 
         var correctBody = verifyPetition(updateKeys, expectedUpdate);
-        if(!correctBody){
+        var correctBodyPayload = verifyPetition(updateKeys, expectedUpdatePayload);
+        if(!correctBody && !correctBodyPayload){
             return false;
         } 
 

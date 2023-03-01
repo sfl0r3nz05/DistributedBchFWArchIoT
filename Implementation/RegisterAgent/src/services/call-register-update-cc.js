@@ -4,6 +4,7 @@ const path = require('path');
 const ccpPath = path.resolve(__dirname, '..', 'config',  'connection-org1.json');
 const walletPath = path.resolve(__dirname, '..', 'wallet');
 const stringify = require('json-stringify-deterministic');
+const crypto = require('crypto')
 
 //This service creates a connection to the blockchain gateway an asks to create a execute the register
 //author contract from RegisterAuthor chaincode.
@@ -26,8 +27,28 @@ const callRegisterUpdateCC = async (req) => {
     const network = await gateway.getNetwork('mychannel');
     const contract = network.getContract('register','RegisterUpdate');
     try { //ask for the contract to be executed.
-        console.log(stringify(req.body.manifest));
-        const result = await contract.submitTransaction('createUpdate', stringify(req.body), Date.now().toString());
+        var payload;
+        if(req.file){
+            payload = fs.readFileSync(req.file.path.toString());
+        } else {
+            payload = req.body.payload;
+        }
+        const payloadDigest = crypto.createHash('sha384').update(payload).digest('hex');
+        console.log(payloadDigest);
+        var manifest = req.body.manifest;
+        try{
+            console.log(JSON.parse(manifest).payloadDigest)
+        } catch {
+            console.log(manifest.payloadDigest)
+        }
+        
+        //manifest may be in string or object form. We want it to always be in string form.
+        if(manifest.versionID){
+            manifest = stringify(manifest);
+        }
+        const result = await contract.submitTransaction('createUpdate', 
+        req.body.authorKey, manifest, payload, req.body.authorSign, req.body.authorManifestSign,
+        Date.now().toString());
         gateway.disconnect();
         console.log(`Transaction has been evaluated, result is: ${result.toString()}`);
         return {

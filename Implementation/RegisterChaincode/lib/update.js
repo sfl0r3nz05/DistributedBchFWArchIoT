@@ -39,10 +39,16 @@ class RegisterUpdate extends Contract {
 
     //needs to use comoposite key or somehow fasten queries, but after around 10h trying i 
     //can not seem to make them work. When composite key is used, the record is not stored.
-    async createUpdate(ctx, updateRegister, dat) {
+    async createUpdate(ctx, authorKey, manifest, payload, authorSign, authorManifestSign, dat) {
         try {
             console.info('============= START : Create Update ===========');
-            const updateObject = JSON.parse(updateRegister)
+            const updateObject = {
+                authorKey : authorKey,
+                manifest : JSON.parse(manifest),
+                payload : payload,
+                authorSign : authorSign,
+                authorManifestSign : authorManifestSign
+            }
             //Verify public key;
             console.info('============= Verifiying register Key =============');
             const authorAsBytes = await ctx.stub.getState(updateObject.authorKey); // get the author from chaincode state

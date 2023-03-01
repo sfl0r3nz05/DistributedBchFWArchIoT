@@ -37,7 +37,9 @@ router.post("/register/author", bodyParser.json(), async(req, res) => {
 //Receives an Update and a public key. Tries to register an update in the blockchain.
   //JSON
   router.post("/register", bodyParser.json(),upload.single('payload'), async(req, res, next) => {
-    console.log(req.file)
+    if(req.body.update.constructor === "a".constructor){
+      req.body.update = JSON.parse(req.body.update);
+    }
     try {
       const response = await registerUpdate(req);
       console.log(response);

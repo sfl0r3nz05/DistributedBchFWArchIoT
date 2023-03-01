@@ -1,4 +1,5 @@
 const expected = ['authorKey','manifest','authorSign','authorManifestSign'];
+const expectedPayload = ['authorKey','manifest','authorSign','authorManifestSign','payload'];
 const mandatoryManifest = 
 ['versionID','monotonicSequenceNumber','classID','payloadFormat',
 'storageLocation', 'payloadDigest', 'manifestDigest', 'size', 
@@ -49,7 +50,7 @@ function verifyUpdate(req){
     }
     var keys = readRequest(update);
     
-    if(verifyPetition(keys, expected)){
+    if(verifyPetition(keys, expected) || verifyPetition(keys, expectedPayload)){
         var manifestKeys;
         try {
             manifestKeys = readRequest(JSON.parse(update.manifest));

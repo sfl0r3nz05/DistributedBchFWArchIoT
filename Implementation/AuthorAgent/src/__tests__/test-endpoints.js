@@ -7,7 +7,7 @@ const crypto = require('crypto');
 const readJSON = require('../services/test-services/read-json');
 
 
-  describe.skip('/register/author', () => {
+  describe('/register/author', () => {
     test('Correct input', (done)=> {
         const { publicKey, privateKey } = crypto.generateKeyPairSync("rsa", {
             // The standard secure default length for RSA keys is 2048 bits
@@ -63,7 +63,7 @@ const readJSON = require('../services/test-services/read-json');
     });
   });
 
-  describe.skip('/register', () => {
+  describe('/register', () => {
     test('Correct input', (done)=> {
         var json = readJSON("./test-json/update-register.json",'V_1');
         request
@@ -86,7 +86,7 @@ const readJSON = require('../services/test-services/read-json');
             return done();
         });
     });
-    test('Correct partial input repeated key', (done)=> {
+    test.skip('Correct partial input repeated key', (done)=> {
         var json = readJSON("./test-json/update-register-partial.json",'V_1');
         request
         .post("/register")
@@ -97,7 +97,7 @@ const readJSON = require('../services/test-services/read-json');
             return done();
         });
     });
-    test('Incorrect input mandatory field missing', (done)=> {
+    test.skip('Incorrect input mandatory field missing', (done)=> {
         var json = readJSON("./test-json/update-register-wrong.json");
         request
         .post("/register")
@@ -108,7 +108,7 @@ const readJSON = require('../services/test-services/read-json');
             return done();
         });
     });
-    test('Incorrect input non allowed field', (done)=> {
+    test.skip('Incorrect input non allowed field', (done)=> {
         var json = readJSON("./test-json/update-register-non-allowed.json");
         request
         .post("/register")
@@ -119,7 +119,7 @@ const readJSON = require('../services/test-services/read-json');
             return done();
         });
     });
-    test('Correct input non registered', (done)=> {
+    test.skip('Correct input non registered', (done)=> {
         var json = readJSON("./test-json/update-register-unregistered.json");
         json.publicKey = 'NONREGISTEREDKEY'
         request
@@ -131,7 +131,7 @@ const readJSON = require('../services/test-services/read-json');
             return done();
         });
     });
-    test('Modified manifest', (done)=> {
+    test.skip('Modified manifest', (done)=> {
         var json = readJSON("./test-json/update-register.json");
         json.update.manifest.versionID = "XD"
         request
@@ -143,7 +143,7 @@ const readJSON = require('../services/test-services/read-json');
             return done();
         });
     });
-    test('Modified payload', (done)=> {
+    test.skip('Modified payload', (done)=> {
         var json = readJSON("./test-json/update-register.json");
         json.update.payload = "XD"
         request

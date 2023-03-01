@@ -38,7 +38,6 @@ router.post("/register/author",bodyParser.json(), async function(req, res) {
 //to update the CID. Returns result from CC.
 router.post("/register", bodyParser.json(), upload.single('payload'), async function(req, res, next) {
   try {
-    console.log("ya right")
     console.log(req.body, req.file);
     const result = await registerUpdate(req);
     res.status(parseInt(result.status)).json(result.message.toString());

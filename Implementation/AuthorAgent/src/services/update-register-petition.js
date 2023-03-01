@@ -6,6 +6,7 @@ const stringify = require('json-stringify-deterministic');
 
 const multipart = async (pdata, filePath,url) =>{
     console.log(pdata)
+
     form = new FormData();
     var payload = fs.createReadStream(filePath);
     console.log(payload);
@@ -13,7 +14,7 @@ const multipart = async (pdata, filePath,url) =>{
     form.append('authorKey', pdata.authorKey.toString());
     form.append('manifest', stringify(pdata.manifest));
     form.append('authorSign', pdata.authorSign.toString());
-    form.append('authorManifestSign', pdata.authorKey.toString());
+    form.append('authorManifestSign', pdata.authorManifestSign.toString());
     var res = await axios.post(url, form, {
         headers: form.getHeaders(),
         validateStatus : () => true
