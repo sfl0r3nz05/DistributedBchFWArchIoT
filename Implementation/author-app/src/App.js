@@ -1,11 +1,14 @@
 import './App.css';
+import Header from './components/Header.js'
+import RegisterAuthorForm from './components/RegisterAuthorForm';
+
 
 function App() {
   return (
     <div className="App">
-      <header className="App-header">
-        Author Agent App
-      </header>
+      <Header />
+
+      <RegisterAuthorForm/>
     </div>
   );
 }
