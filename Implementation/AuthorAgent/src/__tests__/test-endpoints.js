@@ -157,8 +157,8 @@ const readJSON = require('../services/test-services/read-json');
     });
 });
 
-    describe.skip('Register Author and Update with Non random Key, For retrieval Testing', () => {
-        test('Correct input', (done)=> {
+    describe('Register Author and Update with Non random Key, For retrieval Testing', () => {
+        test.skip('Correct input', (done)=> {
             const publicKey = fs.readFileSync(path.resolve(__dirname,'../','public_key'),'utf8');
             const privateKey = fs.readFileSync(path.resolve(__dirname,'../','private_key'),'utf8');
 

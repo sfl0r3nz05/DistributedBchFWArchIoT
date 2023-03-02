@@ -11,8 +11,9 @@ const crypto = require('crypto')
 
 // This service will create an update petition and send it to the author agent.
 var json = JSON.parse(fs.readFileSync(path.resolve(__dirname,'../','data','update-register.json'),'utf-8'));
+json.update.manifest.versionID = 'Z_9'+Date.now()
 var payload = fs.createReadStream(path.resolve(__dirname,'../','data','BCM2046A2-iMac2009Bluetooth.bin'));
-var payloadToDigest = fs.readFileSync(path.resolve(__dirname,'../','data','BCM2046A2-iMac2009Bluetooth.bin'));
+var payloadToDigest = fs.readFileSync(path.resolve(__dirname,'../','data','BCM2046A2-iMac2009Bluetooth.bin'),'base64');
 var publicKey = fs.readFileSync(path.resolve(__dirname,'../','data','public_key'),'utf-8');
 var privateKey = fs.readFileSync(path.resolve(__dirname,'../','data','private_key'),'utf-8');
 
@@ -22,7 +23,7 @@ var signedJSON = sign(digestedJSON,privateKey);
 /* console.log("manifestDigest: "+ signedJSON.update.manifest.manifestDigest);
 const signatureContent = crypto.publicDecrypt(publicKey,Buffer.from(signedJSON.update.authorManifestSign,'base64')).toString();
 console.log("signature content: " + signatureContent) */
-console.log(payloadToDigest);
+//console.log(payloadToDigest);
 
 var form = new FormData();
 form.append('publicKey', publicKey);

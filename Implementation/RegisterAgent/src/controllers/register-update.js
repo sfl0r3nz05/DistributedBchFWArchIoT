@@ -16,6 +16,7 @@ const registerUpdate = async(req) =>{
     //create an UpdateRegister Object in case we need to store it.
     //const updateRegister = createUpdateRegister(req);
     //Store update on db
+    
     //CALL CHAINCODE
     const result = await callRegisterUpdateCC(req);
     //check if  result was succesful
@@ -26,7 +27,7 @@ const registerUpdate = async(req) =>{
         }
     }
     //store update payload in ipfs
-    const CID = await storeImageIPFS(req.body.payload);
+    const CID = await storeImageIPFS(req.body.payload,req.file);
     console.log(CID);
     // store CID in the chain
     const resultCID = await callRegisterCIDCC(req, CID);

@@ -118,6 +118,7 @@ class RegisterUpdate extends Contract {
         const keyer = update.Key.toString();
         const recorder = stringify(update.Record);
         await ctx.stub.putState(keyer, Buffer.from(recorder));
+        console.info(recorder);
         return 'Success';
         }catch (err){
             console.info(err);

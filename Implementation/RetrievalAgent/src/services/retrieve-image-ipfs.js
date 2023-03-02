@@ -13,7 +13,7 @@ const retrieveImageIPFS = async(CID) =>{
             content = [...content, ...chunk];
         }
         const raw = Buffer.from(content).toString('utf8')
-        console.log(raw)
+        //console.log(raw)
         
         return {
             status : 201,

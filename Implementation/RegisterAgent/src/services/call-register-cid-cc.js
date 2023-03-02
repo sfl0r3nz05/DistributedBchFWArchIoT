@@ -26,8 +26,14 @@ const callRegisterCIDCC = async (req, CID) => {
     const network = await gateway.getNetwork('mychannel');
     const contract = network.getContract('register','RegisterUpdate');
     try { //ask for the contract to be executed.
+        var manifest;
+        if(!req.body.manifest.versionID){
+            manifest = JSON.parse(req.body.manifest);
+        } else {
+            manifest = req.body.manifest;
+        }
         console.log(stringify(req.body.manifest));
-        const result = await contract.submitTransaction('updateCID', req.body.authorKey.toString(), req.body.manifest.versionID.toString(), req.body.manifest.classID.toString(), stringify(CID));
+        const result = await contract.submitTransaction('updateCID', req.body.authorKey.toString(), manifest.versionID.toString(), manifest.classID.toString(), stringify(CID));
         gateway.disconnect();
         console.log(`Transaction has been evaluated, result is: ${result.toString()}`);
         return {

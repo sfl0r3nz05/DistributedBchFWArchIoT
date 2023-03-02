@@ -29,7 +29,7 @@ const callRegisterUpdateCC = async (req) => {
     try { //ask for the contract to be executed.
         var payload;
         if(req.file){
-            payload = fs.readFileSync(req.file.path.toString());
+            payload = fs.readFileSync(req.file.path.toString(),'base64');
         } else {
             payload = req.body.payload;
         }
