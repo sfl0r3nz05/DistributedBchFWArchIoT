@@ -5,6 +5,7 @@ const stringify  = require('json-stringify-deterministic');
 const { Contract } = require('fabric-contract-api');
 const createRegisterKey = require('./services/create-register-key');
 
+//creates example author assets. Intended for testing only.
 class RegisterAuthor extends Contract {
     async initLedger(ctx) {
         console.info('============= START : Initialize Ledger ===========');
@@ -31,6 +32,7 @@ class RegisterAuthor extends Contract {
         console.info('============= END : Initialize Ledger ===========');
     }
 
+    //Searches the world state for an asset with the given registerKey.
     async queryAuthor(ctx, registerKey) {
         const authorAsBytes = await ctx.stub.getState(registerKey); // get the author from chaincode state
         if (!authorAsBytes || authorAsBytes.length === 0) {
@@ -40,6 +42,7 @@ class RegisterAuthor extends Contract {
         return authorAsBytes.toString();
     }
 
+    //Register an author. If the author already exists, overwrites the registerKey.
     async createAuthor(ctx, message, signedMessage, publicKey) {
         try {
             console.info('============= START : Create Author ===========');

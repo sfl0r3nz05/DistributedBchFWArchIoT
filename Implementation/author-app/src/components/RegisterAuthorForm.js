@@ -2,7 +2,8 @@ import React, {useState} from 'react';
 import axios from 'axios';
 import CryptoJS from 'crypto-js';
 import JSEncrypt from 'jsencrypt';
-
+import Button from '@mui/material/Button';
+import { TextField } from '@mui/material';
 
 export default function RegisterAuthorForm(){
     const [publicKey,setPublicKey] = useState();
@@ -37,26 +38,31 @@ export default function RegisterAuthorForm(){
 
     function processMessage(theMessage){
         setMessage(theMessage);
-        var hash = CryptoJS.SHA384(message);
-        console.log(hash.toString())
+        var hash = CryptoJS.SHA384(theMessage).toString();
+        console.log(hash)
         setHashMessage(hash.toString());
         var sign = new JSEncrypt();
         sign.setPrivateKey(privateKeyContent);
-        var signedMessage = sign.sign(hash.toString(), CryptoJS.SHA384,"sha384");
+        var signedMessage = sign.sign(theMessage, CryptoJS.SHA384,"sha384");
         console.log("signed: " + signedMessage);
         setPrivateMessage(signedMessage);
     }
 
     function handleSubmit(event){
         event.preventDefault();
-        const url = 'http://172.18.0.3:3000/register';
+        const url = 'http://127.0.0.1:3000/register/author';
         const json = {
-            publicKey : publicKeyContent,
-            message : message,
-            signedMessage : privateMessage
+            publicKey : publicKeyContent.toString(),
+            message : message.toString(),
+            signedMessage : privateMessage.toString()
         }
         console.log(json);
-        axios.post(url, json, {withCredentials : false}).then((res) =>{
+        axios.post(url, json, {
+            withCredentials : false,
+            headers : {
+                "Content-Type" : "application/json"
+            }
+        }).then((res) =>{
             console.log(res.data)
         })
     }
@@ -68,28 +74,38 @@ export default function RegisterAuthorForm(){
             <div id='Keys'>
                 <h3>RSA-2048 Keys  -  PKCS1  -  PEM</h3>
                 <div>
-                    <label>PublicKey</label>
-                    <br/>
-                    <input type="file"
-                    onChange={(e) => readPublicKey(e.target.files[0])}></input>
+                    <TextField
+                        type="file"
+                        onChange={(e) => readPublicKey(e.target.files[0])}
+                        color="primary"
+                        variant='outlined'
+                        focused
+                        label="Public Key"
+                    />
                 </div>
+                <br/>
                 <div>
-                    <label>PrivateKey</label>
-                    <br/>
-                    <input type="file"
-                    onChange={async(e) => await readPrivateKey(e.target.files[0])}></input>
+                    <TextField
+                        type="file"
+                        onChange={async(e) => await readPrivateKey(e.target.files[0])}
+                        focused
+                        label="Private Key"                   
+                    />
                     <br/>
                     <a>Only used for signing messages, wont be uploaded</a>
-                    <br/>
-                    <a >{privateKeyContent}</a>
+                    
                 </div>
             </div>
             <div id='Message'>
                 <h3>Message</h3>
-                <label>Text Input</label>
-                <br/>
-                <input type="text" value = {message} 
-                onChange={(e) => processMessage(e.target.value)}></input>   
+                <TextField
+                        type="text"
+                        onChange={(e) => processMessage(e.target.value)}
+                        color="primary"
+                        variant='outlined'
+                        focused
+                        label="Message"
+                    />
                 <br/>
                 <a>The message will be signed for registering to the Blockchain Application</a>
             </div>
@@ -104,7 +120,7 @@ export default function RegisterAuthorForm(){
                 <label>Private Message</label><br/>
                 <a>{privateMessage}</a>
             </div>
-            <button type='submit'>Register Author</button>
+            <Button type='submit' variant='contained' color = "primary">Register Author</Button>
 
         </form>
     )

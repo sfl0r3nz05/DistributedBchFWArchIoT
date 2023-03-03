@@ -5,7 +5,7 @@ import RegisterAuthorForm from './components/RegisterAuthorForm';
 
 function App() {
   return (
-    <div className="App">
+    <div>
       <Header />
 
       <RegisterAuthorForm/>
