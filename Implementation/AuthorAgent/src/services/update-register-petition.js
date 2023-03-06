@@ -19,8 +19,8 @@ const multipart = async (pdata, filePath,url) =>{
         headers: form.getHeaders(),
         validateStatus : () => true
         });
-    console.log("obtained res: " + res.data)
-    console.log(Date.now())
+    //console.log("obtained res: " + res.data)
+    //console.log(Date.now())
     return res;
 }
 
@@ -28,7 +28,7 @@ const jsonType = async (pdata,url) =>{
     var res = await axios.post(url, pdata, {
         validateStatus : () => true
     });
-    console.log("obtained res: " + res.data)
+    //console.log("obtained res: " + res.data)
     return res;
 }
 //Creates a POST petition to the register agent to store an Update and returns the answer.

@@ -5,6 +5,7 @@ const multer = require('multer');
 const fs = require('fs');
 const registerAuthor = require('../controllers/register-author');
 const registerUpdate = require('../controllers/register-update');
+const sign  = require("../controllers/sign");
 
 //router.use(bodyParser.json());
 
@@ -20,6 +21,17 @@ var storage = multer.diskStorage({
 })
 
 var upload = multer({ storage: storage })
+
+router.post("/sign", bodyParser.json(), async(req, res) => {
+  try{
+    const response = await sign(req);
+    res.status(parseInt(response.status)).json(response.message);
+  } catch (error){
+    console.log(error);
+    if (!error.stat) error.stat = 500;
+    res.status(parseInt(error.stat)).json(error.message);
+  }
+});
 
 //Receives a RegisterPetition object. If succesful stores a keyPair with a new register key from 
 //the blockchain and the given public key.
