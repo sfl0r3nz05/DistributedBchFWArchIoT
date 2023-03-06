@@ -51,17 +51,17 @@ class RegisterUpdate extends Contract {
             }
             //Verify public key;
             console.info('============= Verifiying register Key =============');
-            const authorAsBytes = await ctx.stub.getState(updateObject.authorKey); // get the author from chaincode state
+            const authorAsBytes = await this.queryAuthorByRegisterKey(ctx,updateObject.authorKey); // get the author from chaincode state
             if (!authorAsBytes || authorAsBytes.length === 0) {
                 throw new Error('ERR_KEY_NOT_VALID');
             }
             console.info ('Author: ' + authorAsBytes)
             console.info('============== Verifying Update ================')
-            const verifiable = verifyUpdate(updateObject, JSON.parse(authorAsBytes).publicKey)
+            const verifiable = verifyUpdate(updateObject, authorAsBytes.record.publicKey)
             console.info('================ Storing update ================');
             //create update in chain
             const updateInChain = {
-                authorPublicKey : JSON.parse(authorAsBytes).publicKey,
+                authorPublicKey : authorAsBytes.record.publicKey,
                 CID : "YetToStore",
                 manifest : updateObject.manifest,
                 authorSign : updateObject.authorSign,
@@ -73,7 +73,7 @@ class RegisterUpdate extends Contract {
             //or by update data.
             const exists = await this.AssetExists(ctx, 'update'+dat.toString());
             const up = await this.queryUpdateByPublicKeyVersionIDClassID(ctx, 
-                JSON.parse(authorAsBytes).publicKey.toString(), updateInChain.manifest.versionID, 
+                authorAsBytes.record.publicKey.toString(), updateInChain.manifest.versionID, 
                 updateInChain.manifest.classID);
             if (exists) {
                 throw new Error('Please Try Again after a few seconds'); 
@@ -103,13 +103,13 @@ class RegisterUpdate extends Contract {
 
     async updateCID(ctx, authorKey, versionID, classID, CID){
         console.info('============= Verifiying register Key =============');
-        const authorAsBytes = await ctx.stub.getState(authorKey); // get the author from chaincode state
+        const authorAsBytes = await this.queryAuthorByRegisterKey(ctx, authorKey); // get the author from chaincode state
         if (!authorAsBytes || authorAsBytes.length === 0) {
             throw new Error('ERR_KEY_NOT_VALID');
         }
         //get the updateInChain to add CID to.
         console.info('=============== searching for updateInChain =================');
-        const update = await this.queryUpdateByPublicKeyVersionIDClassID(ctx, JSON.parse(authorAsBytes).publicKey.toString(),versionID, classID);
+        const update = await this.queryUpdateByPublicKeyVersionIDClassID(ctx, authorAsBytes.record.publicKey.toString(),versionID, classID);
         if (!update){
             throw new Error('ERR_UPDATE_NON_EXISTENT');
         }
@@ -120,9 +120,9 @@ class RegisterUpdate extends Contract {
         await ctx.stub.putState(keyer, Buffer.from(recorder));
         console.info(recorder);
         return 'Success';
-        }catch (err){
-            console.info(err);
-        }
+    }catch (err){
+        console.info(err);
+    }
     
     async queryUpdateByPublicKeyVersionIDClassID (ctx, publicKey, versionID, classID){
         const startKey = 'update000000000';
@@ -172,6 +172,31 @@ class RegisterUpdate extends Contract {
         }catch (err){
             console.info(err);
             return
+        }
+    }
+
+    async queryAuthorByRegisterKey(ctx, registerKey) {
+        try {
+        const startKey = 'Author00000000';
+        const endKey = 'Author99999999';
+        for await (const {key, value} of ctx.stub.getStateByRange(startKey, endKey)) {
+            const strValue = Buffer.from(value).toString('utf8');
+            let record;
+            try {
+                record = JSON.parse(strValue);
+            } catch (err) {
+                console.info(err);
+                record = strValue;
+            }
+            if (record.docType.toString().valueOf() == 'author' &&
+                record.registerKey.toString().valueOf() == registerKey.toString().valueOf()){
+                return {key,record};
+            }
+            
+        }
+        return null;
+        }catch (err){
+            console.info(err);
         }
     }
 }

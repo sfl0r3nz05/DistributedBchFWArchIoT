@@ -86,7 +86,7 @@ const readJSON = require('../services/test-services/read-json');
             return done();
         });
     });
-    test.skip('Correct partial input repeated key', (done)=> {
+    test('Correct partial input repeated key', (done)=> {
         var json = readJSON("./test-json/update-register-partial.json",'V_1');
         request
         .post("/register")
@@ -97,7 +97,7 @@ const readJSON = require('../services/test-services/read-json');
             return done();
         });
     });
-    test.skip('Incorrect input mandatory field missing', (done)=> {
+    test('Incorrect input mandatory field missing', (done)=> {
         var json = readJSON("./test-json/update-register-wrong.json");
         request
         .post("/register")
@@ -108,7 +108,7 @@ const readJSON = require('../services/test-services/read-json');
             return done();
         });
     });
-    test.skip('Incorrect input non allowed field', (done)=> {
+    test('Incorrect input non allowed field', (done)=> {
         var json = readJSON("./test-json/update-register-non-allowed.json");
         request
         .post("/register")
@@ -119,7 +119,7 @@ const readJSON = require('../services/test-services/read-json');
             return done();
         });
     });
-    test.skip('Correct input non registered', (done)=> {
+    test('Correct input non registered', (done)=> {
         var json = readJSON("./test-json/update-register-unregistered.json");
         json.publicKey = 'NONREGISTEREDKEY'
         request
@@ -131,7 +131,7 @@ const readJSON = require('../services/test-services/read-json');
             return done();
         });
     });
-    test.skip('Modified manifest', (done)=> {
+    test('Modified manifest', (done)=> {
         var json = readJSON("./test-json/update-register.json");
         json.update.manifest.versionID = "XD"
         request
@@ -143,7 +143,7 @@ const readJSON = require('../services/test-services/read-json');
             return done();
         });
     });
-    test.skip('Modified payload', (done)=> {
+    test('Modified payload', (done)=> {
         var json = readJSON("./test-json/update-register.json");
         json.update.payload = "XD"
         request
@@ -158,7 +158,7 @@ const readJSON = require('../services/test-services/read-json');
 });
 
     describe('Register Author and Update with Non random Key, For retrieval Testing', () => {
-        test.skip('Correct input', (done)=> {
+        test('Correct input', (done)=> {
             const publicKey = fs.readFileSync(path.resolve(__dirname,'../','public_key'),'utf8');
             const privateKey = fs.readFileSync(path.resolve(__dirname,'../','private_key'),'utf8');
 

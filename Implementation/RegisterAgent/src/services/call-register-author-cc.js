@@ -25,7 +25,8 @@ const callRegisterAuthorCC = async (req) => {
     const network = await gateway.getNetwork('mychannel');
     const contract = network.getContract('register','RegisterAuthor');
     try { //ask for the contract to be executed.
-        const result = await contract.submitTransaction('createAuthor', req.body.message, req.body.signedMessage, req.body.publicKey);
+        const result = await contract.submitTransaction('createAuthor', req.body.message,
+         req.body.signedMessage, req.body.publicKey, Date.now().toString());
         gateway.disconnect();
         console.log(`Transaction has been evaluated, result is: ${result.toString()}`);
         return {

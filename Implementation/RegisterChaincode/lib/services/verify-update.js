@@ -5,7 +5,8 @@ const verifyRegisterKey = require('./verify-register-key');
 
 // this method verifies that the update has not been modified since signed.
 const verifyUpdate = (updateRegister, publicKey) => {
-    //console.info("verifying: " + JSON.stringify(updateRegister,null,'\t'))
+    console.info("verifying: " + JSON.stringify(updateRegister,null,'\t'))
+    console.info("publicKey: " + publicKey)
     const fields = verifyUpdateFields(updateRegister);
     //const key = verifyRegisterKey(publicKey,updateRegister.authorKey);
     const manifest = verifyManifest(updateRegister, publicKey);
@@ -30,6 +31,9 @@ const verifyManifest = (updateRegister, publicKey) => {
     const signatureContent = crypto.publicDecrypt(publicKey,buffer).toString();
     //compare results
     if(!((manifestDigest.valueOf() == signatureContent.valueOf()) && ((manifestDigest.valueOf() == updateRegister.manifest.manifestDigest.toString().valueOf() ))) ){
+        console.info("manifestDigest: " + updateRegister.manifest.manifestDigest);
+        console.info("Sign: "+ signatureContent)
+        console.info("obtained manifestDigest: "+ manifestDigest);
         throw new Error('ERR_MANIFEST_NOT_VERIFIABLE');
     }
     return true;

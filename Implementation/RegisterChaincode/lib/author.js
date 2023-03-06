@@ -26,7 +26,7 @@ class RegisterAuthor extends Contract {
 
         for (let i = 0; i < authors.length; i++) {
             authors[i].docType = 'author';
-            await ctx.stub.putState(authors[i].registerKey, Buffer.from(stringify({ publicKey: authors[i].publicKey})));
+            await ctx.stub.putState('Author'+i, Buffer.from(stringify(authors[i])));
             console.info('Added <--> ', authors[i]);
         }
         console.info('============= END : Initialize Ledger ===========');
@@ -42,8 +42,33 @@ class RegisterAuthor extends Contract {
         return authorAsBytes.toString();
     }
 
+    async queryAuthorByRegisterKey(ctx, registerKey) {
+        try {
+        const startKey = 'Author00000000';
+        const endKey = 'Author99999999';
+        for await (const {key, value} of ctx.stub.getStateByRange(startKey, endKey)) {
+            const strValue = Buffer.from(value).toString('utf8');
+            let record;
+            try {
+                record = JSON.parse(strValue);
+            } catch (err) {
+                console.info(err);
+                record = strValue;
+            }
+            if (record.docType.toString().valueOf() == 'author' &&
+                record.registerKey.toString().valueOf() == registerKey.toString().valueOf()){
+                return {key,record};
+            }
+            
+        }
+        return null;
+        }catch (err){
+            console.info(err);
+        }
+    }
+
     //Register an author. If the author already exists, overwrites the registerKey.
-    async createAuthor(ctx, message, signedMessage, publicKey) {
+    async createAuthor(ctx, message, signedMessage, publicKey, date) {
         try {
             console.info('============= START : Create Author ===========');
             //Verify public key;
@@ -55,19 +80,15 @@ class RegisterAuthor extends Contract {
             //create author register key
             console.info('============= Creating Register Key ===========');
             const registerKey = createRegisterKey(publicKey); 
-            //verify if registerKey already exists
-            console.info('============= verifying register key ===========');
-            const exists = await this.AssetExists(ctx, registerKey);
-            if (exists) {
-                throw new Error('ERR_KEY_NOT_REGISTABLE');
-            }
+            
             //Store keyPair.
             const author = {
                 docType : 'author',
                 publicKey : publicKey,
+                registerKey: registerKey
             }
             console.info('============= Storying keypair ===========');
-            await ctx.stub.putState(registerKey.toString(), Buffer.from(JSON.stringify(author)));
+            await ctx.stub.putState('Author'+date.toString(), Buffer.from(JSON.stringify(author)));
             console.info('============= END : Create Author ===========');
             return registerKey;
         } catch (err) {
