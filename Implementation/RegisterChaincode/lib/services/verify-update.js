@@ -8,10 +8,10 @@ const verifyUpdate = (updateRegister, publicKey) => {
     //console.info("verifying: " + JSON.stringify(updateRegister,null,'\t'))
     //console.info("publicKey: " + publicKey)
     const fields = verifyUpdateFields(updateRegister);
-    //const key = verifyRegisterKey(publicKey,updateRegister.authorKey);
+    const key = verifyRegisterKey(publicKey,updateRegister.authorKey);
     const manifest = verifyManifest(updateRegister, publicKey);
     const payload = verifyPayload(updateRegister,publicKey);
-    verified = (manifest && payload  && fields); //&& key
+    verified = (manifest && payload  && fields && key);
     if (!verified){
         throw new Error('Update not verifiable. Check the update format.');
     }

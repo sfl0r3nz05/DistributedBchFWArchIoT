@@ -28,6 +28,9 @@ export default function RegisterUpdateForm(props){
 
     const [manifest, setManifest] = useState("");
 
+    const [result, setResult] = useState("");
+    
+
     const createManifest = () => {
         setManifest ({
             versionID : versionID,
@@ -151,12 +154,29 @@ export default function RegisterUpdateForm(props){
             }
         }).then((res) =>{
             console.log(res.data);
+            setResult(res.data);
         })
     }
 
     function registerUpdateJson(update){
-
+        const url = 'http://127.0.0.1:3000/register';
+        update.payload = payloadString;
+        var json = {
+            publicKey : props.publicKeyContent,
+            update : update
+        }
+        console.log(json);
+        axios.post(url, json, {
+            withCredentials : false,
+            headers : {
+                "Content-Type" : "application/json"
+            }
+        }).then((res) =>{
+            console.log(res.data);
+            setResult(res.data);
+        })
     }
+
 
     return(
         <div>
@@ -373,8 +393,11 @@ export default function RegisterUpdateForm(props){
             <br/>
             {manifestSign !== "" && <a>Manifest Signed</a>}
             <br/>
+            {result !== "" && <a>RESULT: {result}</a>}
+            <br/>
             {payloadSign !== "" && manifestSign !== "" &&
                 <Button type ="button" variant='contained' onClick={() => registerUpdate()}>Sign Manifest</Button> }
+            
         </div>
     )
 }
