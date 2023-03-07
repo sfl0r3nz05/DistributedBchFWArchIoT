@@ -22,7 +22,7 @@ export default function RegisterAuthorForm(props){
             }
         }).then((res) =>{
             console.log(res.data)
-            setPrivateMessage(res.data);
+            setPrivateMessage(res.data.sign);
         })
     }
 
@@ -42,6 +42,7 @@ export default function RegisterAuthorForm(props){
             }
         }).then((res) =>{
             console.log(res.data)
+            setPrivateMessage("REGISTER WAS SUCCESFUL!")
         })
     }
 
@@ -69,7 +70,7 @@ export default function RegisterAuthorForm(props){
                 <br/>
             </div>
             <Button type='button' variant='contained' color = "primary" onClick={() => signMessage()}>Sign Message</Button>
-            <Button type='submit' variant='contained' color = "primary">Register Author</Button>
+            {privateMessage !== "" && <Button type='submit' variant='contained' color = "primary">Register Author</Button>}
 
         </form>
     )

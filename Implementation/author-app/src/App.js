@@ -3,6 +3,7 @@ import './App.css';
 import Header from './components/Header.js'
 import RegisterAuthorForm from './components/RegisterAuthorForm';
 import KeyHandler from './components/KeyHandler';
+import RegisterUpdateForm from './components/RegisterUpdateForm';
 
 
 function App() {
@@ -18,6 +19,10 @@ function App() {
       
       {selectedComponent == 0 && 
       <RegisterAuthorForm privateKeyContent={privateKeyContent} setPrivateKeyContent={setPrivateKeyContent}
+      publicKeyContent={publicKeyContent} setPublicKeyContent={setPublicKeyContent}/>}
+
+      {selectedComponent == 1 && 
+      <RegisterUpdateForm privateKeyContent={privateKeyContent} setPrivateKeyContent={setPrivateKeyContent}
       publicKeyContent={publicKeyContent} setPublicKeyContent={setPublicKeyContent}/>}
     </div>
   );

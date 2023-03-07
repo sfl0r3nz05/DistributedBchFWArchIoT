@@ -22,7 +22,7 @@ var storage = multer.diskStorage({
 
 var upload = multer({ storage: storage })
 
-router.post("/sign", bodyParser.json(), async(req, res) => {
+router.post("/sign", bodyParser.json(), upload.single('payload'), async(req, res) => {
   try{
     const response = await sign(req);
     res.status(parseInt(response.status)).json(response.message);
