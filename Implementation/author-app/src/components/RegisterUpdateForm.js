@@ -2,6 +2,7 @@ import React, {useState} from 'react';
 import axios from 'axios';
 import Button from '@mui/material/Button';
 import { Grid, TextField } from '@mui/material';
+import stringify from 'json-stringify-deterministic';
 
 
 export default function RegisterUpdateForm(props){
@@ -25,8 +26,10 @@ export default function RegisterUpdateForm(props){
     const [payloadSign, setPayloadSign] = useState("");
     const [manifestSign, setManifestSign] = useState("");
 
+    const [manifest, setManifest] = useState("");
+
     const createManifest = () => {
-        return ({
+        setManifest ({
             versionID : versionID,
             monotonicSequenceNumber : MonotonicSequenceNumber,
             classID: classID,
@@ -46,7 +49,7 @@ export default function RegisterUpdateForm(props){
     }
 
     const signManifest = () =>{
-        var manifest = createManifest();
+        createManifest();
         signManifestJson(manifest);
     } 
 
@@ -67,6 +70,7 @@ export default function RegisterUpdateForm(props){
             setManifestSign(res.data.sign);
             setManifestDigest(res.data.digest);
             document.getElementById("manifestDigestField").value = res.data.digest;
+            createManifest();
         })
     }
 
@@ -117,6 +121,41 @@ export default function RegisterUpdateForm(props){
         } else {
             console.log("NO PAYLOAD TO SIGN");
         }
+    }
+
+    function registerUpdate(){
+        createManifest();
+        var update = {
+            manifest : manifest,
+            authorSign : payloadSign,
+            authorManifestSign : manifestSign
+        }
+        if (payload){
+            registerUpdateFile(update);
+        } else {
+            registerUpdateJson(update);
+        }
+    }
+
+    function registerUpdateFile(update){
+        const url = 'http://127.0.0.1:3000/register';
+        var formData = new FormData();
+        formData.append('publicKey', props.publicKeyContent);
+        formData.append('update', stringify(update));
+        formData.append('payload', payload);
+        console.log(formData);
+        axios.post(url, formData, {
+            withCredentials : false,
+            headers : {
+                "Content-Type" : "multipart/form-data"
+            }
+        }).then((res) =>{
+            console.log(res.data);
+        })
+    }
+
+    function registerUpdateJson(update){
+
     }
 
     return(
@@ -333,9 +372,9 @@ export default function RegisterUpdateForm(props){
             {payloadSign !== "" && <a>Payload Signed</a>}
             <br/>
             {manifestSign !== "" && <a>Manifest Signed</a>}
-
+            <br/>
             {payloadSign !== "" && manifestSign !== "" &&
-                <Button type ="button" variant='contained' onClick={() => signManifest()}>Sign Manifest</Button> }
+                <Button type ="button" variant='contained' onClick={() => registerUpdate()}>Sign Manifest</Button> }
         </div>
     )
 }

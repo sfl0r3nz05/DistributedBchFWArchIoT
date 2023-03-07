@@ -5,8 +5,8 @@ const verifyRegisterKey = require('./verify-register-key');
 
 // this method verifies that the update has not been modified since signed.
 const verifyUpdate = (updateRegister, publicKey) => {
-    console.info("verifying: " + JSON.stringify(updateRegister,null,'\t'))
-    console.info("publicKey: " + publicKey)
+    //console.info("verifying: " + JSON.stringify(updateRegister,null,'\t'))
+    //console.info("publicKey: " + publicKey)
     const fields = verifyUpdateFields(updateRegister);
     //const key = verifyRegisterKey(publicKey,updateRegister.authorKey);
     const manifest = verifyManifest(updateRegister, publicKey);
@@ -23,6 +23,7 @@ const verifyManifest = (updateRegister, publicKey) => {
     try {
         //obtain manifest digest
     var manifest = JSON.parse(stringify(updateRegister.manifest));
+    console.log(manifest)
     delete manifest.manifestDigest;
     const manifestDigest = crypto.createHash('sha384')
     .update(stringify(manifest)).digest('hex').toString();
