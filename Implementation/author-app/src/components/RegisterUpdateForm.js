@@ -81,7 +81,7 @@ export default function RegisterUpdateForm(props){
         const url = 'http://127.0.0.1:3000/sign';
         const json = {
             privateKey : props.privateKeyContent.toString(),
-            message : payloadString.toString(),
+            payload : payloadString.toString(),
         }
         console.log(json);
         axios.post(url, json, {
@@ -93,6 +93,7 @@ export default function RegisterUpdateForm(props){
             console.log(res.data)
             setPayloadSign(res.data.sign);
             setPayloadDigest(res.data.digest);
+            createManifest();
             document.getElementById("payloadDigestField").value = res.data.digest;
         })
     }
@@ -112,6 +113,7 @@ export default function RegisterUpdateForm(props){
             console.log(res.data)
             setPayloadSign(res.data.sign);
             setPayloadDigest(res.data.digest);
+            createManifest();
             document.getElementById("payloadDigestField").value = res.data.digest;
         })
     }

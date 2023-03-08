@@ -5,8 +5,8 @@ const stringify = require('json-stringify-deterministic');
 // this method verifies that the update has not been modified since signed.
 const verifyUpdate = (publicKey, update, payload) => {
     const fields = verifyUpdateFields(update);
-    const manifest = verifyManifest(update, publicKey);
-    const pay = verifyPayload(update,publicKey, payload);
+    const manifest = verifyManifest(publicKey,update);
+    const pay = verifyPayload(publicKey,update, payload);
     verified = (manifest && pay  && fields);
     if (!verified){
         throw new Error('Update not verifiable. Check the update format.');
@@ -18,13 +18,15 @@ const verifyUpdate = (publicKey, update, payload) => {
 const verifyManifest = (publicKey, update) => {
     try {
         //obtain manifest digest
+    console.log('update: ');
+    console.log(update);
     var manifest = JSON.parse(stringify(update.manifest));
     console.log(manifest)
     delete manifest.manifestDigest;
     const manifestDigest = crypto.createHash('sha384')
     .update(stringify(manifest)).digest('hex').toString();
     //obtain signature content
-    const buffer = Buffer.from(updat.authorManifestSign,'base64');
+    const buffer = Buffer.from(update.authorManifestSign,'base64');
     const signatureContent = crypto.publicDecrypt(publicKey,buffer).toString();
     //compare results
     if(!((manifestDigest.valueOf() == signatureContent.valueOf()) && ((manifestDigest.valueOf() == update.manifest.manifestDigest.toString().valueOf() ))) ){
@@ -46,7 +48,7 @@ const verifyPayload = (publicKey , update, payload) => {
     try {
         //console.info("received manifest payloadDigest: " + stringify(updateRegister.manifest.payloadDigest))
     //obtain payload digest
-    const payloadDigest = crypto.createHash('sha384').update(payload).digest('hex');
+    const payloadDigest = crypto.createHash('sha384').update(Buffer.from(payload)).digest('hex');
     //console.info("payload digest: " + payloadDigest)
     //obtain signature content
     const buffer = Buffer.from(update.authorSign,'base64');

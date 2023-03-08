@@ -69,7 +69,38 @@ export default function UpdateComponent(props){
         }).then((res) =>{
             console.log(res.data);
             setRetrieved(true);
-            setUpdate(res.data);
+            //setUpdate(res.data);
+            setManifest(res.data.manifest);
+            setPayload(res.data.payload);
+            setAuthorManifestSign(res.data.authorManifestSign);
+            setAuthorSign(res.data.authorSign);
+        })
+    }
+
+    function verifyUpdate(){
+        const url = 'http://127.0.0.1:3003/verify';
+        var formData = new FormData();
+        formData.append('payload',payload);
+        var update = {
+            manifest: manifest,
+            authorSign: authorSign,
+            authorManifestSign : authorManifestSign
+        }
+        var deviceID = {
+            publicKey : props.publicKeyContent,
+            classID : props.classID
+        }
+        formData.append('update',stringify(update));
+        formData.append('deviceID',stringify(deviceID));
+        console.log(formData);
+        axios.post(url, formData, {
+            withCredentials : false,
+            headers : {
+                "Content-Type" : "multipart/form-data"
+            }
+        }).then((res) =>{
+            console.log(res.data);
+           
         })
     }
 
@@ -99,7 +130,7 @@ export default function UpdateComponent(props){
         <div>
             <h2>Update</h2>
             <Button variant='contained' onClick={()=> retrieveUpdate()}>Retrieve Update</Button>
-            <br/>
+            <br/><br/><br/>
             {retrieved &&
             <Grid id='Keys' direction='column' container spacing={3}  justifyContent="center">
                 <Grid container direction='row' item sm={10} spacing={0.5} alignItems="center" justifyContent="center">
@@ -111,7 +142,7 @@ export default function UpdateComponent(props){
                         variant='outlined'
                         focused
                         label="versionID"
-                        value={versionID}
+                        value={manifest.versionID}
                         InputProps={{
                             readOnly: true,
                           }}
@@ -125,7 +156,7 @@ export default function UpdateComponent(props){
                         variant='outlined'
                         focused
                         label="classID"
-                        value={classID}
+                        value={manifest.classID}
                         InputProps={{
                             readOnly: true,
                           }}
@@ -139,7 +170,7 @@ export default function UpdateComponent(props){
                         variant='outlined'
                         focused
                         label="vendorID"
-                        value={vendorID}
+                        value={manifest.vendorID}
                         InputProps={{
                             readOnly: true,
                           }}
@@ -156,7 +187,7 @@ export default function UpdateComponent(props){
                         variant='outlined'
                         focused
                         label="MonotonicSequenceNumber"
-                        value={MonotonicSequenceNumber}
+                        value={manifest.MonotonicSequenceNumber}
                         InputProps={{
                             readOnly: true,
                           }}
@@ -170,7 +201,7 @@ export default function UpdateComponent(props){
                         variant='outlined'
                         focused
                         label="PayloadFormat"
-                        value={payloadFormat}
+                        value={manifest.payloadFormat}
                         InputProps={{
                             readOnly: true,
                           }}
@@ -184,7 +215,7 @@ export default function UpdateComponent(props){
                         variant='outlined'
                         focused
                         label="PayloadProcessing"
-                        value={payloadProcessing}
+                        value={manifest.payloadProcessing}
                         InputProps={{
                             readOnly: true,
                           }}
@@ -201,7 +232,7 @@ export default function UpdateComponent(props){
                         variant='outlined'
                         focused
                         label="StorageLocation"
-                        value={storageLocation}
+                        value={manifest.storageLocation}
                         InputProps={{
                             readOnly: true,
                           }}
@@ -215,7 +246,7 @@ export default function UpdateComponent(props){
                         variant='outlined'
                         focused
                         label="PayloadIndicator"
-                        value={payloadIndicator}
+                        value={manifest.payloadIndicator}
                         InputProps={{
                             readOnly: true,
                           }}
@@ -229,7 +260,7 @@ export default function UpdateComponent(props){
                         variant='outlined'
                         focused
                         label="Size"
-                        value={size}
+                        value={manifest.size}
                         InputProps={{
                             readOnly: true,
                           }}
@@ -246,7 +277,7 @@ export default function UpdateComponent(props){
                         variant='outlined'
                         focused
                         label="AditionalInstructions"
-                        value={aditionalInstructions}
+                        value={manifest.aditionalInstructions}
                         InputProps={{
                             readOnly: true,
                           }}
@@ -260,7 +291,7 @@ export default function UpdateComponent(props){
                         variant='outlined'
                         focused
                         label="Dependencies"
-                        value={"Write dependencies separated by comma ','"}
+                        value={manifest.dependencies}
                         InputProps={{
                             readOnly: true,
                           }}
@@ -274,7 +305,7 @@ export default function UpdateComponent(props){
                         variant='outlined'
                         focused
                         label="EncryptionWrapper"
-                        value={encryptionWrapper}
+                        value={manifest.encryptionWrapper}
                         InputProps={{
                             readOnly: true,
                           }}
@@ -291,7 +322,7 @@ export default function UpdateComponent(props){
                         variant='outlined'
                         focused
                         label="ManifestPayload"
-                        value={manifestPayload}
+                        value={manifest.payload}
                         InputProps={{
                             readOnly: true,
                           }}
@@ -306,7 +337,7 @@ export default function UpdateComponent(props){
                         focused
                         label="PayloadDigest"
                         id = "payloadDigestField"
-                        value={payloadDigest}
+                        value={manifest.payloadDigest}
                         InputProps={{
                             readOnly: true,
                           }}
@@ -321,7 +352,7 @@ export default function UpdateComponent(props){
                         focused
                         label="ManifestDigest"
                         id = "manifestDigestField"
-                        value={manifestDigest}
+                        value={manifest.manifestDigest}
                         InputProps={{
                             readOnly: true,
                           }}
@@ -345,8 +376,39 @@ export default function UpdateComponent(props){
                           }}
                     />
                 </Grid>
+                <Grid item sm={6}>
+                <TextField fullWidth
+                        type="text"
+                        onChange={(e) => setPayloadString(e.target.value)}
+                        color="primary"
+                        variant='outlined'
+                        focused
+                        label="ManifestSign"
+                        value={authorManifestSign}
+                        InputProps={{
+                            readOnly: true,
+                          }}
+                    />
+                </Grid>
+                <Grid item sm={6}>
+                <TextField fullWidth
+                        type="text"
+                        onChange={(e) => setPayloadString(e.target.value)}
+                        color="primary"
+                        variant='outlined'
+                        focused
+                        label="PayloadSign"
+                        value={authorSign}
+                        InputProps={{
+                            readOnly: true,
+                          }}
+                    />
+                </Grid>
                 </Grid>
             </Grid>}
+            <br/>
+            {retrieved && 
+              <Button variant='contained' onClick={()=> verifyUpdate()}>Verify Update</Button>}
             
             
         </div>
