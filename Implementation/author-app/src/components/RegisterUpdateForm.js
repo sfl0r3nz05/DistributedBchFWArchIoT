@@ -51,12 +51,12 @@ export default function RegisterUpdateForm(props){
         })
     }
 
-    const signManifest = () =>{
+     const signManifest = async () =>{
         createManifest();
-        signManifestJson(manifest);
+       await signManifestJson(manifest);
     } 
 
-    function signManifestJson(manifest){
+    async function signManifestJson(manifest){
         const url = 'http://127.0.0.1:3000/sign';
         const json = {
             privateKey : props.privateKeyContent.toString(),
@@ -75,9 +75,10 @@ export default function RegisterUpdateForm(props){
             document.getElementById("manifestDigestField").value = res.data.digest;
             createManifest();
         })
+        return
     }
 
-    function signPayloadString(){
+    async function signPayloadString(){
         const url = 'http://127.0.0.1:3000/sign';
         const json = {
             privateKey : props.privateKeyContent.toString(),
@@ -93,12 +94,12 @@ export default function RegisterUpdateForm(props){
             console.log(res.data)
             setPayloadSign(res.data.sign);
             setPayloadDigest(res.data.digest);
-            createManifest();
             document.getElementById("payloadDigestField").value = res.data.digest;
         })
+        return
     }
 
-    function signPayloadFile(){
+    async function signPayloadFile(){
         const url = 'http://127.0.0.1:3000/sign';
         var formData = new FormData();
         formData.append('privateKey', props.privateKeyContent);
@@ -113,16 +114,16 @@ export default function RegisterUpdateForm(props){
             console.log(res.data)
             setPayloadSign(res.data.sign);
             setPayloadDigest(res.data.digest);
-            createManifest();
             document.getElementById("payloadDigestField").value = res.data.digest;
         })
+        return;
     }
 
-    function signPayload (){
+    async function signPayload (){
         if(payload){
-            signPayloadFile();
+           await signPayloadFile();
         } else if (payloadString !== ""){
-            signPayloadString()
+            await signPayloadString()
         } else {
             console.log("NO PAYLOAD TO SIGN");
         }
@@ -176,8 +177,22 @@ export default function RegisterUpdateForm(props){
         }).then((res) =>{
             console.log(res.data);
             setResult(res.data);
-        })
+        }).catch( (err) => {{
+            if (err.response) {
+                // The client was given an error response (5xx, 4xx)
+                console.log(err.response);
+            } else if (err.request) {
+                // The client never received a response, and the request was never left
+                console.log(err.request)
+            } else {
+                // Anything else
+                console.log(err.message)
+            }
+
+            document.getElementById('result').textContent = "Could not register. Check console for details.";
+        }});
     }
+    
 
 
     return(
@@ -387,8 +402,8 @@ export default function RegisterUpdateForm(props){
                 </Grid>
                 </Grid>
             </Grid>
-            <Button type ="button" variant="contained" onClick={() => signPayload()}>Sign Payload</Button>
-            {payloadSign !== "" &&<Button type ="button" variant='contained' onClick={() => signManifest()}>Sign Manifest</Button>}
+            <Button type ="button" variant="contained" onClick={async () => {await signPayload();createManifest()}}>Sign Payload</Button>
+            {payloadSign !== "" && manifest.payloadDigest !== "" &&<Button type ="button" variant='contained' onClick={() => {signManifest();createManifest()}}>Sign Manifest</Button>}
             
             <br/>
             {payloadSign !== "" && <a>Payload Signed</a>}
@@ -398,7 +413,8 @@ export default function RegisterUpdateForm(props){
             {result !== "" && <a>RESULT: {result}</a>}
             <br/>
             {payloadSign !== "" && manifestSign !== "" &&
-                <Button type ="button" variant='contained' onClick={() => registerUpdate()}>Sign Manifest</Button> }
+            manifest.payloadDigest !== "" && manifest.manifestDigest !== "" &&
+                <Button type ="button" variant='contained' onClick={() => registerUpdate()}>Register Update</Button> }
             
         </div>
     )

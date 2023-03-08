@@ -100,29 +100,22 @@ export default function UpdateComponent(props){
             }
         }).then((res) =>{
             console.log(res.data);
+            document.getElementById('result').textContent = res.data;
            
-        })
-    }
+        }).catch( (err) => {{
+            if (err.response) {
+                // The client was given an error response (5xx, 4xx)
+                console.log(err.response);
+            } else if (err.request) {
+                // The client never received a response, and the request was never left
+                console.log(err.request)
+            } else {
+                // Anything else
+                console.log(err.message)
+            }
 
-    function setUpdate(res){
-        setAuthorManifestSign(res.authorManifestSign);
-        setAuthorSign(res.authorSign);
-        setAditionalInstructions(res.manifest.aditionalInstructions);
-        setClassID(res.manifest.classID);
-        setDependencies(res.manifest.dependencies);
-        setEncryptionWrapper(res.manifest.encryptionWrapper);
-        setManifestDigest(res.manifest.manifestDigest);
-        setMonotonicSequenceNumber(res.manifest.monotonicSequenceNumber);
-        setManifestPayload(res.manifest.payload);
-        setPayloadDigest(res.manifest.payloadDigest);
-        setPayloadFormat(res.manifest.payloadFormat);
-        setPayloadIndicator(res.manifest.payloadIndicator);
-        setPayloadProcessing(res.manifest.payloadProcessing);
-        setSize(res.manifest.size);
-        setStorageLocation(res.manifest.storageLocation);
-        setVendorID(res.manifest.vendorID);
-        setVersionID(res.manifest.versionID);
-        setPayload(res.payload);
+            document.getElementById('result').textContent = "Could not verify. Check console for details.";
+        }});
     }
 
 
@@ -137,43 +130,36 @@ export default function UpdateComponent(props){
                     <Grid item sm={3}>
                     <TextField fullWidth
                         type="text"
-                        onChange={(e) => setVersionID(e.target.value)}
+                        onChange={(e) => {setVersionID(e.target.value); createManifest();}}
                         color="primary"
                         variant='outlined'
                         focused
                         label="versionID"
                         value={manifest.versionID}
-                        InputProps={{
-                            readOnly: true,
-                          }}
+                        
                     />
                     </Grid>
                     <Grid item sm={3}>
                     <TextField fullWidth
                         type="text"
-                        onChange={(e) => setClassID(e.target.value)}
+                        onChange={(e) => {setClassID(e.target.value); createManifest();}}
                         color="primary"
                         variant='outlined'
                         focused
                         label="classID"
                         value={manifest.classID}
-                        InputProps={{
-                            readOnly: true,
-                          }}
+                       
                     />
                     </Grid>
                     <Grid item sm={3}>
                     <TextField fullWidth
                         type="text"
-                        onChange={(e) => setVendorID(e.target.value)}
-                        color="primary"
                         variant='outlined'
                         focused
                         label="vendorID"
                         value={manifest.vendorID}
-                        InputProps={{
-                            readOnly: true,
-                          }}
+                        onChange={(e) => {setVendorID(e.target.value); createManifest();}}
+                        
                     />
                     </Grid>
                 </Grid>
@@ -182,43 +168,37 @@ export default function UpdateComponent(props){
                     <Grid item sm={3}>
                     <TextField fullWidth
                         type="text"
-                        onChange={(e) => setMonotonicSequenceNumber(e.target.value)}
+                        onChange={(e) => {setMonotonicSequenceNumber(e.target.value); createManifest();}}
                         color="primary"
                         variant='outlined'
                         focused
                         label="MonotonicSequenceNumber"
                         value={manifest.MonotonicSequenceNumber}
-                        InputProps={{
-                            readOnly: true,
-                          }}
+                       
                     />
                     </Grid>
                     <Grid item sm={3}>
                     <TextField fullWidth
                         type="text"
-                        onChange={(e) => setPayloadFormat(e.target.value)}
+                        onChange={(e) => {setPayloadFormat(e.target.value); createManifest();}}
                         color="primary"
                         variant='outlined'
                         focused
                         label="PayloadFormat"
                         value={manifest.payloadFormat}
-                        InputProps={{
-                            readOnly: true,
-                          }}
+                        
                     />
                     </Grid>
                     <Grid item sm={3}>
                     <TextField fullWidth
                         type="text"
-                        onChange={(e) => setPayloadProcessing(e.target.value)}
+                        onChange={(e) => {setPayloadProcessing(e.target.value); createManifest();}}
                         color="primary"
                         variant='outlined'
                         focused
                         label="PayloadProcessing"
                         value={manifest.payloadProcessing}
-                        InputProps={{
-                            readOnly: true,
-                          }}
+                       
                     />
                     </Grid>
                 </Grid>
@@ -227,43 +207,37 @@ export default function UpdateComponent(props){
                     <Grid item sm={3}>
                     <TextField fullWidth
                         type="text"
-                        onChange={(e) => setStorageLocation(e.target.value)}
+                        onChange={(e) => {setStorageLocation(e.target.value); createManifest();}}
                         color="primary"
                         variant='outlined'
                         focused
                         label="StorageLocation"
                         value={manifest.storageLocation}
-                        InputProps={{
-                            readOnly: true,
-                          }}
+                        
                     />
                     </Grid>
                     <Grid item sm={3}>
                     <TextField fullWidth
                         type="text"
-                        onChange={(e) => setPayloadIndicator(e.target.value)}
+                        onChange={(e) => {setPayloadIndicator(e.target.value); createManifest();}}
                         color="primary"
                         variant='outlined'
                         focused
                         label="PayloadIndicator"
                         value={manifest.payloadIndicator}
-                        InputProps={{
-                            readOnly: true,
-                          }}
+                        
                     />
                     </Grid>
                     <Grid item sm={3}>
                     <TextField fullWidth
                         type="text"
-                        onChange={(e) => setSize(e.target.value)}
+                        onChange={(e) => {setSize(e.target.value); createManifest();}}
                         color="primary"
                         variant='outlined'
                         focused
                         label="Size"
                         value={manifest.size}
-                        InputProps={{
-                            readOnly: true,
-                          }}
+                       
                     />
                     </Grid>
                 </Grid>
@@ -272,43 +246,37 @@ export default function UpdateComponent(props){
                     <Grid item sm={3}>
                     <TextField fullWidth
                         type="text"
-                        onChange={(e) => setAditionalInstructions(e.target.value)}
+                        onChange={(e) => {setAditionalInstructions(e.target.value); createManifest();}}
                         color="primary"
                         variant='outlined'
                         focused
                         label="AditionalInstructions"
                         value={manifest.aditionalInstructions}
-                        InputProps={{
-                            readOnly: true,
-                          }}
+                       
                     />
                     </Grid>
                     <Grid item sm={3}>
                     <TextField fullWidth
                         type="text"
-                        onChange={(e) => setDependencies(e.target.value)}
+                        onChange={(e) => {setDependencies(e.target.value); createManifest();}}
                         color="primary"
                         variant='outlined'
                         focused
                         label="Dependencies"
                         value={manifest.dependencies}
-                        InputProps={{
-                            readOnly: true,
-                          }}
+                        
                     />
                     </Grid>
                     <Grid item sm={3}>
                     <TextField fullWidth
                         type="text"
-                        onChange={(e) => setEncryptionWrapper(e.target.value)}
+                        onChange={(e) => {setEncryptionWrapper(e.target.value); createManifest();}}
                         color="primary"
                         variant='outlined'
                         focused
                         label="EncryptionWrapper"
                         value={manifest.encryptionWrapper}
-                        InputProps={{
-                            readOnly: true,
-                          }}
+                        
                     />
                     </Grid>
                 </Grid>
@@ -317,45 +285,39 @@ export default function UpdateComponent(props){
                     <Grid item sm={3}>
                     <TextField fullWidth
                         type="text"
-                        onChange={(e) => setManifestPayload(e.target.value)}
+                        onChange={(e) => {setManifestPayload(e.target.value); createManifest();}}
                         color="primary"
                         variant='outlined'
                         focused
                         label="ManifestPayload"
                         value={manifest.payload}
-                        InputProps={{
-                            readOnly: true,
-                          }}
+                        
                     />
                     </Grid>
                     <Grid item sm={3}>
                     <TextField fullWidth
                         type="text"
-                        onChange={(e) => setPayloadDigest(e.target.value)}
+                        onChange={(e) => {setPayloadDigest(e.target.value); createManifest();}}
                         color="primary"
                         variant='outlined'
                         focused
                         label="PayloadDigest"
                         id = "payloadDigestField"
                         value={manifest.payloadDigest}
-                        InputProps={{
-                            readOnly: true,
-                          }}
+                       
                     />
                     </Grid>
                     <Grid item sm={3}>
                     <TextField fullWidth
                         type="text"
-                        onChange={(e) => setManifestDigest(e.target.value)}
+                        onChange={(e) => {setManifestDigest(e.target.value); createManifest();}}
                         color="primary"
                         variant='outlined'
                         focused
                         label="ManifestDigest"
                         id = "manifestDigestField"
                         value={manifest.manifestDigest}
-                        InputProps={{
-                            readOnly: true,
-                          }}
+                        
                     />
                     </Grid>
                 </Grid>
@@ -364,48 +326,44 @@ export default function UpdateComponent(props){
                 <Grid item sm={6}>
                 <TextField fullWidth
                         type="text"
-                        onChange={(e) => setPayloadString(e.target.value)}
+                        onChange={(e) => {setPayloadString(e.target.value); createManifest();}}
                         color="primary"
                         variant='outlined'
                         focused
                         label="String-Payload"
                         defaultValue={"Only use if not uploading file"}
                         value={payload}
-                        InputProps={{
-                            readOnly: true,
-                          }}
+                        
                     />
                 </Grid>
                 <Grid item sm={6}>
                 <TextField fullWidth
                         type="text"
-                        onChange={(e) => setPayloadString(e.target.value)}
+                        onChange={(e) => {setAuthorManifestSign(e.target.value); createManifest();}}
                         color="primary"
                         variant='outlined'
                         focused
                         label="ManifestSign"
                         value={authorManifestSign}
-                        InputProps={{
-                            readOnly: true,
-                          }}
+                       
                     />
                 </Grid>
                 <Grid item sm={6}>
                 <TextField fullWidth
                         type="text"
-                        onChange={(e) => setPayloadString(e.target.value)}
+                        onChange={(e) => {setAuthorSign(e.target.value); createManifest();}}
                         color="primary"
                         variant='outlined'
                         focused
                         label="PayloadSign"
                         value={authorSign}
-                        InputProps={{
-                            readOnly: true,
-                          }}
+                        
                     />
                 </Grid>
                 </Grid>
             </Grid>}
+            <br/>
+            <h3 id = "result"></h3>
             <br/>
             {retrieved && 
               <Button variant='contained' onClick={()=> verifyUpdate()}>Verify Update</Button>}

@@ -29,7 +29,7 @@ const verify = async(req) => {
         })
     } catch (err){
         return ({
-            status : 500,
+            status : 403,
             message : err
         })
     }
