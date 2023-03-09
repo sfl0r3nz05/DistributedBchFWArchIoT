@@ -20,7 +20,7 @@ function verifyPetition(keys, expected){
 }
 //this function verifies that the received manifest has a correct format.
 function verifyManifest(manifestKeys,expectedKeys,mandatoryManifest){
-    console.log(manifestKeys)
+    //console.log(manifestKeys)
     var listOne = manifestKeys.sort();
     var listTwo = expectedKeys.sort();
     var listThree = mandatoryManifest.sort();

@@ -9,7 +9,7 @@ const multipart = async (pdata, filePath,url) =>{
 
     form = new FormData();
     var payload = fs.createReadStream(filePath);
-    console.log(payload);
+    //console.log(payload);
     form.append('payload', payload);
     form.append('authorKey', pdata.authorKey.toString());
     form.append('manifest', stringify(pdata.manifest));
