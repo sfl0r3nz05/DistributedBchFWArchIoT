@@ -93,7 +93,7 @@ export default function UpdateComponent(props){
         formData.append('update',stringify(update));
         formData.append('deviceID',stringify(deviceID));
         console.log(formData);
-        axios.post(url, formData, {
+        var response = axios.post(url, formData, {
             withCredentials : false,
             headers : {
                 "Content-Type" : "multipart/form-data"
@@ -102,20 +102,13 @@ export default function UpdateComponent(props){
             console.log(res.data);
             document.getElementById('result').textContent = res.data;
            
-        }).catch( (err) => {{
-            if (err.response) {
-                // The client was given an error response (5xx, 4xx)
-                console.log(err.response);
-            } else if (err.request) {
-                // The client never received a response, and the request was never left
-                console.log(err.request)
-            } else {
-                // Anything else
-                console.log(err.message)
-            }
-
+        });
+        
+        if (!document.getElementById('result').textContent || document.getElementById('result').textContent !== ""){
             document.getElementById('result').textContent = "Could not verify. Check console for details.";
-        }});
+        }
+            
+        
     }
 
 
