@@ -22,7 +22,7 @@ const retrieve = async(req) => {
     result = result.message.Record;
     console.log(result.CID.path.toString());
     //retrieve update payload from ipfs
-    const resultCID = await retrieveImageIPFS(result.CID.path.toString());
+    const resultCID = await retrieveImageIPFS(result.CID.path.toString(),result.manifest.payloadDigest);
     if(resultCID.status.toString().valueOf() !== '201'){
         return {
             status : resultCID.status,
@@ -36,7 +36,6 @@ const retrieve = async(req) => {
         authorManifestSign : result.authorManifestSign,
         payload : resultCID.message
     }
-    //console.log(update)
     return {
         status : resultCID.status,
         message : update

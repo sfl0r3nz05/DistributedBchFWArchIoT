@@ -33,14 +33,10 @@ const callRegisterUpdateCC = async (req) => {
         } else {
             payload = req.body.payload;
         }
-        const payloadDigest = crypto.createHash('sha384').update(payload).digest('hex');
-        console.log(payloadDigest);
+        //const payloadDigest = crypto.createHash('sha384').update(payload).digest('hex');
+        //console.log(payloadDigest);
         var manifest = req.body.manifest;
-        try{
-            console.log(JSON.parse(manifest).payloadDigest)
-        } catch {
-            console.log(manifest.payloadDigest)
-        }
+        
         
         //manifest may be in string or object form. We want it to always be in string form.
         if(manifest.versionID){

@@ -27,7 +27,7 @@ router.post("/sign", bodyParser.json(), upload.single('payload'), async(req, res
     const response = await sign(req);
     res.status(parseInt(response.status)).json(response.message);
   } catch (error){
-    console.log(error);
+    //console.log(error);
     if (!error.stat) error.stat = 500;
     res.status(parseInt(error.stat)).json(error.message);
   }
@@ -49,12 +49,14 @@ router.post("/register/author", bodyParser.json(), async(req, res) => {
 //Receives an Update and a public key. Tries to register an update in the blockchain.
   //JSON
   router.post("/register", bodyParser.json(),upload.single('payload'), async(req, res) => {
+    console.log("started at " + Date.now())
     if(req.body.update.constructor === "a".constructor){
       req.body.update = JSON.parse(req.body.update);
     }
     try {
       const response = await registerUpdate(req);
       console.log(response);
+      console.log("Finished at: " + Date.now());
       res.status(parseInt(response.status)).json(response.message);
     }catch(error){
       console.log(error);

@@ -5,7 +5,7 @@ const signMessage = (message, privateKey, isJson) => {
     if(isJson){
         message = stringify(message);
     }
-    console.log(message);
+    //console.log(message);
     const messageDigest = crypto.createHash('sha384').update(message).digest('hex');
 
     const authorSign = crypto.privateEncrypt({

@@ -28,6 +28,7 @@ const registerUpdate = async(req) =>{
     }
     //store update payload in ipfs
     const CID = await storeImageIPFS(req.body.payload,req.file);
+    console.log("Finished at: " + Date.now());
     console.log(CID);
     // store CID in the chain
     const resultCID = await callRegisterCIDCC(req, CID);

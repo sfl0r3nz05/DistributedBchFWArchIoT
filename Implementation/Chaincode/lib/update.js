@@ -86,6 +86,7 @@ class RegisterUpdate extends Contract {
             const compoKey = await ctx.stub.createCompositeKey('versionid~classid',
             [updateInChain.manifest.versionID.toString(),updateInChain.manifest.classID.toString()]); //JSON.parse(authorAsBytes).publicKey.toString(),
             await ctx.stub.putState('update'+dat.toString(), Buffer.from(stringify(updateInChain)));
+            console.info("Finished at: " + Date.now());
             console.info(compoKey.toString() + stringify(updateInChain));
             console.info('================== Store Update Ended ===============');
             return ('Succesfull registration');
@@ -118,6 +119,7 @@ class RegisterUpdate extends Contract {
         const keyer = update.Key.toString();
         const recorder = stringify(update.Record);
         await ctx.stub.putState(keyer, Buffer.from(recorder));
+        console.info("Finished CID at: " + Date.now());
         console.info(recorder);
         return 'Success';
     }catch (err){
