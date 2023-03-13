@@ -36,6 +36,7 @@ const retrieve = async(req) => {
         authorManifestSign : result.authorManifestSign,
         payload : resultCID.message
     }
+    console.log("finished processing everything: " + Date.now())
     return {
         status : resultCID.status,
         message : update

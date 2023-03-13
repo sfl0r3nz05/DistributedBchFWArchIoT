@@ -31,7 +31,7 @@ class RetrieveUpdate extends Contract {
                 result = { Key: key, Record: record };
             }
         }
-        console.info('done');
+        console.info('done: ' + Date.now());
         if (!result){
             throw new Error ('ERR_UPDATE_NON_EXISTENT');
         }

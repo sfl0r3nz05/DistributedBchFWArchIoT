@@ -6,15 +6,14 @@ const crypto = require('crypto');
 const retrieveImageIPFS = async(CID, payload) =>{
     try {
         const ipfs = await create({ url: config.ipfsURL });
-
+        console.log("retrieved IPFS: " + Date.now());
         const resp = await ipfs.cat(CID);
-        
         let content = [];
         for await (const chunk of resp) {
             content = [...content, ...chunk];
         }
+        console.log("processed IPFS: " + Date.now());
         var raw = Buffer.from(content).toString('base64')
-        //console.log(raw)
         const payloadDigest = crypto.createHash('sha384').update(Buffer.from(raw)).digest('hex');
         console.log("payload Digest: " + payloadDigest)
         if(payloadDigest !== payload){
