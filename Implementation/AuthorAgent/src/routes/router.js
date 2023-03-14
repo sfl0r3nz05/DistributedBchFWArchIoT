@@ -6,6 +6,7 @@ const fs = require('fs');
 const registerAuthor = require('../controllers/register-author');
 const registerUpdate = require('../controllers/register-update');
 const sign  = require("../controllers/sign");
+const path = require('path')
 
 //router.use(bodyParser.json());
 
@@ -49,17 +50,18 @@ router.post("/register/author", bodyParser.json(), async(req, res) => {
 //Receives an Update and a public key. Tries to register an update in the blockchain.
   //JSON
   router.post("/register", bodyParser.json(),upload.single('payload'), async(req, res) => {
-    console.log("started at " + Date.now())
+    fs.appendFile(path.resolve(__dirname,'../../testlogs/startlog.txt'), Date.now().toString() + '\n', (err)=> console.log(err));
     if(req.body.update.constructor === "a".constructor){
       req.body.update = JSON.parse(req.body.update);
     }
     try {
       const response = await registerUpdate(req);
       console.log(response);
-      console.log("Finished at: " + Date.now());
+      fs.appendFile(path.resolve(__dirname,'../../testlogs/endlog.txt'), Date.now().toString() + '\n', (err)=> console.log(err));
       res.status(parseInt(response.status)).json(response.message);
     }catch(error){
       console.log(error);
+      fs.appendFile(path.resolve(__dirname,'../../data/endlog.txt'), Date.now().toString() + '\n', (err)=> console.log(err));
       if (!error.stat) error.stat = 500;
       res.status(parseInt(error.stat)).json(error.message);
     }
