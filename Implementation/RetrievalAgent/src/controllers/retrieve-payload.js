@@ -29,17 +29,9 @@ const retrieve = async(req) => {
             message : resultCID.message
         }
     }
-    //build update object
-    const update = {
-        manifest : result.manifest,
-        authorSign : result.authorSign,
-        authorManifestSign : result.authorManifestSign,
-        payload : resultCID.message
-    }
-    console.log("finished processing everything: " + Date.now())
     return {
         status : resultCID.status,
-        message : update
+        message : resultCID.message
     }
 
 }

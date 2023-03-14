@@ -83,7 +83,7 @@ To get the repository working in a local environment, please follow the instruct
     sudo sh <test-network-folder>/updateOne.sh <path to chaincode> <name> <version> 
     sudo sh <test-network-folder>/updateTwo.sh <ID given in terminal> <name> <version> 
     ```
-    It is important that version increases by one everytime you update the chaincode.
+    It is important that version increases by one everytime you update the chaincode. The name 'register' is used in the agents, therefore, use that name if you dont want to modify code for them.
 2. Copy the connection-org1.json file from test-network/organizations/peerOrganizations/org1.example.com into /RegisterAgent/src/config.
 3. Delete contents of RegisterAgent/src/wallet
 3. Update connection-org1.json to include the gateway address from your network instead of localhost.

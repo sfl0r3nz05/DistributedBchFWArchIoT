@@ -55,7 +55,12 @@ export default function UpdateComponent(props){
     
 
     function retrieveUpdate(){
-        const url = 'http://127.0.0.1:3002/retrieve';
+        retrieveManifest();
+        retrievePayload();
+    }
+
+    function retrieveManifest(){
+        const url = 'http://127.0.0.1:3002/retrieve/update';
         var json = {
             publicKey : props.publicKeyContent,
             classID : props.classID
@@ -68,12 +73,44 @@ export default function UpdateComponent(props){
             }
         }).then((res) =>{
             console.log(res.data);
-            setRetrieved(true);
+            //setRetrieved(true);
             //setUpdate(res.data);
             setManifest(res.data.manifest);
-            setPayload(res.data.payload);
             setAuthorManifestSign(res.data.authorManifestSign);
             setAuthorSign(res.data.authorSign);
+        })
+    }
+
+    function retrievePayload(){
+        const url = 'http://127.0.0.1:3002/retrieve/payload';
+        var json = {
+            publicKey : props.publicKeyContent,
+            classID : props.classID
+        }
+        console.log(json);
+        axios.post(url, json, {
+            withCredentials : false,
+            headers : {
+                "Content-Type" : "application/json"
+            },
+            responseType: 'blob'
+        }).then((res) =>{
+            console.log(res.data);
+            setRetrieved(true);
+            setPayload(res.data);
+            // create file link in browser's memory
+            const href = URL.createObjectURL(res.data);
+
+            // create "a" HTML element with href to file & click
+            const link = document.createElement('a');
+            link.href = href;
+            document.body.appendChild(link);
+            link.click();
+
+            // clean up "a" element & remove ObjectURL
+            document.body.removeChild(link);
+            URL.revokeObjectURL(href);
+            
         })
     }
 
@@ -315,45 +352,7 @@ export default function UpdateComponent(props){
                     </Grid>
                 </Grid>
 
-                <Grid container direction='row' item sm={10} spacing={0.5} alignItems="center" justifyContent="center">
-                <Grid item sm={6}>
-                <TextField fullWidth
-                        type="text"
-                        onChange={(e) => {setPayloadString(e.target.value); createManifest();}}
-                        color="primary"
-                        variant='outlined'
-                        focused
-                        label="String-Payload"
-                        defaultValue={"Only use if not uploading file"}
-                        value={payload}
-                        
-                    />
-                </Grid>
-                <Grid item sm={6}>
-                <TextField fullWidth
-                        type="text"
-                        onChange={(e) => {setAuthorManifestSign(e.target.value); createManifest();}}
-                        color="primary"
-                        variant='outlined'
-                        focused
-                        label="ManifestSign"
-                        value={authorManifestSign}
-                       
-                    />
-                </Grid>
-                <Grid item sm={6}>
-                <TextField fullWidth
-                        type="text"
-                        onChange={(e) => {setAuthorSign(e.target.value); createManifest();}}
-                        color="primary"
-                        variant='outlined'
-                        focused
-                        label="PayloadSign"
-                        value={authorSign}
-                        
-                    />
-                </Grid>
-                </Grid>
+                
             </Grid>}
             <br/>
             <h3 id = "result"></h3>

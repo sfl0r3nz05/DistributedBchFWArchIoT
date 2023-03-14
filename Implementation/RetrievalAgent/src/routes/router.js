@@ -1,8 +1,11 @@
 const express = require("express");
 const bodyParser = require('body-parser');
 const router = express.Router();
-const retrieve = require('../controllers/retrieve');
+const retrieveUpdate = require('../controllers/retrieve-update');
+const retrievePayload = require('../controllers/retrieve-payload');
 const retrieveVersion = require('../controllers/retrieve-version');
+const path = require('path');
+const fs = require('fs');
 
 
 router.use(bodyParser.json());
@@ -19,17 +22,37 @@ router.post("/retrieve/version", async function(req, res) {
   }
 });
 
-//receives a DeviceID and sends it to the CC. Return result (full Update) from CC.
-router.post("/retrieve", async function(req, res) {
-  console.log("start: " + Date.now())
+//receives a DeviceID and sends it to the CC. Return result (Update without payload) from CC.
+router.post("/retrieve/update", async function(req, res) {
+  console.log("start update: " + Date.now())
   try {
-    const result = await retrieve(req);
-    console.log("end: " + Date.now())
+    const result = await retrieveUpdate(req);
+    console.log("end update: " + Date.now())
     res.status(parseInt(result.status)).json(result.message);
   }catch (error) {
     console.log(`Failed to evaluate transaction: ${error}`);
     if (!error.status) error.status = 500;
-    console.log("end fail: " + Date.now())
+    console.log("end update fail: " + Date.now())
+    res.status(parseInt(error.status)).json(error.toString());
+  }
+});
+
+//receives a DeviceID and sends it to the CC. Return result (payload) from IPFS.
+router.post("/retrieve/payload", async function(req, res) {
+  console.log("start payload: " + Date.now())
+  try {
+    const result = await retrievePayload(req);
+    console.log("end payload: " + Date.now());
+    var file = fs.createReadStream(path.resolve(__dirname,'../payload/payload'));
+    res.writeHead(200, {
+      "Content-Type": "application/octet-stream",
+      "Content-Disposition": "attachment; filename=" + result.message
+    });
+    file.pipe(res);
+  }catch (error) {
+    console.log(`Failed to evaluate transaction: ${error}`);
+    if (!error.status) error.status = 500;
+    console.log("end payload fail: " + Date.now())
     res.status(parseInt(error.status)).json(error.toString());
   }
 });

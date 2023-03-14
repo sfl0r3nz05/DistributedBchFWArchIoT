@@ -29,7 +29,7 @@ const callRetrieveUpdateCC = async (req) => {
         const result = await contract.submitTransaction('queryUpdateByPublicKeyClassID', req.body.publicKey.toString(), req.body.classID.toString());
         console.log("obtained update:" + Date.now())
         gateway.disconnect();
-        console.log(`Transaction has been evaluated, result is: ${result}`);
+        //console.log(`Transaction has been evaluated, result is: ${result}`);
         return {
             status : 201,
             message : JSON.parse(result)
