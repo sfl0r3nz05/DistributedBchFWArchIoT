@@ -91,7 +91,7 @@ To get the repository working in a local environment, please follow the instruct
     ```
     docker run -d --name ipfs_host --network fabric_test -e IPFS_PROFILE=server -v $ipfs_staging:/export -v $ipfs_data:/data/ipfs -p 4001:4001 -p 4001:4001/udp -p 127.0.0.1:8080:8080 -p 127.0.0.1:5001:5001 ipfs/kubo:latest
     ```
-    Update /RegisterAgent/src/config/config.json to add the connection url, for example "http//localhost:5001".
+    Update /RegisterAgent/src/config/config.json and /RetrievalAgent/src/config/config.json to add the connection url, for example "http//localhost:5001".
 5. Use the script build.sh to initialize the RegisterAgent. It will run the scripts to intialize the node app and register it to the blockchain network.
 6. Use the build.sh script from AuthorAgent to initialize it.
 7. Use the build.sh script to initialize VerificationAgent.

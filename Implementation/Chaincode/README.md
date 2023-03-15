@@ -1,7 +1,6 @@
-# Register Chaincode
-The register chaincode is a collection of smart contracts that can be used to register both authors and updates to the blockchain.
-
-For a more detailed explanation of the data flow and structures, please see [RegisterChaincode Design](../../Design/BlockchainApplication/RegisterChaincodes/),
+# Chaincode
+The chaincode is a collection of smart contracts that can be used to register both authors and updates to the blockchain and to retrieve the different elements of the update.
+For a more detailed explanation of the data flow and structures, please see [RegisterChaincode Design](../../Design/BlockchainApplication/RegisterChaincodes/) and [RetrievalChaincode Design](../../Design/BlockchainApplication/RetrievalChaincodes/)
 
 They are written using the NodeJS version of the Hyperledger Fabric SDK.
 
@@ -22,3 +21,6 @@ dat is the Unix time of the request made by the registerAgent and is used to cre
 [updateRegister](../../Design/DataStructures/Update/) is used to create the new asset after veriying the contents of the payload and manifest. The response is a message containing 'Success' or the throwed error.
 
 updateCID(authorKey,versionID,classID,CID) is used to modify the stored UpdateInChain asset related to the author's publicKey and the manifests version and class IDs in order to add the CID given to the payload by IPFS. authorKey, versionID and classID should be passed as strings. CID should be passed as a stringified JSON object.
+
+## Retrieve Update Contract
+The retrieve update contract can be used to retrieve the last available version or update for a device. In both cases the contract receice a [DeviceID](../../Design/DataStructures/DeviceID/).

@@ -11,6 +11,8 @@ The API serves the following [endpoints](./src/routes/router.js):
 
 - /register(POST): This endpoint receives an Update(see [Update](../../Design/DataStructures/Update)) JSON object and a public key. It calls a function that verifies that the input has the correct format. If the format is incorrect, it returns a 405 code. If the format is correct, it queries the database to obtain the registerKey associated with the given public key in the keyPair. It uses the register key to generate an UpdateRegister object. A POST request is sent to the register agent, and the response is sent back. If succesful, a code 201 is sent, while a code 403 is sent if the register agent sends back an error message.
 
+- /sign(POST): This enpoint receives a private key and a message/payload. It can attend to JSON and multipart/form-data petitions. It returns the digest for the message and that message signed using the sent private key.
+
 - /api-docs: Also accesible with / and /about. It shows the documentation generated with Swagger, which also offer the posibility to use and test the API. To generate this documentation, the [OpenAPI document](./author-agent.json) is used.
 
 ## Instalation
