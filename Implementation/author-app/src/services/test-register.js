@@ -69,7 +69,8 @@ async function signPayloadFile(privateKey, payload, json){
 }
 
 
-const test = async () =>{
+const test = async (times) =>{
+    console.log("Beginning tests")
     var json = JSON.parse(fs.readFileSync(path.resolve(__dirname,'./update-register.json')).toString());
     var publicKey = fs.readFileSync(path.resolve(__dirname,'./public_key')).toString();
     var privateKey = fs.readFileSync(path.resolve(__dirname,'./private_key')).toString();
@@ -79,9 +80,9 @@ const test = async () =>{
     json.publicKey = publicKey;
 
     
-    for(var i = 0; i < 100; i++){
+    for(var i = 0; i < times; i++){
         var jsonit = JSON.parse(stringify(json));
-        json.update.manifest.versionID = 'V_100'+i;
+        json.update.manifest.versionID = 'V_10'+i;
         //delete jsonit.payload;
         await signManifestJson(jsonit, privateKey);
         //console.log(jsonit.update)
@@ -90,4 +91,4 @@ const test = async () =>{
     
 }
 
-test()
+test(100)
