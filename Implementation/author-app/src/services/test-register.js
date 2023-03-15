@@ -4,12 +4,12 @@ const stringify = require('json-stringify-deterministic');
 const path =  require('path');
 const FormData = require('form-data');
 
-async function registerUpdateFile(json, num){
+async function registerUpdateFile(json, num, filePath){
     const url = 'http://127.0.0.1:3000/register';
     var formData = new FormData();
     formData.append('publicKey', json.publicKey);
     formData.append('update', stringify(json.update));
-    formData.append('payload', fs.createReadStream(path.resolve(__dirname,'./BCM2046A2-iMac2009Bluetooth.bin')));
+    formData.append('payload', fs.createReadStream(path.resolve(__dirname,filePath)));
     //console.log(formData);
     try {
         const res = await axios.post(url, formData, {
@@ -59,7 +59,7 @@ async function signPayloadFile(privateKey, payload, json){
             headers : {
                 "Content-Type" : "multipart/form-data"
             }
-        });
+        })
         //console.log(res.data)
         json.update.authorSign = res.data.sign;
         json.update.manifest.payloadDigest = res.data.digest;
@@ -69,12 +69,12 @@ async function signPayloadFile(privateKey, payload, json){
 }
 
 
-const test = async (times) =>{
+const test = async (times,filePath) =>{
     console.log("Beginning tests")
     var json = JSON.parse(fs.readFileSync(path.resolve(__dirname,'./update-register.json')).toString());
     var publicKey = fs.readFileSync(path.resolve(__dirname,'./public_key')).toString();
     var privateKey = fs.readFileSync(path.resolve(__dirname,'./private_key')).toString();
-    var payload = fs.readFileSync(path.resolve(__dirname,'./BCM2046A2-iMac2009Bluetooth.bin'),'base64');
+    var payload = fs.createReadStream(path.resolve(__dirname,filePath))
     await signPayloadFile(privateKey,payload,json)
     
     json.publicKey = publicKey;
@@ -82,13 +82,14 @@ const test = async (times) =>{
     
     for(var i = 0; i < times; i++){
         var jsonit = JSON.parse(stringify(json));
-        json.update.manifest.versionID = 'V_10'+i;
+        jsonit.update.manifest.versionID = 'Test95MB-'+i;
         //delete jsonit.payload;
         await signManifestJson(jsonit, privateKey);
         //console.log(jsonit.update)
-        await registerUpdateFile(jsonit,i);
+        await registerUpdateFile(jsonit,i,filePath);
     }
     
 }
-
-test(100)
+var test552 = './BCM2046A2-iMac2009Bluetooth.bin';
+var test95 = './9.5MBTest.bin'
+test(100,test95);
