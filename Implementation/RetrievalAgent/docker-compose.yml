@@ -1,0 +1,16 @@
+version: "3"
+services:
+  retrievalagent:
+      container_name: retrievalagent
+      restart: always
+      build: .
+      ports:
+      - "3002:3002"
+      networks:
+      - fabric_test
+      volumes:
+      - ./testlogs:/app/testlogs
+networks:
+  fabric_test:
+    external: true
+ 

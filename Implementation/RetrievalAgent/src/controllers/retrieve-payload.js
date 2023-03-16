@@ -1,6 +1,8 @@
 const verifyDevice = require('../services/verify-device');
 const callRetrieveUpdateCC = require('../services/call-retrieve-update-cc');
 const retrieveImageIPFS = require('../services/retrieve-image-ipfs');
+const path = require('path');
+const fs = require('fs');
 
 const retrieve = async(req) => {
     //verifies that the req has the correct keys.
@@ -23,6 +25,7 @@ const retrieve = async(req) => {
     console.log(result.CID.path.toString());
     //retrieve update payload from ipfs
     const resultCID = await retrieveImageIPFS(result.CID.path.toString(),result.manifest.payloadDigest);
+    fs.appendFile(path.resolve(__dirname,'../../testlogs/ipfslog.txt'), Date.now().toString() + '\n', (err)=> console.log(err));
     if(resultCID.status.toString().valueOf() !== '201'){
         return {
             status : resultCID.status,
