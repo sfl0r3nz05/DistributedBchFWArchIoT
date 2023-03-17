@@ -26,6 +26,7 @@ router.post("/retrieve/version", async function(req, res) {
 router.post("/retrieve/update", async function(req, res) {
   fs.appendFile(path.resolve(__dirname,'../../testlogs/startlog.txt'), Date.now().toString() + '\n', (err)=> console.log(err));
   try {
+    console.log(req.body)
     const result = await retrieveUpdate(req);
     res.status(parseInt(result.status)).json(result.message);
   }catch (error) {

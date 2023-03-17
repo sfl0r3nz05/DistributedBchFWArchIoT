@@ -101,4 +101,4 @@ var test552 = './BCM2046A2-iMac2009Bluetooth.bin';
 var test95 = './9.5MBTest.bin'
 var test154 = './15.4MBTest.bin'
 var test361 = './36.1MBTest.bin'
-test(100,test95);
+test(1,test552);

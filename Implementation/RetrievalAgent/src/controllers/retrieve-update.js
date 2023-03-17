@@ -23,7 +23,7 @@ const retrieve = async(req) => {
         }
     }
     result = result.message.Record;
-    console.log(result.CID.path.toString());
+    console.log(result);
     //build update object
     const update = {
         manifest : result.manifest,

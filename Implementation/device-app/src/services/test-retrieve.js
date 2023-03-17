@@ -4,12 +4,13 @@ const path = require('path')
 
 async function retrieveUpdate(json){
     retrieveManifest(json);
-    //await retrievePayload(json);
+    await retrievePayload(json);
 }
 
 async function retrieveManifest(json){
     const url = 'http://127.0.0.1:3002/retrieve/update';
-    console.log(json);
+    //console.log(json);
+    json = JSON.parse(JSON.stringify(json))
     try{
         const res = await axios.post(url, json, {
             withCredentials : false,
@@ -17,7 +18,7 @@ async function retrieveManifest(json){
                 "Content-Type" : "application/json"
             }
         })
-        //console.log(res.data)
+        //console.log(res.data.message)
     } catch (err){
         console.log(err.message)
     }
@@ -26,7 +27,7 @@ async function retrieveManifest(json){
 
 async function retrievePayload(json){
     const url = 'http://127.0.0.1:3002/retrieve/payload';
-    console.log(json);
+    //console.log(json);
     try {
         const res = await axios.post(url, json, {
             withCredentials : false,
@@ -42,12 +43,21 @@ async function retrievePayload(json){
 }
 
 const test = async() =>{
-    var key = fs.readFileSync(path.resolve(__dirname,'./public_key')).toString()
+    console.log('Beginning Test')
+    var publicKey = fs.readFileSync(path.resolve(__dirname,'./public_key'),'utf8');
     var json = {
-        publicKey : key,
-        classID : 'Class_1'
+        publicKey : publicKey,
+        classID : "Class_1"
     }
-
-    await retrieveUpdate(json)
+    for (var i=0; i< 100;i++){
+        try{
+            await retrieveUpdate(json);
+            console.log('Success update '+i)
+        } catch (err){
+            console.log('Error '+i + ' ' + err)
+        }
+    }
+        
+    
 }
 test();

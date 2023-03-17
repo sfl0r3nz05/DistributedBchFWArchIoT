@@ -25,11 +25,11 @@ const callRetrieveUpdateCC = async (req) => {
     const network = await gateway.getNetwork('mychannel');
     const contract = network.getContract('register','RetrieveUpdate');
     try { //ask for the contract to be executed.
-        //console.log(req.body)
+        console.log(req.body)
         const result = await contract.submitTransaction('queryUpdateByPublicKeyClassID', req.body.publicKey.toString(), req.body.classID.toString());
         console.log("obtained update:" + Date.now())
         gateway.disconnect();
-        //console.log(`Transaction has been evaluated, result is: ${result}`);
+        console.log(`Transaction has been evaluated, result is: ${result}`);
         return {
             status : 201,
             message : JSON.parse(result)

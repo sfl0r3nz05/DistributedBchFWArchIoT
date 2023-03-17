@@ -23,7 +23,7 @@ class RetrieveUpdate extends Contract {
                 console.info(err);
                 record = strValue;
             }
-            console.info("record: " + JSON.stringify(record));
+            //console.info("record: " + JSON.stringify(record));
             if (record.authorPublicKey.toString().valueOf() == publicKey.toString().valueOf() && 
                 record.manifest.classID.toString().valueOf() == classID.toString().valueOf() &&
                 (!result || record.manifest.versionID.toString().valueOf() >  result.Record.manifest.versionID)){

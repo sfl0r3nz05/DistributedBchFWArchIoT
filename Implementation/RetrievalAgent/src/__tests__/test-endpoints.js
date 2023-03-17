@@ -13,7 +13,7 @@ var path = require("path");
         request
         .post("/retrieve/version")
         .send(json)
-        .expect(201)
+        .expect(200)
         .end((err, res) => {
             if (err) return done(err);
             return done();
@@ -45,10 +45,14 @@ var path = require("path");
 
   describe('/retrieve', () => {
     test('Correct input', (done)=> {
-        var json = JSON.parse(fs.readFileSync(path.resolve(__dirname, './test-json/correct.json'), 'utf8'));
-        json.publicKey = fs.readFileSync(path.resolve(__dirname, '../','public_key'),'utf-8');
+        //var json = JSON.parse(fs.readFileSync(path.resolve(__dirname, './test-json/correct.json'), 'utf8'));
+        json = {
+            publicKey : fs.readFileSync(path.resolve(__dirname, '../','public_key'),'utf-8'),
+            classID : 'Class_1'
+        };
+
         request
-        .post("/retrieve")
+        .post("/retrieve/update")
         .send(json)
         .expect(201)
         .end((err, res) => {
