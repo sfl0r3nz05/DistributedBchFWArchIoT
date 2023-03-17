@@ -88,7 +88,7 @@ const test = async (times,filePath) =>{
     
     for(var i = 0; i < times; i++){
         var jsonit = JSON.parse(stringify(json));
-        jsonit.update.manifest.versionID = 'V_5'+i;
+        jsonit.update.manifest.versionID = 'V_6'+i;
         //delete jsonit.payload;
         await signManifestJson(jsonit, privateKey);
         //console.log(jsonit.update)
@@ -101,4 +101,4 @@ var test552 = './BCM2046A2-iMac2009Bluetooth.bin';
 var test95 = './9.5MBTest.bin'
 var test154 = './15.4MBTest.bin'
 var test361 = './36.1MBTest.bin'
-test(1,test154);
+test(1,test361);
