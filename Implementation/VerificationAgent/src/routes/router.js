@@ -22,9 +22,10 @@ var storage = multer.diskStorage({
 var upload = multer({ storage: storage })
 
 //receives an update and a device ID and verifies the update. Returns true or error.
-router.post("/verify", bodyParser.json(),upload.single('update'), async(req, res) => {
+router.post("/verify", bodyParser.json(),upload.single('payload'), async(req, res) => {
     
   try {
+    console.log("reached here")
     const response = await verify(req);
     console.log(response);
     res.status(parseInt(response.status)).json(response.message);

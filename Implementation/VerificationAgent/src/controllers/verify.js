@@ -5,6 +5,7 @@ const verify = async(req) => {
     try{
         var payload;
         if(req.file){
+            console.log(req.file)
             payload = fs.readFileSync(req.file.path,'base64');
         } else {
             payload = req.body.payload
