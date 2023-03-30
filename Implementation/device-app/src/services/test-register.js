@@ -100,6 +100,7 @@ const test = async (times,filePath) =>{
 var test1 = './1KBTest.bin';
 var test22 = './22KBTest.bin';
 var test94 = './94KBTest.bin';
+var test289 = './2'
 var test105 = './1.05MBTest.bin';
 var test495 = './4.95MBTest.bin';
 var test552 = './BCM2046A2-iMac2009Bluetooth.bin';
