@@ -88,7 +88,7 @@ const test = async (times,filePath) =>{
     
     for(var i = 0; i < times; i++){
         var jsonit = JSON.parse(stringify(json));
-        jsonit.update.manifest.versionID = 'V_1KBAA'+i;
+        jsonit.update.manifest.versionID = 'V_1KB'+i;
         //delete jsonit.payload;
         await signManifestJson(jsonit, privateKey);
         //console.log(jsonit.update)
