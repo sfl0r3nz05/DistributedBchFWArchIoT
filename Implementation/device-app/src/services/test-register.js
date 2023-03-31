@@ -88,7 +88,7 @@ const test = async (times,filePath) =>{
     
     for(var i = 0; i < times; i++){
         var jsonit = JSON.parse(stringify(json));
-        jsonit.update.manifest.versionID = 'V_1kb'+i;
+        jsonit.update.manifest.versionID = 'V_32MB-_'+i;
         //delete jsonit.payload;
         await signManifestJson(jsonit, privateKey);
         //console.log(jsonit.update)
@@ -97,7 +97,7 @@ const test = async (times,filePath) =>{
     }
     
 }
-var test1 = './1KBTest.bin';
+var test1 = './1KBTest2.bin';
 var test22 = './22KBTest.bin';
 var test94 = './94KBTest.bin';
 var test289 = './289KBTest.bin';
@@ -107,5 +107,6 @@ var test552 = './BCM2046A2-iMac2009Bluetooth.bin';
 var test95 = './9.5MBTest.bin'
 var test154 = './15.4MBTest.bin'
 var test267 = './26.7MBTest.bin';
+var test32 = './32MBTest.bin';
 var test361 = './36.1MBTest.bin'
-test(100,test1);
+test(16,test32);
